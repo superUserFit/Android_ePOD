@@ -6,10 +6,8 @@
     android:background="@drawable/gradient"
     tools:context=".job_management.JobManagementFragment">
 
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/job_management_RecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:text="This Job Management screen"/>
-
+        android:layout_height="wrap_content"/>
 </FrameLayout>
