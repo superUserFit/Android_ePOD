@@ -3,5 +3,18 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="orange">#FF9800</color>
+    <color name="orangeAccent">#73FFA500</color>
     <color name="deepOrange">#FF5722</color>
+    <color name="grey">#EEEEEE</color>
+    <color name="darkGrey">#555555</color>
+    <color name="blue">#3FA2F6</color>
+    <color name="blueAccent">#733FA2F6</color>
+    <color name="yellow">#FFF455</color>
+    <color name="darkYellow">#FFC700</color>
+    <color name="darkGreen">#059212</color>
+    <color name="limeGreen">#06D001</color>
+    <color name="limeGreenAccent">#8006D001</color>
+    <color name="red">#FF0000</color>
+    <color name="redAccent">#73FF0000</color>
 </resources>
+

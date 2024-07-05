@@ -1,0 +1,485 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/job_order_loading"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="8dp"
+        android:layout_marginHorizontal="16dp"
+        android:id="@+id/loading_card_1"
+        app:cardElevation="8dp"
+        app:cardCornerRadius="12dp"
+        app:cardBackgroundColor="@color/white">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/grey">
+
+                <TextView
+                    android:id="@+id/customerName1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.075"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toTopOf="@id/docNo1"
+                    app:layout_constraintHorizontal_bias="0"/>
+
+                <TextView
+                    android:id="@+id/docNo1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@id/customerName1"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <TextView
+                    android:id="@+id/docDate1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/darkGrey"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@id/customerName1"
+                    app:layout_constraintStart_toEndOf="@id/docNo1"/>
+
+                <TextView
+                    android:id="@+id/jobOrderStatus1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:width="100dp"
+                    android:textAlignment="center"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp"
+                    android:textSize="12sp"
+                    android:gravity="center"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/customerName1"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginVertical="8dp"
+                app:dividerColor="@color/grey"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/pickupInfo1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/grey">
+
+                <ImageView
+                    android:id="@+id/pickupIcon1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <TextView
+                    android:id="@+id/pickupLocation1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    app:layout_constraintStart_toEndOf="@id/pickupIcon1"
+                    app:layout_constraintTop_toTopOf="@id/pickupIcon1"
+                    app:layout_constraintBottom_toTopOf="@id/pickupAddress1"
+                    app:layout_constraintEnd_toStartOf="@id/startPickupAt1"
+                    app:layout_constraintHorizontal_bias="0"/>
+
+                <TextView
+                    android:id="@+id/pickupAddress1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintHorizontal_chainStyle="spread_inside"
+                    app:layout_constraintStart_toStartOf="@id/pickupLocation1"
+                    app:layout_constraintTop_toBottomOf="@id/pickupLocation1"
+                    app:layout_constraintEnd_toStartOf="@id/startPickupAt1"/>
+
+                <TextView
+                    android:id="@+id/startPickupAt1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="@id/pickupAddress1"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/deliveryInfo1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
+                android:background="@color/grey">
+
+                <ImageView
+                    android:id="@+id/deliveryIcon1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <TextView
+                    android:id="@+id/deliveryLocation1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    app:layout_constraintStart_toEndOf="@id/deliveryIcon1"
+                    app:layout_constraintTop_toTopOf="@id/deliveryIcon1"
+                    app:layout_constraintBottom_toTopOf="@id/deliveryAddress1"
+                    app:layout_constraintEnd_toStartOf="@id/endPickupAt1"
+                    app:layout_constraintHorizontal_bias="0"/>
+
+                <TextView
+                    android:id="@+id/deliveryAddress1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintHorizontal_chainStyle="spread_inside"
+                    app:layout_constraintStart_toStartOf="@id/deliveryLocation1"
+                    app:layout_constraintTop_toBottomOf="@id/deliveryLocation1"
+                    app:layout_constraintEnd_toStartOf="@id/endPickupAt1"/>
+
+                <TextView
+                    android:id="@+id/endPickupAt1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="@id/deliveryAddress1"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="8dp"
+        android:layout_marginHorizontal="16dp"
+        android:id="@+id/loading_card_2"
+        app:cardElevation="8dp"
+        app:cardCornerRadius="12dp"
+        app:cardBackgroundColor="@color/white">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/grey">
+
+                <TextView
+                    android:id="@+id/customerName2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.075"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toTopOf="@+id/docNo2"
+                    app:layout_constraintHorizontal_bias="0"/>
+
+                <TextView
+                    android:id="@+id/docNo2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@id/customerName2"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <TextView
+                    android:id="@+id/docDate2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/darkGrey"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@id/customerName2"
+                    app:layout_constraintStart_toEndOf="@id/docNo2"/>
+
+                <TextView
+                    android:id="@+id/jobOrderStatus2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:width="100dp"
+                    android:textAlignment="center"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp"
+                    android:textSize="12sp"
+                    android:gravity="center"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/customerName2"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginVertical="8dp"
+                app:dividerColor="@color/grey"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/pickupInfo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/grey">
+
+                <ImageView
+                    android:id="@+id/pickupIcon2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <TextView
+                    android:id="@+id/pickupLocation2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    app:layout_constraintStart_toEndOf="@id/pickupIcon2"
+                    app:layout_constraintTop_toTopOf="@id/pickupIcon2"
+                    app:layout_constraintBottom_toTopOf="@id/pickupAddress2"
+                    app:layout_constraintEnd_toStartOf="@+id/startPickupAt2"
+                    app:layout_constraintHorizontal_bias="0"/>
+
+                <TextView
+                    android:id="@+id/pickupAddress2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintHorizontal_chainStyle="spread_inside"
+                    app:layout_constraintStart_toStartOf="@id/pickupLocation2"
+                    app:layout_constraintTop_toBottomOf="@id/pickupLocation2"
+                    app:layout_constraintEnd_toStartOf="@+id/startPickupAt2"/>
+
+                <TextView
+                    android:id="@+id/startPickupAt2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="@id/pickupAddress2"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/deliveryInfo2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
+                android:background="@color/grey">
+
+                <ImageView
+                    android:id="@+id/deliveryIcon2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <TextView
+                    android:id="@+id/deliveryLocation2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    app:layout_constraintStart_toEndOf="@id/deliveryIcon2"
+                    app:layout_constraintTop_toTopOf="@id/deliveryIcon2"
+                    app:layout_constraintBottom_toTopOf="@id/deliveryAddress2"
+                    app:layout_constraintEnd_toStartOf="@+id/endPickupAt2"
+                    app:layout_constraintHorizontal_bias="0"/>
+
+                <TextView
+                    android:id="@+id/deliveryAddress2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintHorizontal_chainStyle="spread_inside"
+                    app:layout_constraintStart_toStartOf="@id/deliveryLocation2"
+                    app:layout_constraintTop_toBottomOf="@id/deliveryLocation2"
+                    app:layout_constraintEnd_toStartOf="@+id/endPickupAt2"/>
+
+                <TextView
+                    android:id="@+id/endPickupAt2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="@id/deliveryAddress2"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="8dp"
+        android:layout_marginHorizontal="16dp"
+        android:id="@+id/loading_card_3"
+        app:cardElevation="8dp"
+        app:cardCornerRadius="12dp"
+        app:cardBackgroundColor="@color/white">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/grey">
+
+                <TextView
+                    android:id="@+id/customerName3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.075"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toTopOf="@id/docNo3"
+                    app:layout_constraintHorizontal_bias="0"/>
+
+                <TextView
+                    android:id="@+id/docNo3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@id/customerName3"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <TextView
+                    android:id="@+id/docDate3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/darkGrey"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@id/customerName3"
+                    app:layout_constraintStart_toEndOf="@id/docNo3"/>
+
+                <TextView
+                    android:id="@+id/jobOrderStatus3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:width="100dp"
+                    android:textAlignment="center"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp"
+                    android:textSize="12sp"
+                    android:gravity="center"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/customerName3"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginVertical="8dp"
+                app:dividerColor="@color/grey"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/pickupInfo3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/grey">
+
+                <ImageView
+                    android:id="@+id/pickupIcon3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <TextView
+                    android:id="@+id/pickupLocation3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    app:layout_constraintStart_toEndOf="@id/pickupIcon3"
+                    app:layout_constraintTop_toTopOf="@id/pickupIcon3"
+                    app:layout_constraintBottom_toTopOf="@id/pickupAddress3"
+                    app:layout_constraintEnd_toStartOf="@+id/startPickupAt3"
+                    app:layout_constraintHorizontal_bias="0"/>
+
+                <TextView
+                    android:id="@+id/pickupAddress3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintHorizontal_chainStyle="spread_inside"
+                    app:layout_constraintStart_toStartOf="@id/pickupLocation3"
+                    app:layout_constraintTop_toBottomOf="@id/pickupLocation3"
+                    app:layout_constraintEnd_toStartOf="@+id/startPickupAt3"/>
+
+                <TextView
+                    android:id="@+id/startPickupAt3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="@id/pickupAddress3"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/deliveryInfo3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
+                android:background="@color/grey">
+
+                <ImageView
+                    android:id="@+id/deliveryIcon3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <TextView
+                    android:id="@+id/deliveryLocation3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    app:layout_constraintStart_toEndOf="@id/deliveryIcon3"
+                    app:layout_constraintTop_toTopOf="@id/deliveryIcon3"
+                    app:layout_constraintBottom_toTopOf="@id/deliveryAddress3"
+                    app:layout_constraintEnd_toStartOf="@+id/endPickupAt3"
+                    app:layout_constraintHorizontal_bias="0"/>
+
+                <TextView
+                    android:id="@+id/deliveryAddress3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintHorizontal_chainStyle="spread_inside"
+                    app:layout_constraintStart_toStartOf="@id/deliveryLocation3"
+                    app:layout_constraintTop_toBottomOf="@id/deliveryLocation3"
+                    app:layout_constraintEnd_toStartOf="@+id/endPickupAt3"/>
+
+                <TextView
+                    android:id="@+id/endPickupAt3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="@id/deliveryAddress3"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</LinearLayout>

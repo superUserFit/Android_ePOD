@@ -1,63 +1,95 @@
 package com.example.epod.job_management.job_order.view.adapter;
 
-package com.example.epod.job_management.job_order.adapter;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.epod.R;
+import com.example.epod.job_management.job_order.JobOrderDetailsActivity;
+import com.example.epod.job_management.job_order.interfaces.JobOrderAdapterInterface;
 import com.example.epod.job_management.job_order.view.model.JobOrder;
+import com.example.epod.job_management.job_order.view.holder.JobOrderViewHolder;
+import com.example.epod.job_management.job_order.view.model.JobOrderHasDetails;
 
 import java.util.List;
 
-public class JobOrderAdapter extends RecyclerView.Adapter<JobOrderAdapter.JobOrderViewHolder> {
-
+public class JobOrderAdapter extends RecyclerView.Adapter<JobOrderViewHolder> implements JobOrderAdapterInterface {
     private List<JobOrder> jobOrderList;
+    private Context context;
 
-    public JobOrderAdapter(List<JobOrder> jobOrderList) {
+    public JobOrderAdapter(List<JobOrder> jobOrderList, Context context) {
         this.jobOrderList = jobOrderList;
+        this.context = context;
+    }
+
+    @Override
+    public void setJobOrders(List<JobOrder> jobOrders) {
+        this.jobOrderList = jobOrders;
+        notifyDataSetChanged();
+    }
+
+    public void createJobOrder(JobOrder jobOrder) {
+        this.jobOrderList.add(jobOrder);
+        notifyItemInserted(this.jobOrderList.size() - 1);
+    }
+
+    public void removeJobOrder(int position) {
+        if (position >= 0 && position < this.jobOrderList.size()) {
+            this.jobOrderList.remove(position);
+            notifyItemRemoved(position);
+        }
+    }
+
+    public void updateJobOrder(int position, JobOrder jobOrder) {
+        if (position >= 0 && position < this.jobOrderList.size()) {
+            this.jobOrderList.set(position, jobOrder);
+            notifyItemChanged(position);
+        }
     }
 
     @NonNull
     @Override
     public JobOrderViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_holder_job_management_card, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.job_order_view_holder_card, parent, false);
         return new JobOrderViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull JobOrderViewHolder holder, int position) {
         JobOrder jobOrder = jobOrderList.get(position);
-        holder.titleTextView.setText(jobOrder.getTitle());
-        holder.descriptionTextView.setText(jobOrder.getDescription());
-        holder.imageView.setImageResource(jobOrder.getImageResId());
+        holder.bind(jobOrder);
+
+        if (jobOrder.getUUID() != null) {
+            holder.itemView.setOnClickListener(view -> {
+                Intent intent = new Intent(context, JobOrderDetailsActivity.class);
+                intent.putExtra("jobOrderId", jobOrder.getJobOrder());
+                context.startActivity(intent);
+            });
+        } else {
+            Toast.makeText(context, "UUID is null for this job order", Toast.LENGTH_SHORT).show();
+        }
     }
+
 
     @Override
     public int getItemCount() {
         return jobOrderList.size();
     }
 
-    static class JobOrderViewHolder extends RecyclerView.ViewHolder {
-        CardView cardView;
-        ImageView imageView;
-        TextView titleTextView;
-        TextView descriptionTextView;
+    @Override
+    public void setJobOrder(JobOrder jobOrder) {
+        throw new UnsupportedOperationException("Not supported in JobOrderAdapter");
+    }
 
-        public JobOrderViewHolder(@NonNull View itemView) {
-            super(itemView);
-            cardView = itemView.findViewById(R.id.card_view);
-            imageView = itemView.findViewById(R.id.card_image);
-            titleTextView = itemView.findViewById(R.id.card_title);
-            descriptionTextView = itemView.findViewById(R.id.card_description);
-        }
+    @Override
+    public void setJobOrderHasDetails(List<JobOrderHasDetails> jobOrderHasDetails) {
+        throw new UnsupportedOperationException("Not supported in JobOrderAdapter");
     }
 }
-

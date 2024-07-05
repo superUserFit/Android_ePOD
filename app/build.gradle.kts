@@ -39,7 +39,10 @@ android {
     sourceSets {
         getByName("main") {
             res {
-                srcDirs("src\\main\\res")
+                srcDirs(
+                    "src\\main\\res",
+                    "src\\main\\res\\anim",
+                )
             }
         }
     }
@@ -51,6 +54,11 @@ dependencies {
     implementation("com.google.android.material:material:1.12.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.activity:activity:1.8.0")
+    implementation ("com.squareup.retrofit2:retrofit:2.11.0")
+    implementation ("com.squareup.retrofit2:converter-gson:2.11.0")
+    implementation ("com.squareup.okhttp3:okhttp:4.9.3")
+    implementation ("com.squareup.okhttp3:logging-interceptor:4.9.3")
+    implementation ("com.facebook.shimmer:shimmer:0.5.0")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")

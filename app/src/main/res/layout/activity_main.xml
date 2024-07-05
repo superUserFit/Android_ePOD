@@ -14,7 +14,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
     </FrameLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -24,10 +23,17 @@
         android:layout_marginStart="1dp"
         android:layout_marginEnd="1dp"
         android:layout_marginBottom="1dp"
-        android:background="@color/orange"
+        android:background="@color/grey"
         app:menu="@menu/bottom_nav_menu"
+        app:itemBackground="@drawable/bottom_nav_item_background"
+        app:itemIconTint="@color/black"
+        app:itemActiveIndicatorStyle="@color/black"
+        app:itemPaddingBottom="8dp"
+        app:itemIconSize="28dp"
+        app:itemPaddingTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

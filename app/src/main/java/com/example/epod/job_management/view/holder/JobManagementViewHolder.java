@@ -1,4 +1,4 @@
-package com.example.epod.job_management.view.view_holder;
+package com.example.epod.job_management.view.holder;
 
 import android.view.View;
 import android.widget.ImageView;

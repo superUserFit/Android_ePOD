@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginVertical="8dp"
+    android:layout_marginHorizontal="8dp"
+    android:orientation="vertical">
+
+    <androidx.cardview.widget.CardView
+        android:onClick="expandItemDetails"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="20dp"
+        app:cardBackgroundColor="@color/orangeAccent"
+        app:cardElevation="4dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/itemTypeTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Stock 1"
+                android:textStyle="bold"
+                android:textColor="@color/deepOrange"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/expandIcon"/>
+
+            <ImageButton
+                android:id="@+id/expandIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="Expand item"
+                android:src="@drawable/icon_expand_less"
+                android:background="@android:color/transparent"
+                app:tint="@color/deepOrange"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/itemTypeTitle"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/itemDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintTop_toBottomOf="@id/itemTypeTitle"
+                android:visibility="gone">
+
+                <com.google.android.material.divider.MaterialDivider
+                    android:layout_width="match_parent"
+                    android:layout_height="2px"
+                    android:layout_marginTop="4dp"
+                    app:dividerColor="@color/darkGrey"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <TextView
+                    android:id="@+id/titleItemCode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:width="95dp"
+                    android:text="Code"
+                    android:textColor="@color/deepOrange"
+                    android:textStyle="bold"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <TextView
+                    android:id="@+id/itemCode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Item code"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/titleItemCode"/>
+
+                <com.google.android.material.divider.MaterialDivider
+                    android:layout_width="match_parent"
+                    android:layout_height="2px"
+                    android:layout_marginTop="4dp"
+                    app:dividerColor="@color/darkGrey"
+                    app:layout_constraintTop_toBottomOf="@id/titleItemCode"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <TextView
+                    android:id="@+id/titleItemType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:width="95dp"
+                    android:text="Item type"
+                    android:textStyle="bold"
+                    android:textColor="@color/deepOrange"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/titleItemCode"/>
+
+                <TextView
+                    android:id="@+id/itemType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Item type"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@id/titleItemCode"
+                    app:layout_constraintStart_toEndOf="@id/titleItemType"/>
+
+                <com.google.android.material.divider.MaterialDivider
+                    android:id="@+id/dividerItemType"
+                    android:layout_width="match_parent"
+                    android:layout_height="2px"
+                    android:layout_marginTop="4dp"
+                    app:dividerColor="@color/darkGrey"
+                    app:layout_constraintTop_toBottomOf="@id/titleItemType"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <TextView
+                    android:id="@+id/titleDescription"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:width="95dp"
+                    android:text="Description"
+                    android:textColor="@color/deepOrange"
+                    android:textStyle="bold"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@id/dividerItemType"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <TextView
+                    android:id="@+id/description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Description"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="8dp"
+                    android:maxLines="3"
+                    app:layout_constraintStart_toEndOf="@id/titleDescription"
+                    app:layout_constraintTop_toBottomOf="@id/dividerItemType"/>
+
+                <com.google.android.material.divider.MaterialDivider
+                    android:id="@+id/dividerDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="2px"
+                    android:layout_marginTop="4dp"
+                    app:dividerColor="@color/darkGrey"
+                    app:layout_constraintTop_toBottomOf="@id/titleDescription"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <TextView
+                    android:id="@+id/titleQuantity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:width="95dp"
+                    android:text="Quantity"
+                    android:textColor="@color/deepOrange"
+                    android:textStyle="bold"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/dividerDescription"/>
+
+                <TextView
+                    android:id="@+id/quantity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="100"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintStart_toEndOf="@id/titleQuantity"
+                    app:layout_constraintTop_toBottomOf="@id/dividerDescription"/>
+
+                <com.google.android.material.divider.MaterialDivider
+                    android:id="@+id/dividerQuantity"
+                    android:layout_width="match_parent"
+                    android:layout_height="3px"
+                    android:layout_marginTop="4dp"
+                    app:dividerColor="@color/darkGrey"
+                    app:layout_constraintTop_toBottomOf="@id/titleQuantity"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <TextView
+                    android:id="@+id/titleitemUOM"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:width="95dp"
+                    android:text="UOM"
+                    android:textColor="@color/deepOrange"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/quantity"/>
+
+                <TextView
+                    android:id="@+id/itemUOM"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="UOM"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="4dp"
+                    app:layout_constraintStart_toEndOf="@id/titleitemUOM"
+                    app:layout_constraintTop_toTopOf="@id/dividerQuantity"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</LinearLayout>

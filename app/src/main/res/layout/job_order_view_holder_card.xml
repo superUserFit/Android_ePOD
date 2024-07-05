@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginVertical="8dp"
+    android:layout_marginHorizontal="16dp"
+    app:cardElevation="8dp"
+    app:cardCornerRadius="12dp"
+    app:cardBackgroundColor="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/customerName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Customer name"
+                android:textStyle="bold"
+                android:textColor="@color/orange"
+                android:letterSpacing="0.075"
+                android:maxLines="1"
+                android:ellipsize="end"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/docNo"
+                app:layout_constraintHorizontal_bias="0"/>
+
+            <TextView
+                android:id="@+id/docNo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Document number"
+                android:textStyle="bold"
+                android:textColor="@color/darkGrey"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@id/customerName"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <TextView
+                android:id="@+id/docDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Document Date"
+                android:textColor="@color/darkGrey"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@id/customerName"
+                app:layout_constraintStart_toEndOf="@id/docNo"/>
+
+            <TextView
+                android:id="@+id/jobOrderStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Job Order Status"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:background="@drawable/ui_rounded_32"
+                android:width="100dp"
+                android:textAlignment="center"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                android:textSize="12sp"
+                android:gravity="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/customerName"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginVertical="8dp"
+            app:dividerColor="@color/darkGrey"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/pickupInfo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/pickupIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_location_on"
+                    app:tint="@color/red"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <TextView
+                    android:id="@+id/pickupLocation"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Pickup Location"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_marginStart="8dp"
+                    app:layout_constraintStart_toEndOf="@id/pickupIcon"
+                    app:layout_constraintTop_toTopOf="@id/pickupIcon"
+                    app:layout_constraintBottom_toTopOf="@id/pickupAddress"
+                    app:layout_constraintEnd_toStartOf="@+id/startPickupAt"
+                    app:layout_constraintHorizontal_bias="0"/>
+
+                <TextView
+                    android:id="@+id/pickupAddress"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Pickup Address"
+                    android:textColor="@color/darkGrey"
+                    app:layout_constraintHorizontal_chainStyle="spread_inside"
+                    app:layout_constraintStart_toStartOf="@id/pickupLocation"
+                    app:layout_constraintTop_toBottomOf="@id/pickupLocation"
+                    app:layout_constraintEnd_toStartOf="@+id/startPickupAt"/>
+
+                <TextView
+                    android:id="@+id/startPickupAt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Start Pickup At"
+                    android:paddingStart="24dp"
+                    android:textColor="@color/darkGrey"
+                    app:layout_constraintTop_toTopOf="@id/pickupAddress"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/deliveryInfo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp">
+
+                <ImageView
+                    android:id="@+id/deliveryIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_location_searching"
+                    app:tint="@color/darkGreen"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <TextView
+                    android:id="@+id/deliveryLocation"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Delivery Location"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_marginStart="8dp"
+                    app:layout_constraintStart_toEndOf="@id/deliveryIcon"
+                    app:layout_constraintTop_toTopOf="@id/deliveryIcon"
+                    app:layout_constraintBottom_toTopOf="@id/deliveryAddress"
+                    app:layout_constraintEnd_toStartOf="@+id/endPickupAt"
+                    app:layout_constraintHorizontal_bias="0"/>
+
+                <TextView
+                    android:id="@+id/deliveryAddress"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Delivery Address"
+                    android:textColor="@color/darkGrey"
+                    app:layout_constraintHorizontal_chainStyle="spread_inside"
+                    app:layout_constraintStart_toStartOf="@id/deliveryLocation"
+                    app:layout_constraintTop_toBottomOf="@id/deliveryLocation"
+                    app:layout_constraintEnd_toStartOf="@+id/endPickupAt"/>
+
+                <TextView
+                    android:id="@+id/endPickupAt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="End Pickup At"
+                    android:paddingStart="24dp"
+                    android:textColor="@color/darkGrey"
+                    app:layout_constraintTop_toTopOf="@id/deliveryAddress"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

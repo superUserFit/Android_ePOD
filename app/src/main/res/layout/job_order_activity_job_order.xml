@@ -1,10 +1,128 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".job_management.job_order.JobOrderActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/gradient" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="8dp"
+            android:layout_marginHorizontal="16dp">
+
+            <LinearLayout
+                android:id="@+id/search_bar_container"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@drawable/ui_search_bar"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/alarm_button"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/icon_search"
+                    android:padding="8dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="Search" />
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/searchBar"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingStart="4dp"
+                    android:paddingEnd="4dp"
+                    android:paddingVertical="12dp"
+                    android:hint="Search..."
+                    android:textColorHint="@color/darkGrey"
+                    android:textColor="@color/black"
+                    android:layout_gravity="center_vertical"
+                    android:background="@android:color/transparent"
+                    android:maxLines="1"
+                    android:inputType="text" />
+            </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/alarm_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/icon_alarm"
+                android:background="@drawable/ui_circular_button"
+                android:padding="12dp"
+                android:contentDescription="Sort"
+                app:circularflow_radiusInDP="100dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/search_bar_container"
+                app:layout_constraintBottom_toBottomOf="@+id/search_bar_container" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView_jobOrder_tabButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/search_bar_container"/>
+
+        <ViewSwitcher
+            android:id="@+id/viewSwitcher"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <!-- Shimmer Loading Layout -->
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/job_order_loading"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="visible"
+                app:shimmer_auto_start="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <include layout="@layout/job_order_layout_job_order_loading"/>
+                </LinearLayout>
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+            <!-- Job Order Layout -->
+            <LinearLayout
+                android:id="@+id/jobOrderLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView_jobOrder"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_constraintTop_toBottomOf="@id/recyclerView_jobOrder_tabButton"/>
+            </LinearLayout>
+        </ViewSwitcher>
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

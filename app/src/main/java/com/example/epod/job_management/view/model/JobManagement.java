@@ -1,19 +1,11 @@
 package com.example.epod.job_management.view.model;
 
 public class JobManagement {
-    int icon;
     String cardTitle;
+    int icon;
 
-    public JobManagement(int icon, String cardTitle) {
-        this.icon = icon;
+    public JobManagement(String cardTitle, int icon) {
         this.cardTitle = cardTitle;
-    }
-
-    public int getIcon() {
-        return icon;
-    }
-
-    public void setIcon(int icon) {
         this.icon = icon;
     }
 
@@ -23,5 +15,13 @@ public class JobManagement {
 
     public void setCardTitle(String cardTitle) {
         this.cardTitle = cardTitle;
+    }
+
+    public int getIcon() {
+        return icon;
+    }
+
+    public void setIcon(int icon) {
+        this.icon = icon;
     }
 }
