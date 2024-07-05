@@ -5,7 +5,7 @@ public class JobOrder {
     private String pickupLocation, pickupAddress, deliveryLocation, deliveryAddress;
     private String pickupContact, pickupContactNo, deliveryContact, deliveryContactNo;
     private String startPickupAtFormat, endPickupAtFormat;
-    private String tripType, openTask;
+    private String description, deadline, tripType, openTask;
 
     public JobOrder(
             String UUID, String docNo, String docDateFormat, String jobOrder,
@@ -13,7 +13,7 @@ public class JobOrder {
             String pickupAddress, String deliveryLocation, String deliveryAddress,
             String pickupContact, String pickupContactNo, String deliveryContact,
             String deliveryContactNo, String startPickupAtFormat, String endPickupAtFormat,
-            String tripType, String openTask
+            String description, String deadline, String tripType, String openTask
     ) {
         this.UUID = UUID;
         this.docNo = docNo;
@@ -31,6 +31,8 @@ public class JobOrder {
         this.deliveryContactNo = deliveryContactNo;
         this.startPickupAtFormat = startPickupAtFormat;
         this.endPickupAtFormat = endPickupAtFormat;
+        this.description = description;
+        this.deadline = deadline;
         this.tripType = tripType;
         this.openTask = openTask;
     }
@@ -157,6 +159,22 @@ public class JobOrder {
 
     public void setEndPickupAt(String endPickupAtFormat) {
         this.endPickupAtFormat = endPickupAtFormat;
+    }
+
+    public String getDeadline() {
+        return deadline;
+    }
+
+    public void setDeadline(String deadline) {
+        this.deadline = deadline;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getTripType() {

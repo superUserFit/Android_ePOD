@@ -43,7 +43,10 @@ public class JobOrderDetailsAdapter extends RecyclerView.Adapter<JobOrderDetails
 
     @Override
     public void onBindViewHolder(@NonNull JobOrderDetailsViewHolder holder, int position) {
-
+        holder.docNo.setText(jobOrder.getDocNo() != null ? jobOrder.getDocNo() : "");
+        holder.docDate.setText(jobOrder.getDocDate() != null ? jobOrder.getDocDate() : "");
+        holder.deadline.setText(jobOrder.getDeadline() != null ? jobOrder.getDeadline() : "");
+        holder.description.setText(jobOrder);
     }
 
     @Override
