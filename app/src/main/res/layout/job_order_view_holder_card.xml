@@ -127,7 +127,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Start Pickup At"
-                    android:paddingStart="24dp"
+                    android:paddingStart="30dp"
                     android:textColor="@color/darkGrey"
                     app:layout_constraintTop_toTopOf="@id/pickupAddress"
                     app:layout_constraintEnd_toEndOf="parent"/>
@@ -178,7 +178,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="End Pickup At"
-                    android:paddingStart="24dp"
+                    android:paddingStart="30dp"
                     android:textColor="@color/darkGrey"
                     app:layout_constraintTop_toTopOf="@id/deliveryAddress"
                     app:layout_constraintEnd_toEndOf="parent"/>

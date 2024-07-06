@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
 import androidx.activity.OnBackPressedCallback;
@@ -19,14 +20,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.epod.R;
 import com.example.epod.job_management.job_order.controller.DataLoadCallback;
 import com.example.epod.job_management.job_order.controller.JobOrderController;
-import com.example.epod.job_management.job_order.view.adapter.JobOrderDetailsAdapter;
+import com.example.epod.job_management.job_order.view.adapter.JobOrderHasDetailsAdapter;
 import com.example.epod.job_management.job_order.view.model.JobOrder;
 import com.facebook.shimmer.ShimmerFrameLayout;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class JobOrderDetailsActivity extends AppCompatActivity implements DataLoadCallback {
-    private JobOrderDetailsAdapter jobOrderDetailsAdapter;
+    private TextView docNo, docDate, deadline, tripType, description, customerName, attentionName;
+    private TextView phoneNo, address, containerNo, containerSize, containerType, deliveryAddress;
+
+
+    private JobOrderHasDetailsAdapter jobOrderHasDetailsAdapter;
     private JobOrderController jobOrderController;
     private LinearLayout itemDetailsLayout;
     private ViewSwitcher viewSwitcher;
@@ -36,6 +42,7 @@ public class JobOrderDetailsActivity extends AppCompatActivity implements DataLo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.job_order_activity_job_order_details);
+        setLayout();
 
         // Set AppBar
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -72,19 +79,24 @@ public class JobOrderDetailsActivity extends AppCompatActivity implements DataLo
         }
 
         String jobOrderId = getIntent().getExtras().getString("jobOrderId");
-        jobOrderDetailsAdapter = new JobOrderDetailsAdapter(this);
-        jobOrderController = new JobOrderController(jobOrderDetailsAdapter, this);
+        jobOrderHasDetailsAdapter = new JobOrderHasDetailsAdapter(new ArrayList<>(), this);
+        jobOrderController = new JobOrderController(jobOrderHasDetailsAdapter, this);
         jobOrderController.getUpdateJobOrder(jobOrderId);
 
         //  Set RecyclerView for job order details
+        jobOrderController.getUpdateJobOrderHasDetails(jobOrderId);
         itemDetailsLayout = findViewById(R.id.itemDetails);
     }
 
     @Override
     public void onLoad(JobOrder jobOrder) {
         runOnUiThread(() -> {
-            jobOrderDetailsAdapter.setJobOrder(jobOrder);
-            Log.e("Response: ", "Loading Job order");
+            docNo.setText(jobOrder.getDocNo() != null ? jobOrder.getDocNo() : "");
+            docDate.setText(jobOrder.getDocDate() != null ? jobOrder.getDocDate() : "");
+            deadline.setText(jobOrder.getDeadline() != null ? jobOrder.getDeadline() : "");
+            tripType.setText(jobOrder.getTripType() != null ? jobOrder.getTripType() : "");
+            description.setText(jobOrder.getDescription() != null ? jobOrder.getDescription() : "");
+            Log.e("Response: ", "Loading Job order: " + jobOrder.getDocNo());
         });
     }
 
@@ -108,5 +120,13 @@ public class JobOrderDetailsActivity extends AppCompatActivity implements DataLo
     @Override
     public void onLoad(List<JobOrder> jobOrders) {
 
+    }
+
+    private void setLayout() {
+        docNo = findViewById(R.id.docNo);
+        docDate = findViewById(R.id.docDate);
+        deadline = findViewById(R.id.deadline);
+        tripType = findViewById(R.id.tripType);
+        description = findViewById(R.id.description);
     }
 }

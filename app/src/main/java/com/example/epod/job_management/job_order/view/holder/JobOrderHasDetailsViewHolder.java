@@ -8,11 +8,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.epod.R;
 
-public class JobOrderDetailsViewHolder extends RecyclerView.ViewHolder {
+public class JobOrderHasDetailsViewHolder extends RecyclerView.ViewHolder {
     public TextView docNo, docDate, deadline, tripType, description;
     public TextView customerName, attentionName, phoneNo, address;
 
-    public JobOrderDetailsViewHolder(@NonNull View itemView) {
+    public JobOrderHasDetailsViewHolder(@NonNull View itemView) {
         super(itemView);
         docNo = itemView.findViewById(R.id.docNo);
         docDate = itemView.findViewById(R.id.docDate);

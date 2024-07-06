@@ -10,17 +10,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.epod.R;
 import com.example.epod.job_management.job_order.interfaces.JobOrderAdapterInterface;
-import com.example.epod.job_management.job_order.view.holder.ItemDetailsViewHolder;
+import com.example.epod.job_management.job_order.view.holder.JobOrderHasDetailsViewHolder;
 import com.example.epod.job_management.job_order.view.model.JobOrder;
 import com.example.epod.job_management.job_order.view.model.JobOrderHasDetails;
 
 import java.util.List;
 
-public class ItemDetailsAdapter extends RecyclerView.Adapter<ItemDetailsViewHolder> implements JobOrderAdapterInterface {
+public class JobOrderHasDetailsAdapter extends RecyclerView.Adapter<JobOrderHasDetailsViewHolder> implements JobOrderAdapterInterface {
     private List<JobOrderHasDetails> jobOrderHasDetails;
     private Context context;
 
-    public ItemDetailsAdapter(List<JobOrderHasDetails> jobOrderHasDetails, Context context) {
+    public  JobOrderHasDetailsAdapter(List<JobOrderHasDetails> jobOrderHasDetails, Context context) {
         this.jobOrderHasDetails = jobOrderHasDetails;
         this.context = context;
     }
@@ -32,19 +32,14 @@ public class ItemDetailsAdapter extends RecyclerView.Adapter<ItemDetailsViewHold
 
     @NonNull
     @Override
-    public ItemDetailsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public JobOrderHasDetailsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.job_order_layout_item_details, parent, false);
-        return new ItemDetailsViewHolder(view);
+        return new JobOrderHasDetailsViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ItemDetailsViewHolder holder, int position) {
-        JobOrderHasDetails itemDetails = jobOrderHasDetails.get(position);
-        holder.itemCode.setText(itemDetails.getItemCode());
-        holder.itemType.setText(itemDetails.getItemType());
-        holder.description.setText(itemDetails.getDescription());
-        holder.quantity.setText(itemDetails.getDescription());
-        holder.itemUOM.setText(itemDetails.getItemUOM());
+    public void onBindViewHolder(@NonNull JobOrderHasDetailsViewHolder holder, int position) {
+
     }
 
     @Override
@@ -54,11 +49,11 @@ public class ItemDetailsAdapter extends RecyclerView.Adapter<ItemDetailsViewHold
 
     @Override
     public void setJobOrders(List<JobOrder> jobOrders) {
-        throw new UnsupportedOperationException("Not supported in ItemDetailsAdapter");
+
     }
 
     @Override
     public void setJobOrder(JobOrder jobOrder) {
-        throw new UnsupportedOperationException("Not supported in ItemDetailsAdapter");
+
     }
 }

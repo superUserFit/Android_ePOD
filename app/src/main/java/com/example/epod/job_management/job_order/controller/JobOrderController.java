@@ -57,7 +57,7 @@ public class JobOrderController {
                     JobOrderResponse jobOrderResponse = response.body();
                     if(jobOrderResponse != null) {
                         JobOrder jobOrder = jobOrderResponse.getJobOrder();
-                        jobOrderAdapter.setJobOrder(jobOrder);
+                        dataLoadCallback.onLoad(jobOrder);
                     }
                 }
             }

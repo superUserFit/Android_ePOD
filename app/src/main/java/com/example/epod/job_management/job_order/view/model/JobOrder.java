@@ -5,7 +5,8 @@ public class JobOrder {
     private String pickupLocation, pickupAddress, deliveryLocation, deliveryAddress;
     private String pickupContact, pickupContactNo, deliveryContact, deliveryContactNo;
     private String startPickupAtFormat, endPickupAtFormat;
-    private String description, deadline, tripType, openTask;
+    private String description, deadlineFormat, tripType, openTask, attentionName, phoneNo;
+    private String address, containerNo, containerSize, containerType;
 
     public JobOrder(
             String UUID, String docNo, String docDateFormat, String jobOrder,
@@ -13,7 +14,9 @@ public class JobOrder {
             String pickupAddress, String deliveryLocation, String deliveryAddress,
             String pickupContact, String pickupContactNo, String deliveryContact,
             String deliveryContactNo, String startPickupAtFormat, String endPickupAtFormat,
-            String description, String deadline, String tripType, String openTask
+            String description, String deadlineFormat, String tripType, String openTask,
+            String attentionName, String phoneNo, String address, String containerNo,
+            String containerSize, String containerType
     ) {
         this.UUID = UUID;
         this.docNo = docNo;
@@ -32,9 +35,15 @@ public class JobOrder {
         this.startPickupAtFormat = startPickupAtFormat;
         this.endPickupAtFormat = endPickupAtFormat;
         this.description = description;
-        this.deadline = deadline;
+        this.deadlineFormat = deadlineFormat;
         this.tripType = tripType;
         this.openTask = openTask;
+        this.attentionName = attentionName;
+        this.phoneNo = phoneNo;
+        this.address = address;
+        this.containerNo = containerNo;
+        this.containerSize = containerSize;
+        this.containerType = containerType;
     }
 
     public String getUUID() {
@@ -162,11 +171,11 @@ public class JobOrder {
     }
 
     public String getDeadline() {
-        return deadline;
+        return deadlineFormat;
     }
 
     public void setDeadline(String deadline) {
-        this.deadline = deadline;
+        this.deadlineFormat = deadlineFormat;
     }
 
     public String getDescription() {
@@ -191,5 +200,53 @@ public class JobOrder {
 
     public void setOpenTask(String openTask) {
         this.openTask = openTask;
+    }
+
+    public String getAttentionName() {
+        return attentionName;
+    }
+
+    public void setAttentionName(String attentionName) {
+        this.attentionName = attentionName;
+    }
+
+    public String getPhoneNo() {
+        return phoneNo;
+    }
+
+    public void setPhoneNo(String phoneNo) {
+        this.phoneNo = phoneNo;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getContainerNo() {
+        return containerNo;
+    }
+
+    public void setContainerNo(String containerNo) {
+        this.containerNo = containerNo;
+    }
+
+    public String getContainerSize() {
+        return containerSize;
+    }
+
+    public void setContainerSize(String containerSize) {
+        this.containerSize = containerSize;
+    }
+
+    public String getContainerType() {
+        return containerType;
+    }
+
+    public void setContainerType(String containerType) {
+        this.containerType = containerType;
     }
 }
