@@ -3,7 +3,6 @@ package com.example.epod.job_management.job_order;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.ViewSwitcher;
@@ -12,6 +11,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.epod.job_management.job_order.view.model.JobOrderHasDetails;
 import com.facebook.shimmer.ShimmerFrameLayout;
 
 import com.example.epod.R;
@@ -21,18 +22,18 @@ import com.example.epod.job_management.job_order.view.adapter.TabButtonAdapter;
 import com.example.epod.job_management.job_order.view.holder.TabButtonViewHolder;
 import com.example.epod.job_management.job_order.view.model.JobOrder;
 import com.example.epod.utils.Helper;
-import com.example.epod.job_management.job_order.controller.DataLoadCallback;
+import com.example.epod.job_management.job_order.controller.JobOrderCallback;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class JobOrderActivity extends AppCompatActivity implements DataLoadCallback {
+public class JobOrderActivity extends AppCompatActivity implements JobOrderCallback {
     private JobOrderAdapter jobOrderAdapter;
     private JobOrderController jobOrderController;
     private ViewSwitcher viewSwitcher;
     private ShimmerFrameLayout loadingLayout;
     private EditText searchTextField;
-    private List<JobOrder> allJobOrders = new ArrayList<>();
+    private List<JobOrder> jobOrders = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,12 +80,12 @@ public class JobOrderActivity extends AppCompatActivity implements DataLoadCallb
 
         jobOrderAdapter = new JobOrderAdapter(new ArrayList<>(), this);
         jobOrderController = new JobOrderController(jobOrderAdapter, this);
-        jobOrderController.getAllJobOrderHasAssignment("All");
+        jobOrderController.getJobOrderByUser();
 
         // Set RecyclerView for job orders
-        RecyclerView recyclerViewJobOrder = findViewById(R.id.recyclerView_jobOrder);
-        recyclerViewJobOrder.setAdapter(jobOrderAdapter);
-        recyclerViewJobOrder.setLayoutManager(new LinearLayoutManager(this));
+        RecyclerView recyclerView_jobOrder = findViewById(R.id.recyclerView_jobOrder);
+        recyclerView_jobOrder.setAdapter(jobOrderAdapter);
+        recyclerView_jobOrder.setLayoutManager(new LinearLayoutManager(this));
 
         //  For search feature
         searchTextField = findViewById(R.id.searchBar);
@@ -108,18 +109,13 @@ public class JobOrderActivity extends AppCompatActivity implements DataLoadCallb
     }
 
     @Override
-    public void onLoad(List<JobOrder> jobOrders) {
+    public void onLoadJobOrders(List<JobOrder> jobOrders) {
         runOnUiThread(() -> {
             loadingLayout.stopShimmer();
             viewSwitcher.setDisplayedChild(1);
-            allJobOrders = jobOrders;
-            jobOrderAdapter.setJobOrders(allJobOrders);
+            this.jobOrders = jobOrders;
+            jobOrderAdapter.setJobOrders(this.jobOrders);
         });
-    }
-
-    @Override
-    public void onLoad(JobOrder jobOrder) {
-
     }
 
     @Override
@@ -133,7 +129,7 @@ public class JobOrderActivity extends AppCompatActivity implements DataLoadCallb
 
     private void searchJobOrders(String searchQuery) {
         List<JobOrder> filteredJobOrders = new ArrayList<>();
-        for(JobOrder jobOrder : allJobOrders) {
+        for(JobOrder jobOrder : jobOrders) {
             if(jobOrder.getCustomerName() != null) {
                 if(jobOrder.getCustomerName().toLowerCase().contains(searchQuery.toLowerCase())) {
                     filteredJobOrders.add(jobOrder);
@@ -141,5 +137,15 @@ public class JobOrderActivity extends AppCompatActivity implements DataLoadCallb
             }
         }
         jobOrderAdapter.setJobOrders(filteredJobOrders);
+    }
+
+    @Override
+    public void onLoadJobOrder(JobOrder jobOrder) {
+
+    }
+
+    @Override
+    public void onLoadJobOrderDetails(List<JobOrderHasDetails> jobOrderHasDetails) {
+
     }
 }

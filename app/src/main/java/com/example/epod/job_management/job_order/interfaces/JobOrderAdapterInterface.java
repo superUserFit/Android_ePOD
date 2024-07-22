@@ -7,6 +7,5 @@ import java.util.List;
 
 public interface JobOrderAdapterInterface {
     void setJobOrders(List<JobOrder> jobOrders);
-    void setJobOrder(JobOrder jobOrder);
     void setJobOrderHasDetails(List<JobOrderHasDetails> jobOrderHasDetails);
 }

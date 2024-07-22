@@ -3,7 +3,7 @@ package com.example.epod.job_management.job_order.controller;
 import android.util.Log;
 
 import com.example.epod.job_management.job_order.interfaces.JobOrderAdapterInterface;
-import com.example.epod.job_management.job_order.interfaces.JobOrderInterface;
+import com.example.epod.job_management.job_order.interfaces.JobOrderAPI;
 import com.example.epod.job_management.job_order.view.model.JobOrder;
 import com.example.epod.job_management.job_order.view.model.JobOrderHasDetails;
 import com.example.epod.utils.Request;
@@ -16,16 +16,16 @@ import java.util.List;
 
 public class JobOrderController {
     private final JobOrderAdapterInterface jobOrderAdapter;
-    private final JobOrderInterface jobOrderInterface = Request.getRetrofitInstance().create(JobOrderInterface.class);
-    private final DataLoadCallback dataLoadCallback;
+    private final JobOrderAPI jobOrderApi = Request.getRetrofitInstance().create(JobOrderAPI.class);
+    private final JobOrderCallback jobOrderCallback;
 
-    public JobOrderController(JobOrderAdapterInterface jobOrderAdapter, DataLoadCallback dataLoadCallback) {
+    public JobOrderController(JobOrderAdapterInterface jobOrderAdapter, JobOrderCallback jobOrderCallback) {
         this.jobOrderAdapter = jobOrderAdapter;
-        this.dataLoadCallback = dataLoadCallback;
+        this.jobOrderCallback = jobOrderCallback;
     }
 
-    public void getAllJobOrderHasAssignment(String jobOrderStatus) {
-        Call<JobOrderResponse> call = jobOrderInterface.getAllJobOrderHasAssignment(jobOrderStatus, "jobOrderStatus", "docDate", "desc");
+    public void getJobOrderByUser() {
+        Call<JobOrderResponse> call = jobOrderApi.getJobOrderByUser("docDate", "desc");
 
         call.enqueue(new Callback<JobOrderResponse>() {
             @Override
@@ -35,7 +35,7 @@ public class JobOrderController {
                     if (jobOrderResponse != null) {
                         List<JobOrder> jobOrders = jobOrderResponse.getJobOrders();
                         jobOrderAdapter.setJobOrders(jobOrders);
-                        dataLoadCallback.onLoad(jobOrders);
+                        jobOrderCallback.onLoadJobOrders(jobOrders);
                     }
                 }
             }
@@ -48,7 +48,7 @@ public class JobOrderController {
     }
 
     public void getUpdateJobOrder(String jobOrderId) {
-        Call<JobOrderResponse> call = jobOrderInterface.getUpdateJobOrder(jobOrderId);
+        Call<JobOrderResponse> call = jobOrderApi.getUpdateJobOrder(jobOrderId);
 
         call.enqueue(new Callback<JobOrderResponse>() {
             @Override
@@ -57,7 +57,7 @@ public class JobOrderController {
                     JobOrderResponse jobOrderResponse = response.body();
                     if(jobOrderResponse != null) {
                         JobOrder jobOrder = jobOrderResponse.getJobOrder();
-                        dataLoadCallback.onLoad(jobOrder);
+                        jobOrderCallback.onLoadJobOrder(jobOrder);
                     }
                 }
             }
@@ -70,7 +70,7 @@ public class JobOrderController {
     }
 
     public void getUpdateJobOrderHasDetails(String jobOrderId) {
-        Call<JobOrderResponse> call = jobOrderInterface.getUpdateJobOrderHasDetails(jobOrderId);
+        Call<JobOrderResponse> call = jobOrderApi.getUpdateJobOrderHasDetails(jobOrderId);
 
         call.enqueue(new Callback<JobOrderResponse>() {
             @Override
@@ -78,8 +78,9 @@ public class JobOrderController {
                 if(response.isSuccessful()) {
                     JobOrderResponse jobOrderResponse = response.body();
                     if(jobOrderResponse != null) {
-                        JobOrderHasDetails jobOrderHasDetails = (JobOrderHasDetails) jobOrderResponse.getJobOrderHasDetails();
-                        jobOrderAdapter.setJobOrderHasDetails((List<JobOrderHasDetails>) jobOrderHasDetails);
+                        List<JobOrderHasDetails> jobOrderHasDetails = jobOrderResponse.getJobOrderHasDetails();
+                        jobOrderAdapter.setJobOrderHasDetails(jobOrderHasDetails);
+                        jobOrderCallback.onLoadJobOrderDetails(jobOrderHasDetails);
                     }
                 }
             }

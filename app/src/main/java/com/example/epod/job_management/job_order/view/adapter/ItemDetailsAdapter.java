@@ -33,18 +33,20 @@ public class ItemDetailsAdapter extends RecyclerView.Adapter<ItemDetailsViewHold
     @NonNull
     @Override
     public ItemDetailsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.job_order_layout_item_details, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.job_order_view_holder_item_details, parent, false);
         return new ItemDetailsViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ItemDetailsViewHolder holder, int position) {
         JobOrderHasDetails itemDetails = jobOrderHasDetails.get(position);
-        holder.itemCode.setText(itemDetails.getItemCode());
-        holder.itemType.setText(itemDetails.getItemType());
-        holder.description.setText(itemDetails.getDescription());
-        holder.quantity.setText(itemDetails.getDescription());
-        holder.itemUOM.setText(itemDetails.getItemUOM());
+        holder.bind(itemDetails);
+
+        if(itemDetails.getItemType().equals("Stock")) {
+            holder.itemDetailsCard.setCardBackgroundColor(context.getResources().getColor(R.color.orangeAccent));
+        } else {
+            holder.itemDetailsCard.setCardBackgroundColor(context.getResources().getColor(R.color.limeGreenAccent));
+        }
     }
 
     @Override
@@ -54,11 +56,6 @@ public class ItemDetailsAdapter extends RecyclerView.Adapter<ItemDetailsViewHold
 
     @Override
     public void setJobOrders(List<JobOrder> jobOrders) {
-        throw new UnsupportedOperationException("Not supported in ItemDetailsAdapter");
-    }
-
-    @Override
-    public void setJobOrder(JobOrder jobOrder) {
         throw new UnsupportedOperationException("Not supported in ItemDetailsAdapter");
     }
 }

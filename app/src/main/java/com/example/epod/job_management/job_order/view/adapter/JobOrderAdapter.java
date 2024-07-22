@@ -84,11 +84,6 @@ public class JobOrderAdapter extends RecyclerView.Adapter<JobOrderViewHolder> im
     }
 
     @Override
-    public void setJobOrder(JobOrder jobOrder) {
-        throw new UnsupportedOperationException("Not supported in JobOrderAdapter");
-    }
-
-    @Override
     public void setJobOrderHasDetails(List<JobOrderHasDetails> jobOrderHasDetails) {
         throw new UnsupportedOperationException("Not supported in JobOrderAdapter");
     }
