@@ -3,7 +3,7 @@ package com.example.epod.auth.controller;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.example.epod.auth.interfaces.AuthInterface;
+import com.example.epod.auth.repository.AuthRepository;
 import com.example.epod.auth.model.Auth;
 import com.example.epod.utils.Request;
 
@@ -12,7 +12,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class AuthController {
-    private final AuthInterface authInterface = Request.getRetrofitInstance().create(AuthInterface.class);
+    private final AuthRepository authRepository = Request.getRetrofitInstance().create(AuthRepository.class);
     private final AuthCallback authCallback;
     private final SharedPreferences sharedPreferences;
 
@@ -22,7 +22,7 @@ public class AuthController {
     }
 
     public void login(String username, String password) {
-        Call<AuthResponse> call = authInterface.login(username, password);
+        Call<AuthResponse> call = authRepository.login(username, password);
 
         call.enqueue(new Callback<AuthResponse>() {
             @Override

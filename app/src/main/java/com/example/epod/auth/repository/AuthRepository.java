@@ -1,4 +1,4 @@
-package com.example.epod.auth.interfaces;
+package com.example.epod.auth.repository;
 
 
 import retrofit2.Call;
@@ -9,7 +9,7 @@ import retrofit2.http.POST;
 import com.example.epod.auth.controller.AuthResponse;
 
 
-public interface AuthInterface {
+public interface AuthRepository {
     @FormUrlEncoded
     @POST("site/api/site/login")
     Call<AuthResponse> login(

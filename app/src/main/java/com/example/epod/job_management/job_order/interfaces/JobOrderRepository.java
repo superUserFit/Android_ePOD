@@ -9,7 +9,7 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 
-public interface JobOrderAPI {
+public interface JobOrderRepository {
     @FormUrlEncoded
     @POST("job_order/api/job-order/get-job-order-has-assignment")
     Call<JobOrderResponse> getJobOrderByUser(

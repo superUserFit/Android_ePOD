@@ -3,7 +3,7 @@ package com.example.epod.job_management.job_order.controller;
 import android.util.Log;
 
 import com.example.epod.job_management.job_order.interfaces.JobOrderAdapterInterface;
-import com.example.epod.job_management.job_order.interfaces.JobOrderAPI;
+import com.example.epod.job_management.job_order.interfaces.JobOrderRepository;
 import com.example.epod.job_management.job_order.view.model.JobOrder;
 import com.example.epod.job_management.job_order.view.model.JobOrderHasDetails;
 import com.example.epod.utils.Request;
@@ -16,7 +16,7 @@ import java.util.List;
 
 public class JobOrderController {
     private final JobOrderAdapterInterface jobOrderAdapter;
-    private final JobOrderAPI jobOrderApi = Request.getRetrofitInstance().create(JobOrderAPI.class);
+    private final JobOrderRepository jobOrderRepository = Request.getRetrofitInstance().create(JobOrderRepository.class);
     private final JobOrderCallback jobOrderCallback;
 
     public JobOrderController(JobOrderAdapterInterface jobOrderAdapter, JobOrderCallback jobOrderCallback) {
@@ -25,7 +25,7 @@ public class JobOrderController {
     }
 
     public void getJobOrderByUser() {
-        Call<JobOrderResponse> call = jobOrderApi.getJobOrderByUser("docDate", "desc");
+        Call<JobOrderResponse> call = jobOrderRepository.getJobOrderByUser("docDate", "desc");
 
         call.enqueue(new Callback<JobOrderResponse>() {
             @Override
@@ -48,7 +48,7 @@ public class JobOrderController {
     }
 
     public void getUpdateJobOrder(String jobOrderId) {
-        Call<JobOrderResponse> call = jobOrderApi.getUpdateJobOrder(jobOrderId);
+        Call<JobOrderResponse> call = jobOrderRepository.getUpdateJobOrder(jobOrderId);
 
         call.enqueue(new Callback<JobOrderResponse>() {
             @Override
@@ -70,7 +70,7 @@ public class JobOrderController {
     }
 
     public void getUpdateJobOrderHasDetails(String jobOrderId) {
-        Call<JobOrderResponse> call = jobOrderApi.getUpdateJobOrderHasDetails(jobOrderId);
+        Call<JobOrderResponse> call = jobOrderRepository.getUpdateJobOrderHasDetails(jobOrderId);
 
         call.enqueue(new Callback<JobOrderResponse>() {
             @Override
