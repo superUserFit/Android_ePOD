@@ -11,13 +11,13 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 import com.example.epod.MainActivity;
 import com.example.epod.R;
-import com.example.epod.auth.controller.AuthController;
-import com.example.epod.auth.controller.AuthCallback;
+import com.example.epod.auth.repository.AuthRepository;
+import com.example.epod.auth.repository.AuthCallback;
 import com.example.epod.auth.model.Auth;
 import com.example.epod.utils.Helper;
 
 public class LoginActivity extends AppCompatActivity {
-    private AuthController authController;
+    private AuthRepository authRepository;
     private ProgressBar progressBar;
     private Button loginButton;
 
@@ -32,7 +32,7 @@ public class LoginActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBar);
         loginButton.setBackgroundResource(R.drawable.ui_rounded_64_gradient_orange);
 
-        authController = new AuthController(this, new AuthCallback() {
+        authRepository = new AuthRepository(this, new AuthCallback() {
             @Override
             public void onLoadAuth(Auth authenticatedUser) {
                 progressBar.setVisibility(View.GONE);
@@ -64,7 +64,7 @@ public class LoginActivity extends AppCompatActivity {
             loginButton.setText("");
             loginButton.setBackgroundResource(R.drawable.gradient_white);
             progressBar.setVisibility(View.VISIBLE);
-            authController.login(username, password);
+            authRepository.login(username, password);
         });
     }
 }

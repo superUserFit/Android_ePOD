@@ -15,13 +15,6 @@ import java.lang.annotation.Target;
 import java.lang.reflect.Field;
 
 public class Helper {
-
-    @Retention(RetentionPolicy.RUNTIME)
-    @Target(ElementType.FIELD)
-    public @interface BindView {
-        int value();
-    }
-
     public static void goBackActivity(Context context) {
         Intent intent = new Intent(context, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);

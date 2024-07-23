@@ -1,4 +1,4 @@
-package com.example.epod.auth.controller;
+package com.example.epod.auth.repository;
 
 import com.example.epod.auth.model.Auth;
 
