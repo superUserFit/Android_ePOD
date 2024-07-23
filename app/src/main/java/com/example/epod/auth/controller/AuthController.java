@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 
 import com.example.epod.auth.repository.AuthRepository;
 import com.example.epod.auth.model.Auth;
+import com.example.epod.auth.repository.AuthResponse;
 import com.example.epod.utils.Request;
 
 import retrofit2.Call;

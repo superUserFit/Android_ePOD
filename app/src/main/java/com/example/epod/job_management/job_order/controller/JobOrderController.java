@@ -3,7 +3,7 @@ package com.example.epod.job_management.job_order.controller;
 import android.util.Log;
 
 import com.example.epod.job_management.job_order.interfaces.JobOrderAdapterInterface;
-import com.example.epod.job_management.job_order.interfaces.JobOrderRepository;
+import com.example.epod.job_management.job_order.repository.JobOrderRepository;
 import com.example.epod.job_management.job_order.view.model.JobOrder;
 import com.example.epod.job_management.job_order.view.model.JobOrderHasDetails;
 import com.example.epod.utils.Request;

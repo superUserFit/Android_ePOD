@@ -1,4 +1,4 @@
-package com.example.epod.job_management.job_order.interfaces;
+package com.example.epod.job_management.job_order.repository;
 
 import com.example.epod.job_management.job_order.controller.JobOrderResponse;
 

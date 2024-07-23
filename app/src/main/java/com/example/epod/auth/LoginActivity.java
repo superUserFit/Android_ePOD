@@ -30,14 +30,14 @@ public class LoginActivity extends AppCompatActivity {
         EditText passwordTextField = findViewById(R.id.password);
         loginButton = findViewById(R.id.login_button);
         progressBar = findViewById(R.id.progressBar);
-        loginButton.setBackgroundResource(R.drawable.ui_rounded_64);
+        loginButton.setBackgroundResource(R.drawable.ui_rounded_64_gradient_orange);
 
         authController = new AuthController(this, new AuthCallback() {
             @Override
             public void onLoadAuth(Auth authenticatedUser) {
                 progressBar.setVisibility(View.GONE);
                 loginButton.setText("Login");
-                loginButton.setBackgroundResource(R.drawable.gradient_orange);
+                loginButton.setBackgroundResource(R.drawable.ui_rounded_64_gradient_orange);
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish();
@@ -47,7 +47,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onError(String errorMessage) {
                 progressBar.setVisibility(View.GONE);
                 loginButton.setText("Login");
-                loginButton.setBackgroundResource(R.drawable.gradient_orange);
+                loginButton.setBackgroundResource(R.drawable.ui_rounded_64_gradient_orange);
                 Toast.makeText(LoginActivity.this, errorMessage, Toast.LENGTH_SHORT).show();
             }
         });

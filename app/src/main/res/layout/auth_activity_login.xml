@@ -105,7 +105,7 @@
                     android:text="Login"
                     android:textStyle="bold"
                     android:textColor="@color/white"
-                    android:background="@drawable/gradient_orange"
+                    android:background="@drawable/ui_rounded_64_gradient_orange"
                     android:gravity="center"
                     android:layout_gravity="center"
                     android:layoutDirection="ltr" />
