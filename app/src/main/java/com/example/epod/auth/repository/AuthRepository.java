@@ -10,7 +10,10 @@ public class AuthRepository {
     private final AuthRepositoryInterface authRepositoryInterface;
     private final AuthCallback authCallback;
 
-    public AuthRepository(AuthRepositoryInterface authRepositoryInterface, AuthCallback authCallback) {
+    public AuthRepository(
+            AuthRepositoryInterface authRepositoryInterface,
+            AuthCallback authCallback
+    ) {
         this.authRepositoryInterface = authRepositoryInterface;
         this.authCallback = authCallback;
     }

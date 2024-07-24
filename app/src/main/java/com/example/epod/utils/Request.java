@@ -25,7 +25,8 @@ import java.security.cert.CertificateFactory;
 
 public class Request {
     public static Retrofit retrofit;
-    private static final String BASE_URL = "https://1ofis.infollective.com/application/backend/";
+    private static final String BASE_URL = "http://192.168.1.101/1ofis/application/backend/";
+//    private static final String BASE_URL = "https://1ofis.infollective.com/application/backend/";
 
     public static Retrofit getRetrofitInstance(Context context) {
         if(retrofit == null) {

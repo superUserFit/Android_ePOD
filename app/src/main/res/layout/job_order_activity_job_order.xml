@@ -32,7 +32,7 @@
                 android:background="@drawable/ui_search_bar"
                 android:layout_marginEnd="8dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/alarm_button"
+                app:layout_constraintEnd_toStartOf="@+id/sort_job_order"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent">
 
@@ -63,7 +63,7 @@
             </LinearLayout>
 
             <ImageButton
-                android:id="@+id/alarm_button"
+                android:id="@+id/sort_job_order"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"

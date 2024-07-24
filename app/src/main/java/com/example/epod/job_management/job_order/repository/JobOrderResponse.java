@@ -1,4 +1,4 @@
-package com.example.epod.job_management.job_order.controller;
+package com.example.epod.job_management.job_order.repository;
 
 import com.example.epod.job_management.job_order.view.model.JobOrder;
 import com.example.epod.job_management.job_order.view.model.JobOrderHasDetails;

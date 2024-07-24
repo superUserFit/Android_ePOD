@@ -13,17 +13,23 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.epod.R;
 import com.example.epod.job_management.job_order.view.holder.TabButtonViewHolder;
+import com.google.android.material.tabs.TabLayout;
 
 import java.util.List;
 
 public class TabButtonAdapter extends RecyclerView.Adapter<TabButtonViewHolder> {
     private final List<TabButtonViewHolder.TabButton> tabButtonList;
+    private View.OnClickListener onClickListener;
     private final Context context;
-    private int selectedTabIndex = 0;
+    public int selectedTabIndex = 0;
 
     public TabButtonAdapter(List<TabButtonViewHolder.TabButton> tabButtonList, Context context) {
         this.tabButtonList = tabButtonList;
         this.context = context;
+    }
+
+    public void onClickListener(View.OnClickListener onClickListener) {
+        this.onClickListener = onClickListener;
     }
 
     @NonNull
@@ -53,11 +59,14 @@ public class TabButtonAdapter extends RecyclerView.Adapter<TabButtonViewHolder> 
             drawable.setColor(color);
         }
 
+
         holder.tabButton.setOnClickListener(view -> {
-            int previousTabIndex = selectedTabIndex;
+            if(onClickListener != null) {
+                onClickListener.onClick(view);
+            }
+
             selectedTabIndex = position;
-            notifyItemChanged(previousTabIndex);
-            notifyItemChanged(selectedTabIndex);
+            notifyDataSetChanged();
         });
     }
 

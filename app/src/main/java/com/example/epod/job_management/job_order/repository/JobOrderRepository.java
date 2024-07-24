@@ -1,29 +1,102 @@
 package com.example.epod.job_management.job_order.repository;
 
-import com.example.epod.job_management.job_order.controller.JobOrderResponse;
+import android.util.Log;
+
+import com.example.epod.job_management.job_order.view.model.JobOrder;
+import com.example.epod.job_management.job_order.view.model.JobOrderHasDetails;
 
 import retrofit2.Call;
-import retrofit2.http.Field;
-import retrofit2.http.FormUrlEncoded;
-import retrofit2.http.GET;
-import retrofit2.http.POST;
-import retrofit2.http.Query;
+import retrofit2.Callback;
+import retrofit2.Response;
 
-public interface JobOrderRepository {
-    @FormUrlEncoded
-    @POST("job_order/api/job-order/get-job-order-has-assignment")
-    Call<JobOrderResponse> getJobOrderByUser(
-            @Field("param[sort]") String sort,
-            @Field("param[order]") String order
-    );
+import java.util.Collections;
+import java.util.List;
 
-    @GET("job_order/api/job-order/get-update-job-order-data?id=")
-    Call<JobOrderResponse> getUpdateJobOrder(
-            @Query("id") String jobOrderId
-    );
+public class JobOrderRepository {
+    private final JobOrderRepositoryInterface jobOrderRepositoryInterface;
+    private final JobOrderCallback jobOrderCallback;
 
-    @GET("job_order/api/job-order/get-update-job-order-has-details-data?id=")
-    Call<JobOrderResponse> getUpdateJobOrderHasDetails(
-            @Query("id") String jobOrderId
-    );
+    public JobOrderRepository(
+            JobOrderRepositoryInterface jobOrderRepositoryInterface,
+            JobOrderCallback jobOrderCallback
+    ) {
+        this.jobOrderRepositoryInterface = jobOrderRepositoryInterface;
+        this.jobOrderCallback = jobOrderCallback;
+    }
+
+    public void getJobOrderByUser(String authorization, String sort, String order) {
+        Call<JobOrderResponse> call = jobOrderRepositoryInterface.getJobOrderByUser(authorization, sort, order);
+
+        call.enqueue(new Callback<JobOrderResponse>() {
+            @Override
+            public void onResponse(Call<JobOrderResponse> call, Response<JobOrderResponse> response) {
+                if (response.isSuccessful()) {
+                    JobOrderResponse jobOrderResponse = response.body();
+                    if(jobOrderResponse != null) {
+                        List<JobOrder> jobOrders = jobOrderResponse.getJobOrders();
+                        if(jobOrders == null) {
+                            jobOrders = Collections.emptyList();
+                        }
+                        jobOrderCallback.onLoadJobOrders(jobOrders);
+                    } else {
+                        jobOrderCallback.onLoadJobOrders(Collections.emptyList());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JobOrderResponse> call, Throwable throwable) {
+                Log.e("Error: ", throwable.getMessage());
+                jobOrderCallback.onLoadJobOrders(Collections.emptyList());
+            }
+        });
+    }
+
+    public void getUpdateJobOrder(String authorization, String jobOrderId) {
+        Call<JobOrderResponse> call = jobOrderRepositoryInterface.getUpdateJobOrder(authorization, jobOrderId);
+
+        call.enqueue(new Callback<JobOrderResponse>() {
+            @Override
+            public void onResponse(Call<JobOrderResponse> call, Response<JobOrderResponse> response) {
+                if(response.isSuccessful()) {
+                    JobOrderResponse jobOrderResponse = response.body();
+                    if(jobOrderResponse != null) {
+                        JobOrder jobOrder = jobOrderResponse.getJobOrder();
+                        jobOrderCallback.onLoadJobOrder(jobOrder);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JobOrderResponse> call, Throwable throwable) {
+                Log.e("Error", throwable.getMessage());
+                jobOrderCallback.onLoadJobOrder(null);
+            }
+        });
+    }
+
+    public void getUpdateJobOrderHasDetails(String authorization, String jobOrderId) {
+        Call<JobOrderResponse> call = jobOrderRepositoryInterface.getUpdateJobOrderHasDetails(authorization, jobOrderId);
+
+        call.enqueue(new Callback<JobOrderResponse>() {
+            @Override
+            public void onResponse(Call<JobOrderResponse> call, Response<JobOrderResponse> response) {
+                if(response.isSuccessful()) {
+                    JobOrderResponse jobOrderResponse = response.body();
+                    if(jobOrderResponse != null) {
+                        List<JobOrderHasDetails> jobOrderHasDetails = jobOrderResponse.getJobOrderHasDetails();
+                        if(jobOrderHasDetails == null) {
+                            jobOrderHasDetails = Collections.emptyList();
+                        }
+                        jobOrderCallback.onLoadJobOrderDetails(jobOrderHasDetails);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JobOrderResponse> call, Throwable throwable) {
+                jobOrderCallback.onLoadJobOrderDetails(Collections.emptyList());
+            }
+        });
+    }
 }

@@ -18,9 +18,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.epod.R;
+import com.example.epod.auth.service.AuthService;
 import com.example.epod.databinding.JobOrderActivityJobOrderDetailsBinding;
-import com.example.epod.job_management.job_order.controller.JobOrderCallback;
-import com.example.epod.job_management.job_order.controller.JobOrderController;
+import com.example.epod.job_management.job_order.repository.JobOrderCallback;
+import com.example.epod.job_management.job_order.repository.JobOrderRepository;
+import com.example.epod.job_management.job_order.service.JobOrderService;
 import com.example.epod.job_management.job_order.view.adapter.ItemDetailsAdapter;
 import com.example.epod.job_management.job_order.view.model.JobOrder;
 import com.example.epod.job_management.job_order.view.model.JobOrderHasDetails;
@@ -30,7 +32,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class JobOrderDetailsActivity extends AppCompatActivity implements JobOrderCallback {
-    private JobOrderController jobOrderController;
+    private AuthService authService;
+    private JobOrderService jobOrderService;
     private ItemDetailsAdapter itemDetailsAdapter;
     private ViewSwitcher viewSwitcher;
     private ShimmerFrameLayout loadingLayout;
@@ -81,11 +84,12 @@ public class JobOrderDetailsActivity extends AppCompatActivity implements JobOrd
 
         String jobOrderId = getIntent().getExtras().getString("jobOrderId");
         itemDetailsAdapter = new ItemDetailsAdapter(new ArrayList<>(), this);
-        jobOrderController = new JobOrderController(itemDetailsAdapter, this);
-        jobOrderController.getUpdateJobOrder(jobOrderId);
+        authService = new AuthService(this);
+        jobOrderService = new JobOrderService(this, itemDetailsAdapter, authService);
+        jobOrderService.getUpdateJobOrder(jobOrderId);
 
         //  Set RecyclerView for job order details
-        jobOrderController.getUpdateJobOrderHasDetails(jobOrderId);
+        jobOrderService.getUpdateJobOrderHasDetails(jobOrderId);
         itemDetailsCard = findViewById(R.id.itemDetails);
 
         RecyclerView recyclerView_jobOrderDetails_itemDetails = findViewById(R.id.recyclerView_jobOrderDetails_itemDetails);
