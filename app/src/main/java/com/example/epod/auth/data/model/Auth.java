@@ -1,4 +1,4 @@
-package com.example.epod.auth.model;
+package com.example.epod.auth.data.model;
 
 import com.example.epod.account.model.Account;
 import com.example.epod.company.model.Company;

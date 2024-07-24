@@ -1,4 +1,4 @@
-package com.example.epod.auth;
+package com.example.epod.auth.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,8 +12,8 @@ import android.widget.ProgressBar;
 
 import com.example.epod.MainActivity;
 import com.example.epod.R;
-import com.example.epod.auth.repository.AuthCallback;
-import com.example.epod.auth.model.Auth;
+import com.example.epod.auth.data.repository.AuthCallback;
+import com.example.epod.auth.data.model.Auth;
 import com.example.epod.auth.service.AuthService;
 import com.example.epod.utils.Helper;
 
@@ -48,12 +48,12 @@ public class LoginActivity extends AppCompatActivity implements AuthCallback {
             loginButton.setBackgroundResource(R.drawable.gradient_white);
             progressBar.setVisibility(View.VISIBLE);
 
-            authService.performLogin(username, password);
+            authService.login(username, password);
         });
     }
 
     @Override
-    public void onLoadAuth(Auth authenticatedUser) {
+    public void onLogin(Auth authenticatedUser) {
         Log.e("User in Activity: ", authenticatedUser.getUsername());
         progressBar.setVisibility(View.GONE);
         loginButton.setText("Login");

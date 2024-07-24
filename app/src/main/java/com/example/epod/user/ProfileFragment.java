@@ -7,14 +7,13 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.epod.R;
-import com.example.epod.auth.LoginActivity;
+import com.example.epod.auth.view.LoginActivity;
 
 public class ProfileFragment extends Fragment {
     private Button logoutButton;

@@ -1,25 +1,23 @@
-package com.example.epod.auth.repository;
+package com.example.epod.auth.data.repository;
 
-import com.example.epod.auth.model.Auth;
+import android.content.Context;
+import com.example.epod.auth.data.model.Auth;
 
+import com.example.epod.utils.Request;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AuthRepository {
-    private final AuthRepositoryInterface authRepositoryInterface;
-    private final AuthCallback authCallback;
+public class AuthRepository implements AuthRepositoryInterface {
+    private final AuthAPI authApi;
 
-    public AuthRepository(
-            AuthRepositoryInterface authRepositoryInterface,
-            AuthCallback authCallback
-    ) {
-        this.authRepositoryInterface = authRepositoryInterface;
-        this.authCallback = authCallback;
+    public AuthRepository(Context context, AuthCallback authCallback) {
+        this.authApi = Request.getRetrofitInstance(context).create(AuthAPI.class);
     }
 
-    public void login(String username, String password) {
-        Call<AuthResponse> call = authRepositoryInterface.login(username, password);
+    @Override
+    public void login(String username, String password, AuthCallback authCallback) {
+        Call<AuthResponse> call = authApi.login(username, password);
 
         call.enqueue(new Callback<AuthResponse>() {
             @Override
@@ -28,7 +26,7 @@ public class AuthRepository {
                     AuthResponse authResponse = response.body();
                     if(authResponse != null) {
                         Auth authenticatedUser = authResponse.getAuthenticatedUser();
-                        authCallback.onLoadAuth(authenticatedUser);
+                        authCallback.onLogin(authenticatedUser);
                     } else {
                         authCallback.onError("Invalid username or password");
                     }
@@ -40,5 +38,10 @@ public class AuthRepository {
                 authCallback.onError("Invalid username or password");
             }
         });
+    }
+
+    @Override
+    public void logout(AuthCallback authCallback) {
+
     }
 }

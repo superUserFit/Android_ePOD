@@ -1,16 +1,21 @@
 package com.example.epod.auth.service;
 
+import android.annotation.SuppressLint;
+import android.app.Service;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
-import android.util.Log;
+import android.os.IBinder;
+import android.os.Binder;
 
-import com.example.epod.auth.model.Auth;
-import com.example.epod.auth.repository.AuthCallback;
-import com.example.epod.auth.repository.AuthRepository;
-import com.example.epod.auth.repository.AuthRepositoryInterface;
-import com.example.epod.utils.Request;
+import androidx.annotation.Nullable;
+import com.example.epod.auth.data.model.Auth;
+import com.example.epod.auth.data.repository.AuthCallback;
+import com.example.epod.auth.data.repository.AuthRepository;
 
-public class AuthService {
+public class AuthService extends Service {
+    private final IBinder binder = new LocalBinder();
+
     private static final String PREFERENCES_NAME = "auth";
     private static final String KEY_TOKEN = "token";
     private static final String KEY_USER_ID = "userId";
@@ -20,41 +25,46 @@ public class AuthService {
     private static final String KEY_LOCATION = "location";
     private static final String KEY_USER_GROUP = "user_group";
 
-    private final SharedPreferences sharedPreferences;
-    private final AuthRepository authRepository;
+    private SharedPreferences sharedPreferences;
+    private AuthRepository authRepository;
 
-    public AuthService(Context context) {
-        this.sharedPreferences = context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE);
-        AuthRepositoryInterface authRepositoryInterface = Request.getRetrofitInstance(context).create(AuthRepositoryInterface.class);
 
-        this.authRepository = new AuthRepository(authRepositoryInterface, new AuthCallback() {
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        sharedPreferences = getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE);
+        authRepository = new AuthRepository(this, new AuthCallback() {
             @Override
-            public void onLoadAuth(Auth authenticatedUser) {
-                login(authenticatedUser);
-                ((AuthCallback) context).onLoadAuth(authenticatedUser);
+            public void onLogin(Auth authenticatedUser) {
+
             }
 
             @Override
             public void onError(String errorMessage) {
-                Log.e("Auth Service error: ", errorMessage);
+
             }
         });
     }
 
-    public void performLogin(String username, String password) {
-        authRepository.login(username, password);
-    }
+    public void login(String username, String password, AuthCallback authCallback) {
+        authRepository.login(username, password, new AuthCallback() {
+            @Override
+            public void onLogin(Auth authenticatedUser) {
+                @SuppressLint("CommitPrefEdits") SharedPreferences.Editor editor = sharedPreferences.edit();
 
-    public void login(Auth authenticatedUser) {
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(KEY_TOKEN, authenticatedUser.getAccess_token());
-        editor.putString(KEY_USER_ID, authenticatedUser.getId());
-        editor.putString(KEY_AUTHORIZATION, "Basic " + authenticatedUser.getAuthorization());
-        editor.putString(KEY_ACCOUNT, authenticatedUser.getCurrentAccount().getUUID());
-        editor.putString(KEY_COMPANY, authenticatedUser.getCurrentCompany().getUUID());
-        editor.putString(KEY_LOCATION, authenticatedUser.getCurrentLocation().getUUID());
-        editor.putString(KEY_USER_GROUP, authenticatedUser.getCurrentUserGroup().getUUID());
-        editor.apply();
+                editor.putString(KEY_TOKEN, authenticatedUser.getAccess_token());
+                editor.putString(KEY_USER_ID, authenticatedUser.getId());
+                editor.putString(KEY_ACCOUNT, authenticatedUser.getCurrentAccount().getUUID());
+                editor.putString(KEY_LOCATION, authenticatedUser.getCurrentLocation().getUUID());
+                editor.putString(KEY_COMPANY, authenticatedUser.getCurrentCompany().getUUID());
+                editor.putString(KEY_USER_GROUP, authenticatedUser.getCurrentUserGroup().getUUID());
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                authCallback.onError(errorMessage);
+            }
+        });
     }
 
     public String getToken() {
@@ -78,5 +88,22 @@ public class AuthService {
         editor.remove(KEY_LOCATION);
         editor.remove(KEY_USER_GROUP);
         editor.apply();
+    }
+
+    @Nullable
+    @Override
+    public IBinder onBind(Intent intent) {
+        return binder;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
+
+    public class LocalBinder extends Binder{
+        AuthService getService() {
+            return AuthService.this;
+        }
     }
 }
