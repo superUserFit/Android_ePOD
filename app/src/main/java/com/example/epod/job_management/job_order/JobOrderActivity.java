@@ -7,7 +7,6 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ViewSwitcher;
@@ -19,17 +18,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.epod.auth.service.AuthService;
 import com.example.epod.job_management.job_order.service.JobOrderService;
-import com.example.epod.job_management.job_order.view.model.JobOrderHasDetails;
+import com.example.epod.job_management.job_order.data.model.JobOrderHasDetails;
 import com.facebook.shimmer.ShimmerFrameLayout;
 
 import com.example.epod.R;
-import com.example.epod.job_management.job_order.repository.JobOrderRepository;
 import com.example.epod.job_management.job_order.view.adapter.JobOrderAdapter;
 import com.example.epod.job_management.job_order.view.adapter.TabButtonAdapter;
 import com.example.epod.job_management.job_order.view.holder.TabButtonViewHolder;
-import com.example.epod.job_management.job_order.view.model.JobOrder;
+import com.example.epod.job_management.job_order.data.model.JobOrder;
 import com.example.epod.utils.Helper;
-import com.example.epod.job_management.job_order.repository.JobOrderCallback;
+import com.example.epod.job_management.job_order.data.repository.JobOrderCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -138,7 +136,6 @@ public class JobOrderActivity extends AppCompatActivity implements JobOrderCallb
         });
 
         tabButtonAdapter.onClickListener(view -> {
-            // Ensure view is a child of RecyclerView
             View parentView = (View) view.getParent();
             if (parentView instanceof RecyclerView) {
                 int position = recyclerViewTabButton.getChildAdapterPosition(view);

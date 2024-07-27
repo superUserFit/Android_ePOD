@@ -1,7 +1,7 @@
-package com.example.epod.job_management.job_order.repository;
+package com.example.epod.job_management.job_order.data.repository;
 
-import com.example.epod.job_management.job_order.view.model.JobOrder;
-import com.example.epod.job_management.job_order.view.model.JobOrderHasDetails;
+import com.example.epod.job_management.job_order.data.model.JobOrder;
+import com.example.epod.job_management.job_order.data.model.JobOrderHasDetails;
 
 import java.util.List;
 

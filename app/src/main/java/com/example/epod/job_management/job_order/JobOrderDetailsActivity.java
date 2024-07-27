@@ -20,12 +20,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.epod.R;
 import com.example.epod.auth.service.AuthService;
 import com.example.epod.databinding.JobOrderActivityJobOrderDetailsBinding;
-import com.example.epod.job_management.job_order.repository.JobOrderCallback;
-import com.example.epod.job_management.job_order.repository.JobOrderRepository;
+import com.example.epod.job_management.job_order.data.repository.JobOrderCallback;
 import com.example.epod.job_management.job_order.service.JobOrderService;
 import com.example.epod.job_management.job_order.view.adapter.ItemDetailsAdapter;
-import com.example.epod.job_management.job_order.view.model.JobOrder;
-import com.example.epod.job_management.job_order.view.model.JobOrderHasDetails;
+import com.example.epod.job_management.job_order.data.model.JobOrder;
+import com.example.epod.job_management.job_order.data.model.JobOrderHasDetails;
 import com.facebook.shimmer.ShimmerFrameLayout;
 
 import java.util.ArrayList;

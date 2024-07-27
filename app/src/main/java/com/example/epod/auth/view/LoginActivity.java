@@ -1,6 +1,7 @@
 package com.example.epod.auth.view;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,13 +13,12 @@ import android.widget.ProgressBar;
 
 import com.example.epod.MainActivity;
 import com.example.epod.R;
-import com.example.epod.auth.data.repository.AuthCallback;
 import com.example.epod.auth.data.model.Auth;
-import com.example.epod.auth.service.AuthService;
+import com.example.epod.auth.data.repository.AuthCallback;
 import com.example.epod.utils.Helper;
 
 public class LoginActivity extends AppCompatActivity implements AuthCallback {
-    private AuthService authService;
+    private AuthViewModel authViewModel;
     private ProgressBar progressBar;
     private Button loginButton;
 
@@ -33,7 +33,19 @@ public class LoginActivity extends AppCompatActivity implements AuthCallback {
         progressBar = findViewById(R.id.progressBar);
         loginButton.setBackgroundResource(R.drawable.ui_rounded_64_gradient_orange);
 
-        authService = new AuthService(this);
+        authViewModel = new ViewModelProvider(this).get(AuthViewModel.class);
+
+        authViewModel.getAuthenticatedUser().observe(this, authenticatedUser -> {
+            if(authenticatedUser != null) {
+                handleAuthSuccess(authenticatedUser);
+            }
+        });
+
+        authViewModel.getErrorMessage().observe(this, errorMessage -> {
+            if(errorMessage != null) {
+                handleAuthError(errorMessage);
+            }
+        });
 
         loginButton.setOnClickListener(view -> {
             String username = usernameTextField.getText().toString();
@@ -44,11 +56,11 @@ public class LoginActivity extends AppCompatActivity implements AuthCallback {
                 return;
             }
 
+            authViewModel.login(username, password);
+
             loginButton.setText("");
             loginButton.setBackgroundResource(R.drawable.gradient_white);
             progressBar.setVisibility(View.VISIBLE);
-
-            authService.login(username, password);
         });
     }
 
@@ -65,6 +77,22 @@ public class LoginActivity extends AppCompatActivity implements AuthCallback {
 
     @Override
     public void onError(String errorMessage) {
+        progressBar.setVisibility(View.GONE);
+        loginButton.setText("Login");
+        loginButton.setBackgroundResource(R.drawable.ui_rounded_64_gradient_orange);
+        Helper.showToast(LoginActivity.this, errorMessage, "SHORT");
+    }
+
+    private void handleAuthSuccess(Auth authenticatedUser) {
+        progressBar.setVisibility(View.GONE);
+        loginButton.setText("Login");
+        loginButton.setBackgroundResource(R.drawable.ui_rounded_64_gradient_orange);
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    private void handleAuthError(String errorMessage) {
         progressBar.setVisibility(View.GONE);
         loginButton.setText("Login");
         loginButton.setBackgroundResource(R.drawable.ui_rounded_64_gradient_orange);

@@ -8,7 +8,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.epod.R;
-import com.example.epod.job_management.job_order.view.model.JobOrderHasDetails;
+import com.example.epod.job_management.job_order.data.model.JobOrderHasDetails;
 
 public class ItemDetailsViewHolder extends RecyclerView.ViewHolder {
     public CardView itemDetailsCard;

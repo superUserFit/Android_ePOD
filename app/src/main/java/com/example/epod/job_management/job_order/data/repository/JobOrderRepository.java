@@ -1,9 +1,11 @@
-package com.example.epod.job_management.job_order.repository;
+package com.example.epod.job_management.job_order.data.repository;
 
+import android.content.Context;
 import android.util.Log;
 
-import com.example.epod.job_management.job_order.view.model.JobOrder;
-import com.example.epod.job_management.job_order.view.model.JobOrderHasDetails;
+import com.example.epod.job_management.job_order.data.model.JobOrder;
+import com.example.epod.job_management.job_order.data.model.JobOrderHasDetails;
+import com.example.epod.utils.Request;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -12,20 +14,19 @@ import retrofit2.Response;
 import java.util.Collections;
 import java.util.List;
 
-public class JobOrderRepository {
-    private final JobOrderRepositoryInterface jobOrderRepositoryInterface;
-    private final JobOrderCallback jobOrderCallback;
+public class JobOrderRepository implements JobOrderRepositoryInterface {
+    private final JobOrderAPI jobOrderApi;
 
     public JobOrderRepository(
-            JobOrderRepositoryInterface jobOrderRepositoryInterface,
+            Context context,
             JobOrderCallback jobOrderCallback
     ) {
-        this.jobOrderRepositoryInterface = jobOrderRepositoryInterface;
-        this.jobOrderCallback = jobOrderCallback;
+        this.jobOrderApi = Request.getRetrofitInstance(context).create(JobOrderAPI.class);
     }
 
-    public void getJobOrderByUser(String authorization, String sort, String order) {
-        Call<JobOrderResponse> call = jobOrderRepositoryInterface.getJobOrderByUser(authorization, sort, order);
+    @Override
+    public void getJobOrderByUser(String authorization, String sort, String order, JobOrderCallback jobOrderCallback) {
+        Call<JobOrderResponse> call = jobOrderApi.getJobOrderByUser(authorization, sort, order);
 
         call.enqueue(new Callback<JobOrderResponse>() {
             @Override
@@ -52,8 +53,9 @@ public class JobOrderRepository {
         });
     }
 
-    public void getUpdateJobOrder(String authorization, String jobOrderId) {
-        Call<JobOrderResponse> call = jobOrderRepositoryInterface.getUpdateJobOrder(authorization, jobOrderId);
+    @Override
+    public void getUpdateJobOrder(String authorization, String jobOrderId, JobOrderCallback jobOrderCallback) {
+        Call<JobOrderResponse> call = jobOrderApi.getUpdateJobOrder(authorization, jobOrderId);
 
         call.enqueue(new Callback<JobOrderResponse>() {
             @Override
@@ -75,8 +77,9 @@ public class JobOrderRepository {
         });
     }
 
-    public void getUpdateJobOrderHasDetails(String authorization, String jobOrderId) {
-        Call<JobOrderResponse> call = jobOrderRepositoryInterface.getUpdateJobOrderHasDetails(authorization, jobOrderId);
+    @Override
+    public void getUpdateJobOrderHasDetails(String authorization, String jobOrderId, JobOrderCallback jobOrderCallback) {
+        Call<JobOrderResponse> call = jobOrderApi.getUpdateJobOrderHasDetails(authorization, jobOrderId);
 
         call.enqueue(new Callback<JobOrderResponse>() {
             @Override
@@ -98,5 +101,70 @@ public class JobOrderRepository {
                 jobOrderCallback.onLoadJobOrderDetails(Collections.emptyList());
             }
         });
+    }
+
+    @Override
+    public void getUpdateJobOrderHasSupervisors() {
+
+    }
+
+    @Override
+    public void getUpdateJobOrderHasAssignmentData() {
+
+    }
+
+    @Override
+    public void createJobOrderHasAssignment() {
+
+    }
+
+    @Override
+    public void updateJobOrderHasAssignment() {
+
+    }
+
+    @Override
+    public void updateJobOrderHasAssignee() {
+
+    }
+
+    @Override
+    public void getJobOrderHasAssignmentByUser() {
+
+    }
+
+    @Override
+    public void getUpdateJobOrderHasAssignment() {
+
+    }
+
+    @Override
+    public void getUpdateJobOrderHasAssignee() {
+
+    }
+
+    @Override
+    public void acknowledgedJobOrderHasAssignment() {
+
+    }
+
+    @Override
+    public void startJobOrderHasAssignment() {
+
+    }
+
+    @Override
+    public void pickupJobOrderHasAssignment() {
+
+    }
+
+    @Override
+    public void deliverJobOrderHasAssignment() {
+
+    }
+
+    @Override
+    public void acceptJobOrderHasAssignment() {
+
     }
 }

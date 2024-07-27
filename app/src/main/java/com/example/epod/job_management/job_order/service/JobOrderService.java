@@ -1,59 +1,55 @@
 package com.example.epod.job_management.job_order.service;
 
+import android.app.Service;
 import android.content.Context;
-import android.util.Log;
+import android.content.Intent;
+import android.os.Binder;
+import android.os.IBinder;
+
+import androidx.annotation.Nullable;
 
 import com.example.epod.auth.service.AuthService;
-import com.example.epod.job_management.job_order.interfaces.JobOrderAdapterInterface;
-import com.example.epod.job_management.job_order.repository.JobOrderCallback;
-import com.example.epod.job_management.job_order.repository.JobOrderRepository;
-import com.example.epod.job_management.job_order.repository.JobOrderRepositoryInterface;
-import com.example.epod.job_management.job_order.view.model.JobOrder;
-import com.example.epod.job_management.job_order.view.model.JobOrderHasDetails;
+import com.example.epod.job_management.job_order.view.interfaces.JobOrderAdapterInterface;
+import com.example.epod.job_management.job_order.data.repository.JobOrderCallback;
+import com.example.epod.job_management.job_order.data.repository.JobOrderRepository;
+import com.example.epod.job_management.job_order.data.repository.JobOrderAPI;
+import com.example.epod.job_management.job_order.data.model.JobOrder;
+import com.example.epod.job_management.job_order.data.model.JobOrderHasDetails;
 import com.example.epod.utils.Request;
 
 import java.util.List;
 
-public class JobOrderService {
-    private final JobOrderRepository jobOrderRepository;
+public class JobOrderService extends Service {
+    private final IBinder binder = new LocalBinder();
+    private JobOrderRepository jobOrderRepository;
     private final AuthService authService;
 
     private String sortOrder = "desc";
     private String selectedStatus = "All";
 
-    public JobOrderService(
-            Context context,
-            JobOrderAdapterInterface jobOrderAdapterInterface,
-            AuthService authService
-            ) {
-        JobOrderRepositoryInterface jobOrderRepositoryInterface = Request.getRetrofitInstance(context).create(JobOrderRepositoryInterface.class);
+    @Override
+    public void onCreate() {
+        super.onCreate();
 
-        this.authService = authService;
+        jobOrderRepository = new JobOrderRepository(this, new JobOrderCallback() {
+            @Override
+            public void onLoadJobOrders(List<JobOrder> jobOrders) {
 
-        this.jobOrderRepository = new JobOrderRepository(
-                jobOrderRepositoryInterface,
-                new JobOrderCallback() {
-                    @Override
-                    public void onLoadJobOrders(List<JobOrder> jobOrders) {
-                        jobOrderAdapterInterface.setJobOrders(jobOrders);
-                        ((JobOrderCallback) context).onLoadJobOrders(jobOrders);
-                    }
+            }
 
-                    @Override
-                    public void onLoadJobOrder(JobOrder jobOrder) {
+            @Override
+            public void onLoadJobOrder(JobOrder jobOrder) {
 
-                    }
+            }
 
-                    @Override
-                    public void onLoadJobOrderDetails(List<JobOrderHasDetails> jobOrderHasDetails) {
-                        jobOrderAdapterInterface.setJobOrderHasDetails(jobOrderHasDetails);
-                        ((JobOrderCallback) context).onLoadJobOrderDetails(jobOrderHasDetails);
-                    }
-                }
-        );
+            @Override
+            public void onLoadJobOrderDetails(List<JobOrderHasDetails> jobOrderHasDetails) {
+
+            }
+        })
     }
 
-    public void getJobOrderByUser() {
+    public void getJobOrderByUser(String sortOrder) {
         String authorization = authService.getAuthorization();
         jobOrderRepository.getJobOrderByUser(authorization, "createdAt", sortOrder);
     }
@@ -103,5 +99,18 @@ public class JobOrderService {
                 selectedStatus = "All";
                 break;
         }
+    }
+
+    @Nullable
+    @Override
+    public IBinder onBind(Intent intent) {
+        return null;
+    }
+
+    @Override
+    public void onDestroy() { super.onDestroy(); }
+
+    public class LocalBinder extends Binder {
+        public JobOrderService getService() { return JobOrderService.this; }
     }
 }

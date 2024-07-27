@@ -1,4 +1,4 @@
-package com.example.epod.job_management.job_order.view.model;
+package com.example.epod.job_management.job_order.data.model;
 
 public class JobOrderHasDetails {
     private String jobOrder, item, itemCode, itemType, itemGroupCode, itemCategoryCode;

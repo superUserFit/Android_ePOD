@@ -1,4 +1,4 @@
-package com.example.epod.job_management.job_order.repository;
+package com.example.epod.job_management.job_order.data.repository;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -8,7 +8,7 @@ import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 
-public interface JobOrderRepositoryInterface {
+public interface JobOrderAPI {
     @FormUrlEncoded
     @POST("job_order/api/job-order/get-job-order-by-user")
     Call<JobOrderResponse> getJobOrderByUser(

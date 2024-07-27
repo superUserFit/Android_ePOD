@@ -28,7 +28,6 @@ public class AuthService extends Service {
     private SharedPreferences sharedPreferences;
     private AuthRepository authRepository;
 
-
     @Override
     public void onCreate() {
         super.onCreate();
@@ -101,8 +100,8 @@ public class AuthService extends Service {
         super.onDestroy();
     }
 
-    public class LocalBinder extends Binder{
-        AuthService getService() {
+    public class LocalBinder extends Binder {
+        public AuthService getService() {
             return AuthService.this;
         }
     }

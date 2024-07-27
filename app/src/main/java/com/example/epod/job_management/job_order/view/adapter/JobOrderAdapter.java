@@ -13,10 +13,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.epod.R;
 import com.example.epod.job_management.job_order.JobOrderDetailsActivity;
-import com.example.epod.job_management.job_order.interfaces.JobOrderAdapterInterface;
-import com.example.epod.job_management.job_order.view.model.JobOrder;
+import com.example.epod.job_management.job_order.view.interfaces.JobOrderAdapterInterface;
+import com.example.epod.job_management.job_order.data.model.JobOrder;
 import com.example.epod.job_management.job_order.view.holder.JobOrderViewHolder;
-import com.example.epod.job_management.job_order.view.model.JobOrderHasDetails;
+import com.example.epod.job_management.job_order.data.model.JobOrderHasDetails;
 
 import java.util.List;
 
