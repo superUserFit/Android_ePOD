@@ -1,4 +1,4 @@
-package com.example.epod.job_management.job_order.view.holder;
+package com.example.epod.job_management.job_order.view.details.holder;
 
 import android.view.View;
 import android.widget.TextView;

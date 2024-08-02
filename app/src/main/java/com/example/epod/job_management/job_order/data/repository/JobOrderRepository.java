@@ -25,8 +25,8 @@ public class JobOrderRepository implements JobOrderRepositoryInterface {
     }
 
     @Override
-    public void getJobOrderByUser(String authorization, String sort, String order, JobOrderCallback jobOrderCallback) {
-        Call<JobOrderResponse> call = jobOrderApi.getJobOrderByUser(authorization, sort, order);
+    public void getJobOrderByUser(String sort, String order, String authorization, JobOrderCallback jobOrderCallback) {
+        Call<JobOrderResponse> call = jobOrderApi.getJobOrderByUser(sort, order, authorization);
 
         call.enqueue(new Callback<JobOrderResponse>() {
             @Override
@@ -54,8 +54,8 @@ public class JobOrderRepository implements JobOrderRepositoryInterface {
     }
 
     @Override
-    public void getUpdateJobOrder(String authorization, String jobOrderId, JobOrderCallback jobOrderCallback) {
-        Call<JobOrderResponse> call = jobOrderApi.getUpdateJobOrder(authorization, jobOrderId);
+    public void getUpdateJobOrder(String jobOrderId, String authorization, JobOrderCallback jobOrderCallback) {
+        Call<JobOrderResponse> call = jobOrderApi.getUpdateJobOrder(jobOrderId, authorization);
 
         call.enqueue(new Callback<JobOrderResponse>() {
             @Override
@@ -78,8 +78,8 @@ public class JobOrderRepository implements JobOrderRepositoryInterface {
     }
 
     @Override
-    public void getUpdateJobOrderHasDetails(String authorization, String jobOrderId, JobOrderCallback jobOrderCallback) {
-        Call<JobOrderResponse> call = jobOrderApi.getUpdateJobOrderHasDetails(authorization, jobOrderId);
+    public void getUpdateJobOrderHasDetails(String jobOrderId, String authorization, JobOrderCallback jobOrderCallback) {
+        Call<JobOrderResponse> call = jobOrderApi.getUpdateJobOrderHasDetails(jobOrderId, authorization);
 
         call.enqueue(new Callback<JobOrderResponse>() {
             @Override

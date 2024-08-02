@@ -1,4 +1,4 @@
-package com.example.epod.job_management.job_order.view.adapter;
+package com.example.epod.job_management.job_order.view.main.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -12,8 +12,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.epod.R;
-import com.example.epod.job_management.job_order.view.holder.TabButtonViewHolder;
-import com.google.android.material.tabs.TabLayout;
+import com.example.epod.job_management.job_order.view.main.holder.TabButtonViewHolder;
 
 import java.util.List;
 

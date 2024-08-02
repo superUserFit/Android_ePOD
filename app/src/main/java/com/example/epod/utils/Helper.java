@@ -1,20 +1,49 @@
 package com.example.epod.utils;
 
-import android.app.Activity;
+import android.annotation.SuppressLint;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.widget.TextView;
+import android.content.ServiceConnection;
+import android.os.IBinder;
 import android.widget.Toast;
 
 import com.example.epod.MainActivity;
-
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
-import java.lang.reflect.Field;
+import com.example.epod.auth.service.AuthService;
+import com.example.epod.auth.service.AuthServiceInterface;
 
 public class Helper {
+    @SuppressLint("StaticFieldLeak")
+    private static Helper instance;
+    private AuthServiceInterface authService;
+    private boolean isBound = false;
+    private Context context;
+
+    private Helper() {
+    }
+
+    public static synchronized Helper getInstance() {
+        if (instance == null) {
+            instance = new Helper();
+        }
+        return instance;
+    }
+
+    public void bindAuthService(Context context) {
+        if (!isBound) {
+            this.context = context.getApplicationContext();
+            Intent intent = new Intent(this.context, AuthService.class);
+            this.context.bindService(intent, authServiceConnection, Context.BIND_AUTO_CREATE);
+        }
+    }
+
+    public void unbindAuthService() {
+        if (isBound) {
+            context.unbindService(authServiceConnection);
+            isBound = false;
+        }
+    }
+
     public static void goBackActivity(Context context) {
         Intent intent = new Intent(context, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -36,4 +65,28 @@ public class Helper {
 
         Toast.makeText(context, text, toastDuration).show();
     }
+
+    public String getAuthorization() {
+        if (authService != null) {
+            return authService.getAuthorization();
+        } else {
+            showToast(context, "Service not connected", "SHORT");
+            return null;
+        }
+    }
+
+    private final ServiceConnection authServiceConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+            AuthService.LocalBinder binder = (AuthService.LocalBinder) iBinder;
+            authService = binder.getService();
+            isBound = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName componentName) {
+            authService = null;
+            isBound = false;
+        }
+    };
 }

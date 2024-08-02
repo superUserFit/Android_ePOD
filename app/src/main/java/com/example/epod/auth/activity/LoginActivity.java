@@ -1,4 +1,4 @@
-package com.example.epod.auth.view;
+package com.example.epod.auth.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -15,6 +15,7 @@ import com.example.epod.MainActivity;
 import com.example.epod.R;
 import com.example.epod.auth.data.model.Auth;
 import com.example.epod.auth.data.repository.AuthCallback;
+import com.example.epod.auth.view.AuthViewModel;
 import com.example.epod.utils.Helper;
 
 public class LoginActivity extends AppCompatActivity implements AuthCallback {

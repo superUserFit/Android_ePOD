@@ -1,4 +1,4 @@
-package com.example.epod.job_management.job_order.view.holder;
+package com.example.epod.job_management.job_order.view.main.holder;
 
 import android.graphics.drawable.GradientDrawable;
 import android.view.View;

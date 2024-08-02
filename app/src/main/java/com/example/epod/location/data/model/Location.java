@@ -1,4 +1,4 @@
-package com.example.epod.location.model;
+package com.example.epod.location.data.model;
 
 public class Location {
     private String UUID, locationCode;

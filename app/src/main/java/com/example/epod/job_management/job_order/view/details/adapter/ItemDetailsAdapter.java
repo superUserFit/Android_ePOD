@@ -1,4 +1,4 @@
-package com.example.epod.job_management.job_order.view.adapter;
+package com.example.epod.job_management.job_order.view.details.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.epod.R;
 import com.example.epod.job_management.job_order.view.interfaces.JobOrderAdapterInterface;
-import com.example.epod.job_management.job_order.view.holder.ItemDetailsViewHolder;
+import com.example.epod.job_management.job_order.view.details.holder.ItemDetailsViewHolder;
 import com.example.epod.job_management.job_order.data.model.JobOrder;
 import com.example.epod.job_management.job_order.data.model.JobOrderHasDetails;
 

@@ -12,20 +12,20 @@ public interface JobOrderAPI {
     @FormUrlEncoded
     @POST("job_order/api/job-order/get-job-order-by-user")
     Call<JobOrderResponse> getJobOrderByUser(
-            @Header("Authorization") String authorization,
             @Field("param[sort]") String sort,
-            @Field("param[order]") String order
+            @Field("param[order]") String order,
+            @Header("Authorization") String authorization
     );
 
     @GET("job_order/api/job-order/get-update-job-order-data?id=")
     Call<JobOrderResponse> getUpdateJobOrder(
-            @Header("Authorization") String authorization,
-            @Query("id") String jobOrderId
+            @Query("id") String jobOrderId,
+            @Header("Authorization") String authorization
     );
 
     @GET("job_order/api/job-order/get-update-job-order-has-details-data?id=")
     Call<JobOrderResponse> getUpdateJobOrderHasDetails(
-            @Header("Authorization") String authorization,
-            @Query("id") String jobOrderId
+            @Query("id") String jobOrderId,
+            @Header("Authorization") String authorization
     );
 }

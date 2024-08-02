@@ -1,4 +1,4 @@
-package com.example.epod.job_management.job_order;
+package com.example.epod.job_management.job_order.view.details;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -22,7 +22,7 @@ import com.example.epod.auth.service.AuthService;
 import com.example.epod.databinding.JobOrderActivityJobOrderDetailsBinding;
 import com.example.epod.job_management.job_order.data.repository.JobOrderCallback;
 import com.example.epod.job_management.job_order.service.JobOrderService;
-import com.example.epod.job_management.job_order.view.adapter.ItemDetailsAdapter;
+import com.example.epod.job_management.job_order.view.details.adapter.ItemDetailsAdapter;
 import com.example.epod.job_management.job_order.data.model.JobOrder;
 import com.example.epod.job_management.job_order.data.model.JobOrderHasDetails;
 import com.facebook.shimmer.ShimmerFrameLayout;
@@ -31,8 +31,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class JobOrderDetailsActivity extends AppCompatActivity implements JobOrderCallback {
-    private AuthService authService;
-    private JobOrderService jobOrderService;
     private ItemDetailsAdapter itemDetailsAdapter;
     private ViewSwitcher viewSwitcher;
     private ShimmerFrameLayout loadingLayout;
@@ -68,6 +66,7 @@ public class JobOrderDetailsActivity extends AppCompatActivity implements JobOrd
                 finish();
             }
         };
+
         getOnBackPressedDispatcher().addCallback(this, callback);
 
         @SuppressLint({"MissingInflatedId", "LocalSuppress"}) View mainView = findViewById(R.id.main);
@@ -83,12 +82,8 @@ public class JobOrderDetailsActivity extends AppCompatActivity implements JobOrd
 
         String jobOrderId = getIntent().getExtras().getString("jobOrderId");
         itemDetailsAdapter = new ItemDetailsAdapter(new ArrayList<>(), this);
-        authService = new AuthService(this);
-        jobOrderService = new JobOrderService(this, itemDetailsAdapter, authService);
-        jobOrderService.getUpdateJobOrder(jobOrderId);
 
         //  Set RecyclerView for job order details
-        jobOrderService.getUpdateJobOrderHasDetails(jobOrderId);
         itemDetailsCard = findViewById(R.id.itemDetails);
 
         RecyclerView recyclerView_jobOrderDetails_itemDetails = findViewById(R.id.recyclerView_jobOrderDetails_itemDetails);
@@ -114,8 +109,6 @@ public class JobOrderDetailsActivity extends AppCompatActivity implements JobOrd
             itemDetailsCard.setVisibility(View.GONE);
         }
     }
-
-
 
     @Override
     public void onLoadJobOrderDetails(List<JobOrderHasDetails> jobOrderHasDetails) {

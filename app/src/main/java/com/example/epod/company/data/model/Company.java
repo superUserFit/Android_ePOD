@@ -1,4 +1,4 @@
-package com.example.epod.company.model;
+package com.example.epod.company.data.model;
 
 public class Company {
     private String UUID, company;

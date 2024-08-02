@@ -17,13 +17,13 @@
         android:theme="@style/Theme.EPOD"
         tools:targetApi="31">
         <activity
-            android:name=".job_management.job_order.JobOrderDetailsActivity"
+            android:name=".job_management.job_order.view.details.JobOrderDetailsActivity"
             android:exported="false" />
         <activity
             android:name=".job_management.job.view.JobActivity"
             android:exported="false" />
         <activity
-            android:name=".job_management.job_order.JobOrderActivity"
+            android:name=".job_management.job_order.view.main.JobOrderActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
@@ -35,7 +35,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".auth.view.LoginActivity"
+            android:name=".auth.activity.LoginActivity"
             android:exported="false" />
     </application>
 

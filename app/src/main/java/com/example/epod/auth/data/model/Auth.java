@@ -1,8 +1,8 @@
 package com.example.epod.auth.data.model;
 
 import com.example.epod.account.model.Account;
-import com.example.epod.company.model.Company;
-import com.example.epod.location.model.Location;
+import com.example.epod.company.data.model.Company;
+import com.example.epod.location.data.model.Location;
 import com.example.epod.user_group.model.UserGroup;
 
 public class Auth {

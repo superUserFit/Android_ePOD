@@ -13,7 +13,7 @@ import com.example.epod.auth.data.model.Auth;
 import com.example.epod.auth.data.repository.AuthCallback;
 import com.example.epod.auth.data.repository.AuthRepository;
 
-public class AuthService extends Service {
+public class AuthService extends Service implements AuthServiceInterface {
     private final IBinder binder = new LocalBinder();
 
     private static final String PREFERENCES_NAME = "auth";
@@ -56,7 +56,7 @@ public class AuthService extends Service {
                 editor.putString(KEY_ACCOUNT, authenticatedUser.getCurrentAccount().getUUID());
                 editor.putString(KEY_LOCATION, authenticatedUser.getCurrentLocation().getUUID());
                 editor.putString(KEY_COMPANY, authenticatedUser.getCurrentCompany().getUUID());
-                editor.putString(KEY_USER_GROUP, authenticatedUser.getCurrentUserGroup().getUUID());
+                editor.putString(KEY_USER_GROUP, authenticatedUser.getCurrentUserGroup().getUserGroup());
             }
 
             @Override
@@ -66,16 +66,30 @@ public class AuthService extends Service {
         });
     }
 
+    @Override
     public String getToken() {
         return sharedPreferences.getString(KEY_TOKEN, null);
     }
 
+    @Override
     public String getUserId() {
         return sharedPreferences.getString(KEY_USER_ID, null);
     }
 
+    @Override
     public String getAuthorization() { return sharedPreferences.getString(KEY_AUTHORIZATION, null); };
 
+    @Override
+    public String getAccount() { return sharedPreferences.getString(KEY_ACCOUNT, null); }
+
+    @Override
+    public String getCompany() { return sharedPreferences.getString(KEY_COMPANY, null); }
+
+    @Override
+    public String getUserGroup() { return sharedPreferences.getString(KEY_USER_GROUP, null); }
+
+    @Override
+    public String getLocation() { return sharedPreferences.getString(KEY_LOCATION, null); }
 
     public void logout() {
         SharedPreferences.Editor editor = sharedPreferences.edit();

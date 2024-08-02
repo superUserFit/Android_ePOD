@@ -1,4 +1,4 @@
-package com.example.epod.job_management.job_order;
+package com.example.epod.job_management.job_order.view.main;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -13,18 +13,19 @@ import android.widget.ViewSwitcher;
 import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.epod.auth.service.AuthService;
-import com.example.epod.job_management.job_order.service.JobOrderService;
 import com.example.epod.job_management.job_order.data.model.JobOrderHasDetails;
+import com.example.epod.job_management.job_order.view.main.model.JobOrderViewModel;
 import com.facebook.shimmer.ShimmerFrameLayout;
 
 import com.example.epod.R;
-import com.example.epod.job_management.job_order.view.adapter.JobOrderAdapter;
-import com.example.epod.job_management.job_order.view.adapter.TabButtonAdapter;
-import com.example.epod.job_management.job_order.view.holder.TabButtonViewHolder;
+import com.example.epod.job_management.job_order.view.main.adapter.JobOrderAdapter;
+import com.example.epod.job_management.job_order.view.main.adapter.TabButtonAdapter;
+import com.example.epod.job_management.job_order.view.main.holder.TabButtonViewHolder;
 import com.example.epod.job_management.job_order.data.model.JobOrder;
 import com.example.epod.utils.Helper;
 import com.example.epod.job_management.job_order.data.repository.JobOrderCallback;
@@ -35,8 +36,7 @@ import java.util.List;
 public class JobOrderActivity extends AppCompatActivity implements JobOrderCallback {
     private JobOrderAdapter jobOrderAdapter;
     private TabButtonAdapter tabButtonAdapter;
-    private JobOrderService jobOrderService;
-    private AuthService authService;
+    private JobOrderViewModel jobOrderViewModel;
 
     private ViewSwitcher viewSwitcher;
     private ShimmerFrameLayout loadingLayout;
@@ -96,12 +96,34 @@ public class JobOrderActivity extends AppCompatActivity implements JobOrderCallb
         recyclerViewTabButton.setLayoutManager(tabButtonLayout);
         recyclerViewTabButton.setAdapter(tabButtonAdapter);
 
-        sortJobOrder = findViewById(R.id.sort_job_order);
+        jobOrderViewModel = new ViewModelProvider(this).get(JobOrderViewModel.class);
 
-        authService = new AuthService(this);
+        jobOrderViewModel.getJobOrders().observe(this, new Observer<List<JobOrder>>() {
+            @Override
+            public void onChanged(List<JobOrder> jobOrders) {
+                loadingLayout.stopShimmer();
+                viewSwitcher.setDisplayedChild(1);
+                jobOrderAdapter.setJobOrders(jobOrders);
+            }
+        });
+
+        jobOrderViewModel.getIsLoading().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isLoading) {
+                if(isLoading) {
+                    loadingLayout.startShimmer();
+                    viewSwitcher.setDisplayedChild(0);
+                } else {
+                    loadingLayout.stopShimmer();
+                    viewSwitcher.setDisplayedChild(1);
+                }
+            }
+        });
+
+        jobOrderViewModel.loadJobOrders("desc");
+
+        sortJobOrder = findViewById(R.id.sort_job_order);
         jobOrderAdapter = new JobOrderAdapter(new ArrayList<>(), this);
-        jobOrderService = new JobOrderService(this, jobOrderAdapter, authService);
-        jobOrderService.getJobOrderByUser();
 
         // Set RecyclerView for job orders
         RecyclerView recyclerView_jobOrder = findViewById(R.id.recyclerView_jobOrder);
@@ -131,7 +153,7 @@ public class JobOrderActivity extends AppCompatActivity implements JobOrderCallb
         sortJobOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                jobOrderService.toggleSortJobOrder();
+                jobOrderViewModel.toggleSortJobOrders();
             }
         });
 
@@ -141,9 +163,6 @@ public class JobOrderActivity extends AppCompatActivity implements JobOrderCallb
                 int position = recyclerViewTabButton.getChildAdapterPosition(view);
                 tabButtonAdapter.selectedTabIndex = position;
                 tabButtonAdapter.notifyDataSetChanged();
-
-                // Update job order service with selected index
-                jobOrderService.setSelectedStatusIndex(position);
             } else {
                 Log.e("TabButtonAdapter", "View is not a direct child of RecyclerView");
             }
