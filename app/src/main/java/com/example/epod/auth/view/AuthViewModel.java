@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.IBinder;
 
+import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
@@ -46,6 +47,7 @@ public class AuthViewModel extends AndroidViewModel {
     };
 
     public void login(String username, String password) {
+        Log.e("View model: ", username);
         if(authService != null) {
             authService.login(username, password, new AuthCallback() {
                 @Override

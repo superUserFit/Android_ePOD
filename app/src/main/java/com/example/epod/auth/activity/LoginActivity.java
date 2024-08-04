@@ -28,6 +28,8 @@ public class LoginActivity extends AppCompatActivity implements AuthCallback {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.auth_activity_login);
 
+        Log.e("Message", "Hello World");
+
         EditText usernameTextField = findViewById(R.id.username);
         EditText passwordTextField = findViewById(R.id.password);
         loginButton = findViewById(R.id.login_button);
@@ -51,6 +53,8 @@ public class LoginActivity extends AppCompatActivity implements AuthCallback {
         loginButton.setOnClickListener(view -> {
             String username = usernameTextField.getText().toString();
             String password = passwordTextField.getText().toString();
+
+            Log.e("Activity: ", username);
 
             if (username.isEmpty() || password.isEmpty()) {
                 Helper.showToast(LoginActivity.this, "Username and password cannot be blank", "SHORT");

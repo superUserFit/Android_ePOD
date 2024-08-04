@@ -1,9 +1,8 @@
 package com.example.epod.utils;
 
-//      http://192.168.1.101/1ofis/application/backend;
-//      https://1ofis.infollective.com/application/backend;
 
 import android.content.Context;
+import android.util.Log;
 import com.example.epod.R;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -25,10 +24,11 @@ import java.security.cert.CertificateFactory;
 
 public class Request {
     public static Retrofit retrofit;
-    private static final String BASE_URL = "http://192.168.1.101/1ofis/application/backend/";
-//    private static final String BASE_URL = "https://1ofis.infollective.com/application/backend/";
+//    private static final String BASE_URL = "http://192.168.1.101/1ofis/application/backend/";
+    private static final String BASE_URL = "https://1ofis.infollective.com/application/backend/";
 
     public static Retrofit getRetrofitInstance(Context context) {
+        Log.e("BaseURL: ", BASE_URL);
         if(retrofit == null) {
             HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
             loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -66,16 +66,9 @@ public class Request {
 
             return sslContext.getSocketFactory();
 
-        } catch (CertificateException certError) {
+        } catch (CertificateException | IOException | KeyStoreException | NoSuchAlgorithmException |
+                 KeyManagementException certError) {
             throw new RuntimeException(certError);
-        } catch (IOException inputOutputError) {
-            throw new RuntimeException(inputOutputError);
-        } catch (KeyStoreException keyStoreError) {
-            throw new RuntimeException(keyStoreError);
-        } catch (NoSuchAlgorithmException algorithmError) {
-            throw new RuntimeException(algorithmError);
-        } catch (KeyManagementException keyManagementError) {
-            throw new RuntimeException(keyManagementError);
         }
     }
 

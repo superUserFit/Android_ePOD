@@ -18,10 +18,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.epod.R;
-import com.example.epod.auth.service.AuthService;
 import com.example.epod.databinding.JobOrderActivityJobOrderDetailsBinding;
 import com.example.epod.job_management.job_order.data.repository.JobOrderCallback;
-import com.example.epod.job_management.job_order.service.JobOrderService;
 import com.example.epod.job_management.job_order.view.details.adapter.ItemDetailsAdapter;
 import com.example.epod.job_management.job_order.data.model.JobOrder;
 import com.example.epod.job_management.job_order.data.model.JobOrderHasDetails;

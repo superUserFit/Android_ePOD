@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.os.IBinder;
 import android.os.Binder;
 
+import android.util.Log;
 import androidx.annotation.Nullable;
 import com.example.epod.auth.data.model.Auth;
 import com.example.epod.auth.data.repository.AuthCallback;
@@ -46,6 +47,7 @@ public class AuthService extends Service implements AuthServiceInterface {
     }
 
     public void login(String username, String password, AuthCallback authCallback) {
+        Log.e("Service", username);
         authRepository.login(username, password, new AuthCallback() {
             @Override
             public void onLogin(Auth authenticatedUser) {

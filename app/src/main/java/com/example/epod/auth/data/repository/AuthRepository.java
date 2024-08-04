@@ -1,6 +1,7 @@
 package com.example.epod.auth.data.repository;
 
 import android.content.Context;
+import android.util.Log;
 import com.example.epod.auth.data.model.Auth;
 
 import com.example.epod.utils.Request;
@@ -17,6 +18,7 @@ public class AuthRepository implements AuthRepositoryInterface {
 
     @Override
     public void login(String username, String password, AuthCallback authCallback) {
+        Log.e("Repo: ", username);
         Call<AuthResponse> call = authApi.login(username, password);
 
         call.enqueue(new Callback<AuthResponse>() {
