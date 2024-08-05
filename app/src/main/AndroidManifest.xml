@@ -16,6 +16,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EPOD"
         tools:targetApi="tiramisu">
+
+        <service
+                android:name=".auth.service.AuthService"
+                android:exported="false"/>
         <activity
             android:name=".job_management.job_order.view.details.JobOrderDetailsActivity"
             android:exported="false" />

@@ -63,8 +63,9 @@ public class LoginActivity extends AppCompatActivity implements AuthCallback {
 
             authViewModel.login(username, password);
 
+            loginButton.setEnabled(false);
             loginButton.setText("");
-            loginButton.setBackgroundResource(R.drawable.gradient_white);
+            loginButton.setBackgroundColor(R.color.white);
             progressBar.setVisibility(View.VISIBLE);
         });
     }
@@ -73,6 +74,7 @@ public class LoginActivity extends AppCompatActivity implements AuthCallback {
     public void onLogin(Auth authenticatedUser) {
         Log.e("User in Activity: ", authenticatedUser.getUsername());
         progressBar.setVisibility(View.GONE);
+        loginButton.setEnabled(true);
         loginButton.setText("Login");
         loginButton.setBackgroundResource(R.drawable.ui_rounded_64_gradient_orange);
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
@@ -83,6 +85,7 @@ public class LoginActivity extends AppCompatActivity implements AuthCallback {
     @Override
     public void onError(String errorMessage) {
         progressBar.setVisibility(View.GONE);
+        loginButton.setEnabled(true);
         loginButton.setText("Login");
         loginButton.setBackgroundResource(R.drawable.ui_rounded_64_gradient_orange);
         Helper.showToast(LoginActivity.this, errorMessage, "SHORT");
@@ -90,6 +93,7 @@ public class LoginActivity extends AppCompatActivity implements AuthCallback {
 
     private void handleAuthSuccess(Auth authenticatedUser) {
         progressBar.setVisibility(View.GONE);
+        loginButton.setEnabled(true);
         loginButton.setText("Login");
         loginButton.setBackgroundResource(R.drawable.ui_rounded_64_gradient_orange);
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
@@ -99,6 +103,7 @@ public class LoginActivity extends AppCompatActivity implements AuthCallback {
 
     private void handleAuthError(String errorMessage) {
         progressBar.setVisibility(View.GONE);
+        loginButton.setEnabled(true);
         loginButton.setText("Login");
         loginButton.setBackgroundResource(R.drawable.ui_rounded_64_gradient_orange);
         Helper.showToast(LoginActivity.this, errorMessage, "SHORT");

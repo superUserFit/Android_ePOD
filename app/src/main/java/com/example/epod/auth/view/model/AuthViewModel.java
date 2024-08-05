@@ -39,12 +39,14 @@ public class AuthViewModel extends AndroidViewModel {
     private final ServiceConnection serviceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
+            Log.e("Connection", "Service connected");
             AuthService.LocalBinder binder = (AuthService.LocalBinder) service;
             authService = binder.getService();
         }
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
+            Log.e("Connection", "Service disconnected");
             authService = null;
         }
     };
@@ -63,6 +65,8 @@ public class AuthViewModel extends AndroidViewModel {
                     errorMessage.postValue(message);
                 }
             });
+        } else {
+            Log.e("Connection", "Auth Service not connected");
         }
     }
 

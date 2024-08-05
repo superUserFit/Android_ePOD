@@ -55,10 +55,11 @@ public class AuthService extends Service implements AuthServiceInterface {
 
                 editor.putString(KEY_TOKEN, authenticatedUser.getAccess_token());
                 editor.putString(KEY_USER_ID, authenticatedUser.getId());
-                editor.putString(KEY_ACCOUNT, authenticatedUser.getCurrentAccount().getUUID());
-                editor.putString(KEY_LOCATION, authenticatedUser.getCurrentLocation().getUUID());
-                editor.putString(KEY_COMPANY, authenticatedUser.getCurrentCompany().getUUID());
-                editor.putString(KEY_USER_GROUP, authenticatedUser.getCurrentUserGroup().getUserGroup());
+
+                editor.putString(KEY_ACCOUNT, authenticatedUser.getCurrentAccount() != null ? authenticatedUser.getCurrentAccount().getUUID() : null);
+                editor.putString(KEY_LOCATION, authenticatedUser.getCurrentLocation() != null ? authenticatedUser.getCurrentLocation().getUUID() : null);
+                editor.putString(KEY_COMPANY, authenticatedUser.getCurrentCompany() != null ? authenticatedUser.getCurrentCompany().getUUID() : null);
+                editor.putString(KEY_USER_GROUP, authenticatedUser.getCurrentUserGroup() != null ? authenticatedUser.getCurrentUserGroup().getUserGroup() : null);
             }
 
             @Override
