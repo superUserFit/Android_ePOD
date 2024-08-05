@@ -5,7 +5,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.epod.auth.activity.LoginActivity;
+import com.example.epod.auth.view.LoginActivity;
 import com.example.epod.databinding.ActivityMainBinding;
 import com.example.epod.job_management.JobManagementFragment;
 import com.example.epod.user.ProfileFragment;

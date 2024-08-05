@@ -1,6 +1,7 @@
-package com.example.epod.auth.view;
+package com.example.epod.auth.view.model;
 
 
+import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.ComponentName;
 import android.content.Context;
@@ -21,6 +22,8 @@ import com.example.epod.auth.service.AuthService;
 public class AuthViewModel extends AndroidViewModel {
     private final MutableLiveData<Auth> authenticatedUser = new MutableLiveData<>();
     private final MutableLiveData<String> errorMessage = new MutableLiveData<>();
+
+    @SuppressLint("StaticFieldLeak")
     private AuthService authService;
 
     public AuthViewModel(@NonNull Application application) {
