@@ -65,7 +65,7 @@ public class LoginActivity extends AppCompatActivity implements AuthCallback {
 
             loginButton.setEnabled(false);
             loginButton.setText("");
-            loginButton.setBackgroundColor(R.color.white);
+            loginButton.setBackgroundResource(R.drawable.ui_rounded_64_white);
             progressBar.setVisibility(View.VISIBLE);
         });
     }
