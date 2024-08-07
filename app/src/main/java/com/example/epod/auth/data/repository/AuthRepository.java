@@ -18,7 +18,6 @@ public class AuthRepository implements AuthRepositoryInterface {
 
     @Override
     public void login(String username, String password, AuthCallback authCallback) {
-        Log.e("Repo: ", username);
         Call<AuthResponse> call = authApi.login(username, password);
 
         call.enqueue(new Callback<AuthResponse>() {
@@ -27,6 +26,7 @@ public class AuthRepository implements AuthRepositoryInterface {
                 if (response.isSuccessful()) {
                     AuthResponse authResponse = response.body();
                     if(authResponse != null) {
+                        Log.e("User in Repo", authResponse.getAuthenticatedUser().getUsername());
                         Auth authenticatedUser = authResponse.getAuthenticatedUser();
                         authCallback.onLogin(authenticatedUser);
                     } else {

@@ -8,4 +8,5 @@ public interface AuthServiceInterface {
     String getCompany();
     String getLocation();
     String getUserGroup();
+    String getUserRole();
 }

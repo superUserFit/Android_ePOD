@@ -5,14 +5,17 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ViewSwitcher;
 import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -33,7 +36,7 @@ import com.example.epod.job_management.job_order.data.repository.JobOrderCallbac
 import java.util.ArrayList;
 import java.util.List;
 
-public class JobOrderActivity extends AppCompatActivity implements JobOrderCallback {
+public class JobOrderActivity extends Fragment implements JobOrderCallback {
     private JobOrderAdapter jobOrderAdapter;
     private TabButtonAdapter tabButtonAdapter;
     private JobOrderViewModel jobOrderViewModel;
@@ -55,33 +58,26 @@ public class JobOrderActivity extends AppCompatActivity implements JobOrderCallb
     };
 
 
-    @SuppressLint("WrongViewCast")
+    @SuppressLint({"WrongViewCast", "NotifyDataSetChanged"})
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.job_order_activity_job_order);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.job_order_activity_job_order, container, false);
 
         // Set AppBar
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        Toolbar toolbar = rootView.findViewById(R.id.toolbar);
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
 
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        if(activity != null) {
+            activity.setSupportActionBar(toolbar);
+            if(activity.getSupportActionBar() != null) {
+                activity.getSupportActionBar().setDisplayShowHomeEnabled(true);
+                activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                activity.getSupportActionBar().setTitle("Job Order");
+            }
         }
 
-        getSupportActionBar().setTitle("Job Order");
-
-        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
-            @Override
-            public void handleOnBackPressed() {
-                Helper.goBackActivity(JobOrderActivity.this);
-            }
-        };
-        getOnBackPressedDispatcher().addCallback(this, callback);
-
-        viewSwitcher = findViewById(R.id.viewSwitcher);
-        loadingLayout = findViewById(R.id.job_order_loading);
+        viewSwitcher = rootView.findViewById(R.id.viewSwitcher);
+        loadingLayout = rootView.findViewById(R.id.job_order_loading);
         viewSwitcher.setDisplayedChild(0);
 
         List<TabButtonViewHolder.TabButton> tabButtonList = new ArrayList<>();
@@ -90,15 +86,15 @@ public class JobOrderActivity extends AppCompatActivity implements JobOrderCallb
             tabButtonList.add(new TabButtonViewHolder.TabButton(status));
         }
 
-        tabButtonAdapter = new TabButtonAdapter(tabButtonList, this);
-        RecyclerView recyclerViewTabButton = findViewById(R.id.recyclerView_jobOrder_tabButton);
-        LinearLayoutManager tabButtonLayout = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        tabButtonAdapter = new TabButtonAdapter(tabButtonList, getContext());
+        RecyclerView recyclerViewTabButton = rootView.findViewById(R.id.recyclerView_jobOrder_tabButton);
+        LinearLayoutManager tabButtonLayout = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerViewTabButton.setLayoutManager(tabButtonLayout);
         recyclerViewTabButton.setAdapter(tabButtonAdapter);
 
         jobOrderViewModel = new ViewModelProvider(this).get(JobOrderViewModel.class);
 
-        jobOrderViewModel.getJobOrders().observe(this, new Observer<List<JobOrder>>() {
+        jobOrderViewModel.getJobOrders().observe(getViewLifecycleOwner(), new Observer<List<JobOrder>>() {
             @Override
             public void onChanged(List<JobOrder> jobOrders) {
                 loadingLayout.stopShimmer();
@@ -107,7 +103,7 @@ public class JobOrderActivity extends AppCompatActivity implements JobOrderCallb
             }
         });
 
-        jobOrderViewModel.getIsLoading().observe(this, new Observer<Boolean>() {
+        jobOrderViewModel.getIsLoading().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean isLoading) {
                 if(isLoading) {
@@ -122,16 +118,16 @@ public class JobOrderActivity extends AppCompatActivity implements JobOrderCallb
 
         jobOrderViewModel.loadJobOrders("desc");
 
-        sortJobOrder = findViewById(R.id.sort_job_order);
-        jobOrderAdapter = new JobOrderAdapter(new ArrayList<>(), this);
+        sortJobOrder = rootView.findViewById(R.id.sort_job_order);
+        jobOrderAdapter = new JobOrderAdapter(new ArrayList<>(), getContext());
 
         // Set RecyclerView for job orders
-        RecyclerView recyclerView_jobOrder = findViewById(R.id.recyclerView_jobOrder);
+        RecyclerView recyclerView_jobOrder = rootView.findViewById(R.id.recyclerView_jobOrder);
         recyclerView_jobOrder.setAdapter(jobOrderAdapter);
-        recyclerView_jobOrder.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView_jobOrder.setLayoutManager(new LinearLayoutManager(getContext()));
 
         //  For search feature
-        searchTextField = findViewById(R.id.searchBar);
+        searchTextField = rootView.findViewById(R.id.searchBar);
 
         searchTextField.addTextChangedListener(new TextWatcher() {
             @Override
@@ -168,25 +164,17 @@ public class JobOrderActivity extends AppCompatActivity implements JobOrderCallb
             }
         });
 
+        return rootView;
     }
 
     @Override
     public void onLoadJobOrders(List<JobOrder> jobOrders) {
-        runOnUiThread(() -> {
+        requireActivity().runOnUiThread(() -> {
             loadingLayout.stopShimmer();
             viewSwitcher.setDisplayedChild(1);
             this.jobOrders = jobOrders;
             jobOrderAdapter.setJobOrders(this.jobOrders);
         });
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            Helper.goBackActivity(this);
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     private void searchJobOrders(String searchQuery) {

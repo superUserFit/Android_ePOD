@@ -19,6 +19,7 @@ import android.util.Log;
 public class MainActivity extends AppCompatActivity {
     ActivityMainBinding dataBinding;
     SharedPreferences sharedPreferences;
+    boolean isUserAssignee;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
         sharedPreferences = getSharedPreferences("auth", MODE_PRIVATE);
         String token = sharedPreferences.getString("token", null);
+        String userRole = sharedPreferences.getString("user_role", null);
 
         if(token == null) {
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
@@ -36,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        Log.e("Token", token);
+        isUserAssignee = "ASSIGNEE".equalsIgnoreCase(userRole);
 
         replaceFragment(new JobManagementFragment());
 

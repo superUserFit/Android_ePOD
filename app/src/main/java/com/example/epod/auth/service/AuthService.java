@@ -25,6 +25,7 @@ public class AuthService extends Service implements AuthServiceInterface {
     private static final String KEY_COMPANY = "company";
     private static final String KEY_LOCATION = "location";
     private static final String KEY_USER_GROUP = "user_group";
+    private static final String KEY_USER_ROLE = "user_role";
 
     private SharedPreferences sharedPreferences;
     private AuthRepository authRepository;
@@ -47,7 +48,6 @@ public class AuthService extends Service implements AuthServiceInterface {
     }
 
     public void login(String username, String password, AuthCallback authCallback) {
-        Log.e("Service", username);
         authRepository.login(username, password, new AuthCallback() {
             @Override
             public void onLogin(Auth authenticatedUser) {
@@ -60,6 +60,21 @@ public class AuthService extends Service implements AuthServiceInterface {
                 editor.putString(KEY_LOCATION, authenticatedUser.getCurrentLocation() != null ? authenticatedUser.getCurrentLocation().getUUID() : null);
                 editor.putString(KEY_COMPANY, authenticatedUser.getCurrentCompany() != null ? authenticatedUser.getCurrentCompany().getUUID() : null);
                 editor.putString(KEY_USER_GROUP, authenticatedUser.getCurrentUserGroup() != null ? authenticatedUser.getCurrentUserGroup().getUserGroup() : null);
+
+                String userRole;
+                String userGroup = authenticatedUser.getCurrentUserGroup() != null ? authenticatedUser.getCurrentUserGroup().getUserGroup() : "";
+
+                if(userGroup.toLowerCase().contains("supervisor")) {
+                    userRole = "SUPERVISOR";
+                } else if(userGroup.toLowerCase().contains("admin")) {
+                    userRole = "ADMIN";
+                } else {
+                    userRole = "ASSIGNEE";
+                }
+
+                editor.putString(KEY_USER_ROLE, userRole);
+                editor.apply();
+                authCallback.onLogin(authenticatedUser);
             }
 
             @Override
@@ -90,6 +105,11 @@ public class AuthService extends Service implements AuthServiceInterface {
 
     @Override
     public String getUserGroup() { return sharedPreferences.getString(KEY_USER_GROUP, null); }
+
+    @Override
+    public String getUserRole() {
+        return sharedPreferences.getString(KEY_USER_ROLE, null);
+    }
 
     @Override
     public String getLocation() { return sharedPreferences.getString(KEY_LOCATION, null); }

@@ -1,7 +1,10 @@
 package com.example.epod.job_management.job.view;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.activity.EdgeToEdge;
 import androidx.activity.OnBackPressedCallback;
@@ -10,49 +13,34 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.fragment.app.Fragment;
 
 import com.example.epod.R;
 import com.example.epod.utils.Helper;
 
-public class JobActivity extends AppCompatActivity {
-
+public class JobActivity extends Fragment {
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.job_order_activity_job, container, false);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.job_order_activity_job);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        Toolbar toolbar = rootView.findViewById(R.id.toolbar);
+        AppCompatActivity activity = (AppCompatActivity)getActivity();
 
-        if(getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if(activity != null) {
+            activity.setSupportActionBar(toolbar);
+            if(activity.getSupportActionBar() != null) {
+                activity.getSupportActionBar().setDisplayShowHomeEnabled(true);
+                activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                activity.getSupportActionBar().setTitle("Job");
+            }
         }
 
-        getSupportActionBar().setTitle("Job");
-
-        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
-            @Override
-            public void handleOnBackPressed() {
-                Helper.goBackActivity(JobActivity.this);
-            }
-        };
-        getOnBackPressedDispatcher().addCallback(this, callback);
-
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+        return rootView;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            Helper.goBackActivity(this);
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
     }
 }

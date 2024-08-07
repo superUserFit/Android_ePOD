@@ -18,6 +18,8 @@ import com.example.epod.auth.data.repository.AuthCallback;
 import com.example.epod.auth.view.model.AuthViewModel;
 import com.example.epod.utils.Helper;
 
+import java.util.Objects;
+
 public class LoginActivity extends AppCompatActivity implements AuthCallback {
     private AuthViewModel authViewModel;
     private ProgressBar progressBar;
@@ -54,8 +56,6 @@ public class LoginActivity extends AppCompatActivity implements AuthCallback {
             String username = usernameTextField.getText().toString();
             String password = passwordTextField.getText().toString();
 
-            Log.e("Activity: ", username);
-
             if (username.isEmpty() || password.isEmpty()) {
                 Helper.showToast(LoginActivity.this, "Username and password cannot be blank", "SHORT");
                 return;
@@ -72,7 +72,7 @@ public class LoginActivity extends AppCompatActivity implements AuthCallback {
 
     @Override
     public void onLogin(Auth authenticatedUser) {
-        Log.e("User in Activity: ", authenticatedUser.getUsername());
+        Log.d("AuthSuccess", "Authenticated successfully.");
         progressBar.setVisibility(View.GONE);
         loginButton.setEnabled(true);
         loginButton.setText("Login");
@@ -92,13 +92,17 @@ public class LoginActivity extends AppCompatActivity implements AuthCallback {
     }
 
     private void handleAuthSuccess(Auth authenticatedUser) {
-        progressBar.setVisibility(View.GONE);
-        loginButton.setEnabled(true);
-        loginButton.setText("Login");
-        loginButton.setBackgroundResource(R.drawable.ui_rounded_64_gradient_orange);
-        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-        startActivity(intent);
-        finish();
+        try {
+            progressBar.setVisibility(View.GONE);
+            loginButton.setEnabled(true);
+            loginButton.setText("Login");
+            loginButton.setBackgroundResource(R.drawable.ui_rounded_64_gradient_orange);
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        } catch (Exception error) {
+            Log.e("AuthError", Objects.requireNonNull(error.getMessage()));
+        }
     }
 
     private void handleAuthError(String errorMessage) {
