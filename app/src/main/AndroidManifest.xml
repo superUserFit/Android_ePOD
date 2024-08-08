@@ -24,10 +24,10 @@
             android:name=".job_management.job_order.view.details.JobOrderDetailsActivity"
             android:exported="false" />
         <activity
-            android:name=".job_management.job.view.JobActivity"
+            android:name=".job_management.job.view.JobFragment"
             android:exported="false" />
         <activity
-            android:name=".job_management.job_order.view.main.JobOrderActivity"
+            android:name=".job_management.job_order.view.main.JobOrderFragment"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

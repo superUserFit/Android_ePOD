@@ -7,13 +7,13 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.epod.auth.view.LoginActivity;
 import com.example.epod.databinding.ActivityMainBinding;
-import com.example.epod.job_management.JobManagementFragment;
+import com.example.epod.job_management.job.view.JobFragment;
+import com.example.epod.job_management.job_order.view.main.JobOrderFragment;
 import com.example.epod.user.ProfileFragment;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -40,12 +40,20 @@ public class MainActivity extends AppCompatActivity {
 
         isUserAssignee = "ASSIGNEE".equalsIgnoreCase(userRole);
 
-        replaceFragment(new JobManagementFragment());
+        if(isUserAssignee) {
+            replaceFragment(new JobFragment());
+        } else {
+            replaceFragment(new JobOrderFragment());
+        }
 
         dataBinding.bottomNavigationView.setOnItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.job_management_tab:
-                    replaceFragment(new JobManagementFragment());
+                    if(isUserAssignee) {
+                        replaceFragment(new JobFragment());
+                    } else {
+                        replaceFragment(new JobOrderFragment());
+                    }
                     break;
 
                 case R.id.profile_tab:

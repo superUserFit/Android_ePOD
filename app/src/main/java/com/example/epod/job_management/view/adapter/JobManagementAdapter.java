@@ -11,8 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.epod.R;
 import com.example.epod.job_management.JobManagementFragment;
-import com.example.epod.job_management.job.view.JobActivity;
-import com.example.epod.job_management.job_order.view.main.JobOrderActivity;
+import com.example.epod.job_management.job.view.JobFragment;
+import com.example.epod.job_management.job_order.view.main.JobOrderFragment;
 import com.example.epod.job_management.view.model.JobManagement;
 import com.example.epod.job_management.view.holder.JobManagementViewHolder;
 
@@ -45,11 +45,11 @@ public class JobManagementAdapter extends RecyclerView.Adapter<JobManagementView
 
             switch (jobManagement.getCardTitle()) {
                 case "Job Order":
-                    intent = new Intent(context, JobOrderActivity.class);
+                    intent = new Intent(context, JobOrderFragment.class);
                     break;
 
                 case "Job":
-                    intent = new Intent(context, JobActivity.class);
+                    intent = new Intent(context, JobFragment.class);
                     break;
 
                 default:
