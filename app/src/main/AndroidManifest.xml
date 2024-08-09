@@ -20,6 +20,10 @@
         <service
                 android:name=".auth.service.AuthService"
                 android:exported="false"/>
+        <service
+            android:name=".job_management.job_order.service.JobOrderService"
+            android:exported="false"/>
+
         <activity
             android:name=".job_management.job_order.view.details.JobOrderDetailsActivity"
             android:exported="false" />

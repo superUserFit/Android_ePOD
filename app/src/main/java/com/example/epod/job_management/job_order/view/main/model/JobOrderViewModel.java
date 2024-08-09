@@ -2,6 +2,13 @@ package com.example.epod.job_management.job_order.view.main.model;
 
 import android.annotation.SuppressLint;
 import android.app.Application;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
+import android.os.IBinder;
+import android.util.Log;
+
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -14,22 +21,17 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 public class JobOrderViewModel extends AndroidViewModel {
-    @SuppressLint("StaticFieldLeak")
-    private final JobOrderService jobOrderService;
-
-    private final MutableLiveData<List<JobOrder>> jobOrders;
-    private final MutableLiveData<Boolean> isLoading;
-    private final MutableLiveData<String> errorMessage;
-
+    private MutableLiveData<List<JobOrder>> jobOrders = new MutableLiveData<>();
+    private MutableLiveData<Boolean> isLoading = new MutableLiveData<>();
+    private MutableLiveData<String> errorMessage = new MutableLiveData<>();
     private String sortOrder = "desc";
+
+    @SuppressLint("StaticFieldLeak")
+    private JobOrderService jobOrderService;
 
     public JobOrderViewModel(@NotNull Application application) {
         super(application);
-        jobOrders = new MutableLiveData<>();
-        isLoading = new MutableLiveData<>(false);
-        errorMessage = new MutableLiveData<>();
-
-        jobOrderService = new JobOrderService();
+        bindJobOrderService(application);
     }
 
     public LiveData<List<JobOrder>> getJobOrders() {
@@ -46,27 +48,50 @@ public class JobOrderViewModel extends AndroidViewModel {
 
     public void loadJobOrders(String sortOrder) {
         isLoading.setValue(true);
-        jobOrderService.getJobOrderByUser(sortOrder, new JobOrderCallback() {
-            @Override
-            public void onLoadJobOrders(List<JobOrder> loadedJobOrders) {
-                jobOrders.setValue(loadedJobOrders);
-                isLoading.setValue(false);
-            }
 
-            @Override
-            public void onLoadJobOrder(JobOrder jobOrder) {
+        if(jobOrderService != null) {
+            jobOrderService.getJobOrderByUser(sortOrder, new JobOrderCallback() {
+                @Override
+                public void onLoadJobOrders(List<JobOrder> loadedJobOrders) {
+                    jobOrders.setValue(loadedJobOrders);
+                    isLoading.setValue(false);
+                }
 
-            }
+                @Override
+                public void onLoadJobOrder(JobOrder jobOrder) {
 
-            @Override
-            public void onLoadJobOrderDetails(List<JobOrderHasDetails> jobOrderHasDetails) {
+                }
 
-            }
-        });
+                @Override
+                public void onLoadJobOrderDetails(List<JobOrderHasDetails> jobOrderHasDetails) {
+
+                }
+            });
+        } else {
+            Log.e("View", "Service is null");
+        }
     }
 
     public void toggleSortJobOrders() {
         sortOrder = sortOrder.equals("asc") ? "desc" : "asc";
         loadJobOrders(sortOrder);
     }
+
+    private void bindJobOrderService(Context context) {
+        Intent intent = new Intent(context, JobOrderService.class);
+        context.bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
+    }
+
+    private final ServiceConnection serviceConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            JobOrderService.LocalBinder binder = (JobOrderService.LocalBinder) service;
+            jobOrderService = binder.getService();
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            jobOrderService = null;
+        }
+    };
 }

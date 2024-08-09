@@ -1,6 +1,7 @@
 package com.example.epod.job_management.job_order.view.main;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -60,7 +61,6 @@ public class JobOrderFragment extends Fragment implements JobOrderCallback {
     @SuppressLint({"WrongViewCast", "NotifyDataSetChanged"})
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.job_order_activity_job_order, container, false);
     }
 
@@ -85,14 +85,19 @@ public class JobOrderFragment extends Fragment implements JobOrderCallback {
                 activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                 activity.getSupportActionBar().setTitle("Job Order");
             }
+        } else {
+            Log.e("JobOrderFragment", "Activity is null!");
         }
 
         // Initialize and set up the JobOrderAdapter
         jobOrderAdapter = new JobOrderAdapter(new ArrayList<>(), getContext());
         RecyclerView recyclerView_jobOrder = view.findViewById(R.id.recyclerView_jobOrder);
-        if (getContext() != null) {
+        Context context = getContext();
+        if (context != null) {
             recyclerView_jobOrder.setAdapter(jobOrderAdapter);
-            recyclerView_jobOrder.setLayoutManager(new LinearLayoutManager(getContext()));
+            recyclerView_jobOrder.setLayoutManager(new LinearLayoutManager(context));
+        } else {
+            Log.e("JobOrderFragment", "Context is null when setting up RecyclerView!");
         }
 
         // Set up the TabButtonAdapter
@@ -102,9 +107,9 @@ public class JobOrderFragment extends Fragment implements JobOrderCallback {
         }
 
         RecyclerView recyclerViewTabButton = view.findViewById(R.id.recyclerView_jobOrder_tabButton);
-        if (getContext() != null) {
-            tabButtonAdapter = new TabButtonAdapter(tabButtonList, getContext());
-            LinearLayoutManager tabButtonLayout = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        if (context != null) {
+            tabButtonAdapter = new TabButtonAdapter(tabButtonList, context);
+            LinearLayoutManager tabButtonLayout = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
             recyclerViewTabButton.setLayoutManager(tabButtonLayout);
             recyclerViewTabButton.setAdapter(tabButtonAdapter);
 
@@ -114,13 +119,10 @@ public class JobOrderFragment extends Fragment implements JobOrderCallback {
                     int position = recyclerViewTabButton.getChildAdapterPosition(tab);
                     tabButtonAdapter.selectedTabIndex = position;
                     tabButtonAdapter.notifyDataSetChanged();
-                } else {
-                    Log.e("TabButtonAdapter", "View is not a direct child of RecyclerView");
                 }
             });
         }
 
-        // Initialize ViewModel and observe data
         jobOrderViewModel = new ViewModelProvider(this).get(JobOrderViewModel.class);
 
         jobOrderViewModel.getJobOrders().observe(getViewLifecycleOwner(), new Observer<List<JobOrder>>() {
@@ -169,6 +171,7 @@ public class JobOrderFragment extends Fragment implements JobOrderCallback {
             }
         });
     }
+
 
     @Override
     public void onLoadJobOrders(List<JobOrder> jobOrders) {
