@@ -1,4 +1,4 @@
-package com.example.epod.utils;
+package com.example.epod.utils.helpers;
 
 import android.annotation.SuppressLint;
 import android.content.ComponentName;
@@ -12,19 +12,19 @@ import com.example.epod.MainActivity;
 import com.example.epod.auth.service.AuthService;
 import com.example.epod.auth.service.AuthServiceInterface;
 
-public class Helper {
+public class ServiceHelper {
     @SuppressLint("StaticFieldLeak")
-    private static Helper instance;
+    private static ServiceHelper instance;
     private AuthServiceInterface authService;
     private boolean isBound = false;
     private Context context;
 
-    private Helper() {
+    private ServiceHelper() {
     }
 
-    public static synchronized Helper getInstance() {
+    public static synchronized ServiceHelper getInstance() {
         if (instance == null) {
-            instance = new Helper();
+            instance = new ServiceHelper();
         }
         return instance;
     }

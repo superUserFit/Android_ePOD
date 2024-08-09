@@ -16,7 +16,7 @@ import com.example.epod.R;
 import com.example.epod.auth.data.model.Auth;
 import com.example.epod.auth.data.repository.AuthCallback;
 import com.example.epod.auth.view.model.AuthViewModel;
-import com.example.epod.utils.Helper;
+import com.example.epod.utils.helpers.ServiceHelper;
 
 import java.util.Objects;
 
@@ -57,7 +57,7 @@ public class LoginActivity extends AppCompatActivity implements AuthCallback {
             String password = passwordTextField.getText().toString();
 
             if (username.isEmpty() || password.isEmpty()) {
-                Helper.showToast(LoginActivity.this, "Username and password cannot be blank", "SHORT");
+                ServiceHelper.showToast(LoginActivity.this, "Username and password cannot be blank", "SHORT");
                 return;
             }
 
@@ -88,7 +88,7 @@ public class LoginActivity extends AppCompatActivity implements AuthCallback {
         loginButton.setEnabled(true);
         loginButton.setText("Login");
         loginButton.setBackgroundResource(R.drawable.ui_rounded_64_gradient_orange);
-        Helper.showToast(LoginActivity.this, errorMessage, "SHORT");
+        ServiceHelper.showToast(LoginActivity.this, errorMessage, "SHORT");
     }
 
     private void handleAuthSuccess(Auth authenticatedUser) {
@@ -110,6 +110,6 @@ public class LoginActivity extends AppCompatActivity implements AuthCallback {
         loginButton.setEnabled(true);
         loginButton.setText("Login");
         loginButton.setBackgroundResource(R.drawable.ui_rounded_64_gradient_orange);
-        Helper.showToast(LoginActivity.this, errorMessage, "SHORT");
+        ServiceHelper.showToast(LoginActivity.this, errorMessage, "SHORT");
     }
 }

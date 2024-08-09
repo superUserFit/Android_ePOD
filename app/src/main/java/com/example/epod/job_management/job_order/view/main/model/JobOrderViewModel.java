@@ -28,6 +28,7 @@ public class JobOrderViewModel extends AndroidViewModel {
 
     @SuppressLint("StaticFieldLeak")
     private JobOrderService jobOrderService;
+    private boolean isServiceConnected = false;
 
     public JobOrderViewModel(@NotNull Application application) {
         super(application);
@@ -38,7 +39,6 @@ public class JobOrderViewModel extends AndroidViewModel {
         Intent intent = new Intent(context, JobOrderService.class);
         context.startService(intent);
         context.bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
-        Log.e("Bind", "Successfully bind the service");
     }
 
     private final ServiceConnection serviceConnection = new ServiceConnection() {
@@ -46,11 +46,18 @@ public class JobOrderViewModel extends AndroidViewModel {
         public void onServiceConnected(ComponentName name, IBinder service) {
             JobOrderService.LocalBinder binder = (JobOrderService.LocalBinder) service;
             jobOrderService = binder.getService();
+
+            if(jobOrderService != null) {
+                isServiceConnected = true;
+                loadJobOrders(sortOrder);
+            }
         }
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
             jobOrderService = null;
+            isServiceConnected = false;
+            errorMessage.setValue("Failed to connect to the service");
         }
     };
 
@@ -67,28 +74,37 @@ public class JobOrderViewModel extends AndroidViewModel {
     }
 
     public void loadJobOrders(String sortOrder) {
+        if(!isServiceConnected) {
+            this.sortOrder = sortOrder;
+            return;
+        }
+
         isLoading.setValue(true);
 
-        if(jobOrderService != null) {
-            jobOrderService.getJobOrderByUser(sortOrder, new JobOrderCallback() {
-                @Override
-                public void onLoadJobOrders(List<JobOrder> loadedJobOrders) {
-                    jobOrders.setValue(loadedJobOrders);
-                    isLoading.setValue(false);
-                }
+        try {
+            if(isServiceConnected) {
+                jobOrderService.getJobOrderByUser(sortOrder, new JobOrderCallback() {
+                    @Override
+                    public void onLoadJobOrders(List<JobOrder> loadedJobOrders) {
+                        jobOrders.setValue(loadedJobOrders);
+                        isLoading.setValue(false);
+                    }
 
-                @Override
-                public void onLoadJobOrder(JobOrder jobOrder) {
+                    @Override
+                    public void onLoadJobOrder(JobOrder jobOrder) {
 
-                }
+                    }
 
-                @Override
-                public void onLoadJobOrderDetails(List<JobOrderHasDetails> jobOrderHasDetails) {
+                    @Override
+                    public void onLoadJobOrderDetails(List<JobOrderHasDetails> jobOrderHasDetails) {
 
-                }
-            });
-        } else {
-            Log.e("ViewModel", "Service is null");
+                    }
+                });
+            }
+        } catch (Exception error) {
+            isLoading.setValue(false);
+            errorMessage.setValue(error.getMessage());
+            Log.e("Error", error.getMessage());
         }
     }
 
@@ -100,6 +116,8 @@ public class JobOrderViewModel extends AndroidViewModel {
     @Override
     protected void onCleared() {
         super.onCleared();
-        getApplication().unbindService(serviceConnection);
+        if(isServiceConnected) {
+            getApplication().unbindService(serviceConnection);
+        }
     }
 }

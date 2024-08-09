@@ -1,22 +1,18 @@
 package com.example.epod.job_management.job_order.service;
 
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 
-import com.example.epod.auth.service.AuthService;
-import com.example.epod.job_management.job_order.view.interfaces.JobOrderAdapterInterface;
 import com.example.epod.job_management.job_order.data.repository.JobOrderCallback;
 import com.example.epod.job_management.job_order.data.repository.JobOrderRepository;
-import com.example.epod.job_management.job_order.data.repository.JobOrderAPI;
 import com.example.epod.job_management.job_order.data.model.JobOrder;
 import com.example.epod.job_management.job_order.data.model.JobOrderHasDetails;
-import com.example.epod.utils.Helper;
-import com.example.epod.utils.Request;
+import com.example.epod.utils.helpers.ServiceHelper;
 
 import java.util.List;
 
@@ -47,11 +43,12 @@ public class JobOrderService extends Service {
     }
 
     public void getJobOrderByUser(String sortOrder, JobOrderCallback jobOrderCallback) {
-        String authorization = Helper.getInstance().getAuthorization();
+        String authorization = ServiceHelper.getInstance().getAuthorization();
+        Log.e("Authorization", authorization);
         jobOrderRepository.getJobOrderByUser("createdAt", sortOrder, authorization, new JobOrderCallback() {
             @Override
             public void onLoadJobOrders(List<JobOrder> jobOrders) {
-                onLoadJobOrder((JobOrder) jobOrders);
+                jobOrderCallback.onLoadJobOrders(jobOrders);
             }
 
             @Override
@@ -67,7 +64,7 @@ public class JobOrderService extends Service {
     }
 
     public void getUpdateJobOrder(String jobOrderId, JobOrderCallback jobOrderCallback) {
-        String authorization = Helper.getInstance().getAuthorization();
+        String authorization = ServiceHelper.getInstance().getAuthorization();
         jobOrderRepository.getUpdateJobOrder(jobOrderId, authorization, new JobOrderCallback() {
             @Override
             public void onLoadJobOrders(List<JobOrder> jobOrders) {
@@ -87,7 +84,7 @@ public class JobOrderService extends Service {
     }
 
     public void getUpdateJobOrderHasDetails(String jobOrderId, JobOrderCallback jobOrderCallback) {
-        String authorization = Helper.getInstance().getAuthorization();
+        String authorization = ServiceHelper.getInstance().getAuthorization();
         jobOrderRepository.getUpdateJobOrderHasDetails(jobOrderId, authorization, new JobOrderCallback() {
             @Override
             public void onLoadJobOrders(List<JobOrder> jobOrders) {
