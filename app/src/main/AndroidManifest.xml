@@ -18,20 +18,20 @@
         tools:targetApi="tiramisu">
 
         <service
-                android:name=".auth.service.AuthService"
+                android:name=".application.auth.service.AuthService"
                 android:exported="false"/>
         <service
-            android:name=".job_management.job_order.service.JobOrderService"
+            android:name=".application.job_order.service.JobOrderService"
             android:exported="false"/>
 
         <activity
-            android:name=".job_management.job_order.view.details.JobOrderDetailsActivity"
+            android:name=".screens.job_management.job_order.details.JobOrderDetailsActivity"
             android:exported="false" />
         <activity
-            android:name=".job_management.job.view.JobFragment"
+            android:name=".screens.job_management.job.view.JobFragment"
             android:exported="false" />
         <activity
-            android:name=".job_management.job_order.view.main.JobOrderFragment"
+            android:name=".screens.job_management.job_order.main.JobOrderFragment"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
@@ -43,7 +43,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".auth.view.LoginActivity"
+            android:name=".screens.auth.LoginActivity"
             android:exported="false" />
     </application>
 

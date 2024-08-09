@@ -5,11 +5,11 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.epod.auth.view.LoginActivity;
+import com.example.epod.screens.auth.LoginActivity;
 import com.example.epod.databinding.ActivityMainBinding;
-import com.example.epod.job_management.job.view.JobFragment;
-import com.example.epod.job_management.job_order.view.main.JobOrderFragment;
-import com.example.epod.user.ProfileFragment;
+import com.example.epod.screens.job_management.job.view.JobFragment;
+import com.example.epod.screens.job_management.job_order.main.JobOrderFragment;
+import com.example.epod.screens.profile.ProfileFragment;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
