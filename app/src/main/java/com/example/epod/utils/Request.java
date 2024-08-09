@@ -28,7 +28,6 @@ public class Request {
 //    private static final String BASE_URL = "https://1ofis.infollective.com/application/backend/";
 
     public static Retrofit getRetrofitInstance(Context context) {
-        Log.e("BaseURL: ", BASE_URL);
         if(retrofit == null) {
             HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
             loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);

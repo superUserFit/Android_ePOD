@@ -21,9 +21,9 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 public class JobOrderViewModel extends AndroidViewModel {
-    private MutableLiveData<List<JobOrder>> jobOrders = new MutableLiveData<>();
-    private MutableLiveData<Boolean> isLoading = new MutableLiveData<>();
-    private MutableLiveData<String> errorMessage = new MutableLiveData<>();
+    private final MutableLiveData<List<JobOrder>> jobOrders = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> isLoading = new MutableLiveData<>();
+    private final MutableLiveData<String> errorMessage = new MutableLiveData<>();
     private String sortOrder = "desc";
 
     @SuppressLint("StaticFieldLeak")
@@ -33,6 +33,26 @@ public class JobOrderViewModel extends AndroidViewModel {
         super(application);
         bindJobOrderService(application);
     }
+
+    private void bindJobOrderService(Context context) {
+        Intent intent = new Intent(context, JobOrderService.class);
+        context.startService(intent);
+        context.bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
+        Log.e("Bind", "Successfully bind the service");
+    }
+
+    private final ServiceConnection serviceConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            JobOrderService.LocalBinder binder = (JobOrderService.LocalBinder) service;
+            jobOrderService = binder.getService();
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            jobOrderService = null;
+        }
+    };
 
     public LiveData<List<JobOrder>> getJobOrders() {
         return jobOrders;
@@ -68,7 +88,7 @@ public class JobOrderViewModel extends AndroidViewModel {
                 }
             });
         } else {
-            Log.e("View", "Service is null");
+            Log.e("ViewModel", "Service is null");
         }
     }
 
@@ -77,21 +97,9 @@ public class JobOrderViewModel extends AndroidViewModel {
         loadJobOrders(sortOrder);
     }
 
-    private void bindJobOrderService(Context context) {
-        Intent intent = new Intent(context, JobOrderService.class);
-        context.bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        getApplication().unbindService(serviceConnection);
     }
-
-    private final ServiceConnection serviceConnection = new ServiceConnection() {
-        @Override
-        public void onServiceConnected(ComponentName name, IBinder service) {
-            JobOrderService.LocalBinder binder = (JobOrderService.LocalBinder) service;
-            jobOrderService = binder.getService();
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-            jobOrderService = null;
-        }
-    };
 }

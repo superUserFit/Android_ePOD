@@ -64,6 +64,7 @@ public class JobOrderFragment extends Fragment implements JobOrderCallback {
         return inflater.inflate(R.layout.job_order_activity_job_order, container, false);
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -81,12 +82,10 @@ public class JobOrderFragment extends Fragment implements JobOrderCallback {
         if (activity != null) {
             activity.setSupportActionBar(toolbar);
             if (activity.getSupportActionBar() != null) {
-                activity.getSupportActionBar().setDisplayShowHomeEnabled(true);
-                activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                activity.getSupportActionBar().setDisplayShowHomeEnabled(false);
+                activity.getSupportActionBar().setDisplayHomeAsUpEnabled(false);
                 activity.getSupportActionBar().setTitle("Job Order");
             }
-        } else {
-            Log.e("JobOrderFragment", "Activity is null!");
         }
 
         // Initialize and set up the JobOrderAdapter
@@ -96,8 +95,6 @@ public class JobOrderFragment extends Fragment implements JobOrderCallback {
         if (context != null) {
             recyclerView_jobOrder.setAdapter(jobOrderAdapter);
             recyclerView_jobOrder.setLayoutManager(new LinearLayoutManager(context));
-        } else {
-            Log.e("JobOrderFragment", "Context is null when setting up RecyclerView!");
         }
 
         // Set up the TabButtonAdapter
