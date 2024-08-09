@@ -8,7 +8,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.epod.R;
-import com.example.epod.job_management.job_order.data.model.JobOrderHasDetails;
+import com.example.epod.job_management.job_order.data.model.JobOrderHasDetailsModel;
 
 public class ItemDetailsViewHolder extends RecyclerView.ViewHolder {
     public CardView itemDetailsCard;
@@ -24,11 +24,11 @@ public class ItemDetailsViewHolder extends RecyclerView.ViewHolder {
         itemUOM = itemView.findViewById(R.id.itemUOM);
     }
 
-    public void bind(JobOrderHasDetails jobOrderHasDetails) {
-        itemCode.setText(jobOrderHasDetails.getItemCode() != null ? jobOrderHasDetails.getItemCode() : "");
-        itemType.setText(jobOrderHasDetails.getItemType() != null ? jobOrderHasDetails.getItemType() : "");
-        description.setText(jobOrderHasDetails.getDescription() != null ? jobOrderHasDetails.getDescription() : "");
-        quantity.setText(jobOrderHasDetails.getDescription() != null ? jobOrderHasDetails.getQuantity() : "");
-        itemUOM.setText(jobOrderHasDetails.getItemUOM() != null ? jobOrderHasDetails.getItemUOM() : "");
+    public void bind(JobOrderHasDetailsModel jobOrderHasDetailsModel) {
+        itemCode.setText(jobOrderHasDetailsModel.getItemCode() != null ? jobOrderHasDetailsModel.getItemCode() : "");
+        itemType.setText(jobOrderHasDetailsModel.getItemType() != null ? jobOrderHasDetailsModel.getItemType() : "");
+        description.setText(jobOrderHasDetailsModel.getDescription() != null ? jobOrderHasDetailsModel.getDescription() : "");
+        quantity.setText(jobOrderHasDetailsModel.getDescription() != null ? jobOrderHasDetailsModel.getQuantity() : "");
+        itemUOM.setText(jobOrderHasDetailsModel.getItemUOM() != null ? jobOrderHasDetailsModel.getItemUOM() : "");
     }
 }

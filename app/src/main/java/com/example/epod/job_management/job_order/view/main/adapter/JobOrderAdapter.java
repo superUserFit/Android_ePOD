@@ -14,42 +14,42 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.epod.R;
 import com.example.epod.job_management.job_order.view.details.JobOrderDetailsActivity;
 import com.example.epod.job_management.job_order.view.interfaces.JobOrderAdapterInterface;
-import com.example.epod.job_management.job_order.data.model.JobOrder;
+import com.example.epod.job_management.job_order.data.model.JobOrderModel;
 import com.example.epod.job_management.job_order.view.main.holder.JobOrderViewHolder;
-import com.example.epod.job_management.job_order.data.model.JobOrderHasDetails;
+import com.example.epod.job_management.job_order.data.model.JobOrderHasDetailsModel;
 
 import java.util.List;
 
 public class JobOrderAdapter extends RecyclerView.Adapter<JobOrderViewHolder> implements JobOrderAdapterInterface {
-    private List<JobOrder> jobOrderList;
+    private List<JobOrderModel> jobOrderModelList;
     private Context context;
 
-    public JobOrderAdapter(List<JobOrder> jobOrderList, Context context) {
-        this.jobOrderList = jobOrderList;
+    public JobOrderAdapter(List<JobOrderModel> jobOrderModelList, Context context) {
+        this.jobOrderModelList = jobOrderModelList;
         this.context = context;
     }
 
     @Override
-    public void setJobOrders(List<JobOrder> jobOrders) {
-        this.jobOrderList = jobOrders;
+    public void setJobOrders(List<JobOrderModel> jobOrderModels) {
+        this.jobOrderModelList = jobOrderModels;
         notifyDataSetChanged();
     }
 
-    public void createJobOrder(JobOrder jobOrder) {
-        this.jobOrderList.add(jobOrder);
-        notifyItemInserted(this.jobOrderList.size() - 1);
+    public void createJobOrder(JobOrderModel jobOrderModel) {
+        this.jobOrderModelList.add(jobOrderModel);
+        notifyItemInserted(this.jobOrderModelList.size() - 1);
     }
 
     public void removeJobOrder(int position) {
-        if (position >= 0 && position < this.jobOrderList.size()) {
-            this.jobOrderList.remove(position);
+        if (position >= 0 && position < this.jobOrderModelList.size()) {
+            this.jobOrderModelList.remove(position);
             notifyItemRemoved(position);
         }
     }
 
-    public void updateJobOrder(int position, JobOrder jobOrder) {
-        if (position >= 0 && position < this.jobOrderList.size()) {
-            this.jobOrderList.set(position, jobOrder);
+    public void updateJobOrder(int position, JobOrderModel jobOrderModel) {
+        if (position >= 0 && position < this.jobOrderModelList.size()) {
+            this.jobOrderModelList.set(position, jobOrderModel);
             notifyItemChanged(position);
         }
     }
@@ -63,13 +63,13 @@ public class JobOrderAdapter extends RecyclerView.Adapter<JobOrderViewHolder> im
 
     @Override
     public void onBindViewHolder(@NonNull JobOrderViewHolder holder, int position) {
-        JobOrder jobOrder = jobOrderList.get(position);
-        holder.bind(jobOrder);
+        JobOrderModel jobOrderModel = jobOrderModelList.get(position);
+        holder.bind(jobOrderModel);
 
-        if (jobOrder.getUUID() != null) {
+        if (jobOrderModel.getUUID() != null) {
             holder.itemView.setOnClickListener(view -> {
                 Intent intent = new Intent(context, JobOrderDetailsActivity.class);
-                intent.putExtra("jobOrderId", jobOrder.getJobOrder());
+                intent.putExtra("jobOrderId", jobOrderModel.getJobOrder());
                 context.startActivity(intent);
             });
         } else {
@@ -80,11 +80,11 @@ public class JobOrderAdapter extends RecyclerView.Adapter<JobOrderViewHolder> im
 
     @Override
     public int getItemCount() {
-        return jobOrderList.size();
+        return jobOrderModelList.size();
     }
 
     @Override
-    public void setJobOrderHasDetails(List<JobOrderHasDetails> jobOrderHasDetails) {
+    public void setJobOrderHasDetails(List<JobOrderHasDetailsModel> jobOrderHasDetailModels) {
         throw new UnsupportedOperationException("Not supported in JobOrderAdapter");
     }
 }

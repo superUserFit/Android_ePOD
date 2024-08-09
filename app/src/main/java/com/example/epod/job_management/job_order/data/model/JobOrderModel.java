@@ -1,27 +1,27 @@
 package com.example.epod.job_management.job_order.data.model;
 
-public class JobOrder {
-    private String UUID, docNo, docDateFormat, jobOrder, customerName, status;
+public class JobOrderModel {
+    private String UUID, docNo, docDate, customerName, status;
     private String pickupLocation, pickupAddress, deliveryLocation, deliveryAddress;
     private String pickupContact, pickupContactNo, deliveryContact, deliveryContactNo;
-    private String startPickupAtFormat, endPickupAtFormat;
-    private String description, deadlineFormat, tripType, openTask, attentionName, phoneNo;
+    private String startPickupAt, endPickupAt, deadline;
+    private String description, tripType, openTask, attentionName, phoneNo;
     private String address, containerNo, containerSize, containerType;
 
-    public JobOrder(
-            String UUID, String docNo, String docDateFormat, String jobOrder,
+
+    public JobOrderModel(
+            String UUID, String docNo, String docDate,
             String customerName, String status, String pickupLocation,
             String pickupAddress, String deliveryLocation, String deliveryAddress,
             String pickupContact, String pickupContactNo, String deliveryContact,
-            String deliveryContactNo, String startPickupAtFormat, String endPickupAtFormat,
-            String description, String deadlineFormat, String tripType, String openTask,
+            String deliveryContactNo, String startPickupAt, String endPickupAt,
+            String description, String deadline, String tripType, String openTask,
             String attentionName, String phoneNo, String address, String containerNo,
             String containerSize, String containerType
     ) {
         this.UUID = UUID;
         this.docNo = docNo;
-        this.docDateFormat = docDateFormat;
-        this.jobOrder = jobOrder;
+        this.docDate = docDate;
         this.customerName = customerName;
         this.status = status;
         this.pickupLocation = pickupLocation;
@@ -32,10 +32,12 @@ public class JobOrder {
         this.pickupContactNo = pickupContactNo;
         this.deliveryContact = deliveryContact;
         this.deliveryContactNo = deliveryContactNo;
-        this.startPickupAtFormat = startPickupAtFormat;
-        this.endPickupAtFormat = endPickupAtFormat;
+        this.startPickupAt = startPickupAt;
+        this.endPickupAt = endPickupAt;
+        this.startPickupAt = startPickupAt;
+        this.endPickupAt = endPickupAt;
         this.description = description;
-        this.deadlineFormat = deadlineFormat;
+        this.deadline = deadline;
         this.tripType = tripType;
         this.openTask = openTask;
         this.attentionName = attentionName;
@@ -63,20 +65,16 @@ public class JobOrder {
     }
 
     public String getDocDate() {
-        return docDateFormat;
+        return docDate;
     }
 
-    public void setDocDate(String docDateFormat) {
-        this.docDateFormat = docDateFormat;
+    public void setDocDate(String docDate) {
+        this.docDate = docDate;
     }
 
     public String getCustomerName() {
         return customerName;
     }
-
-    public String getJobOrder() { return jobOrder; }
-
-    public void setJobOrder(String jobOrder) { this.jobOrder = jobOrder; }
 
     public void setCustomerName(String customerName) {
         this.customerName = customerName;
@@ -155,27 +153,23 @@ public class JobOrder {
     }
 
     public String getStartPickupAt() {
-        return startPickupAtFormat;
+        return startPickupAt;
+    }
+    public void setStartPickupAt(String startPickupAt) {
+        this.startPickupAt = startPickupAt;
     }
 
-    public void setStartPickupAt(String startPickupAtFormat) {
-        this.startPickupAtFormat = startPickupAtFormat;
-    }
-
-    public String getEndPickupAt() {
-        return endPickupAtFormat;
-    }
-
-    public void setEndPickupAt(String endPickupAtFormat) {
-        this.endPickupAtFormat = endPickupAtFormat;
+    public String getEndPickupAt() { return endPickupAt; }
+    public void setEndPickupAt(String endPickupAt) {
+        this.endPickupAt = endPickupAt;
     }
 
     public String getDeadline() {
-        return deadlineFormat;
+        return deadline;
     }
 
     public void setDeadline(String deadline) {
-        this.deadlineFormat = deadlineFormat;
+        this.deadline = deadline;
     }
 
     public String getDescription() {

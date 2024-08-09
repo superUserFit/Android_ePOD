@@ -3,8 +3,8 @@ package com.example.epod.job_management.job_order.data.repository;
 import android.content.Context;
 import android.util.Log;
 
-import com.example.epod.job_management.job_order.data.model.JobOrder;
-import com.example.epod.job_management.job_order.data.model.JobOrderHasDetails;
+import com.example.epod.job_management.job_order.data.model.JobOrderModel;
+import com.example.epod.job_management.job_order.data.model.JobOrderHasDetailsModel;
 import com.example.epod.utils.Request;
 
 import retrofit2.Call;
@@ -34,11 +34,11 @@ public class JobOrderRepository implements JobOrderRepositoryInterface {
                 if (response.isSuccessful()) {
                     JobOrderResponse jobOrderResponse = response.body();
                     if(jobOrderResponse != null) {
-                        List<JobOrder> jobOrders = jobOrderResponse.getJobOrders();
-                        if(jobOrders == null) {
-                            jobOrders = Collections.emptyList();
+                        List<JobOrderModel> jobOrderModels = jobOrderResponse.getJobOrders();
+                        if(jobOrderModels == null) {
+                            jobOrderModels = Collections.emptyList();
                         }
-                        jobOrderCallback.onLoadJobOrders(jobOrders);
+                        jobOrderCallback.onLoadJobOrders(jobOrderModels);
                     } else {
                         jobOrderCallback.onLoadJobOrders(Collections.emptyList());
                     }
@@ -63,8 +63,8 @@ public class JobOrderRepository implements JobOrderRepositoryInterface {
                 if(response.isSuccessful()) {
                     JobOrderResponse jobOrderResponse = response.body();
                     if(jobOrderResponse != null) {
-                        JobOrder jobOrder = jobOrderResponse.getJobOrder();
-                        jobOrderCallback.onLoadJobOrder(jobOrder);
+                        JobOrderModel jobOrderModel = jobOrderResponse.getJobOrder();
+                        jobOrderCallback.onLoadJobOrder(jobOrderModel);
                     }
                 }
             }
@@ -87,11 +87,11 @@ public class JobOrderRepository implements JobOrderRepositoryInterface {
                 if(response.isSuccessful()) {
                     JobOrderResponse jobOrderResponse = response.body();
                     if(jobOrderResponse != null) {
-                        List<JobOrderHasDetails> jobOrderHasDetails = jobOrderResponse.getJobOrderHasDetails();
-                        if(jobOrderHasDetails == null) {
-                            jobOrderHasDetails = Collections.emptyList();
+                        List<JobOrderHasDetailsModel> jobOrderHasDetailModels = jobOrderResponse.getJobOrderHasDetails();
+                        if(jobOrderHasDetailModels == null) {
+                            jobOrderHasDetailModels = Collections.emptyList();
                         }
-                        jobOrderCallback.onLoadJobOrderDetails(jobOrderHasDetails);
+                        jobOrderCallback.onLoadJobOrderDetails(jobOrderHasDetailModels);
                     }
                 }
             }

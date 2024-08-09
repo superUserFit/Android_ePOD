@@ -9,7 +9,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.epod.R;
-import com.example.epod.job_management.job_order.data.model.JobOrder;
+import com.example.epod.job_management.job_order.data.model.JobOrderModel;
 
 public class JobOrderViewHolder extends RecyclerView.ViewHolder {
     public TextView customerName, docNo, docDate, jobOrderStatus;
@@ -33,25 +33,25 @@ public class JobOrderViewHolder extends RecyclerView.ViewHolder {
         endPickupAt = itemView.findViewById(R.id.endPickupAt);
     }
 
-    public void bind(JobOrder jobOrder) {
-        customerName.setText(jobOrder.getCustomerName() != null ? jobOrder.getCustomerName() : "Unknown");
-        docNo.setText(jobOrder.getDocNo() != null ? jobOrder.getDocNo() : "N/A");
-        docDate.setText(jobOrder.getDocDate() != null ? jobOrder.getDocDate() : "N/A");
-        jobOrderStatus.setText(jobOrder.getStatus() != null ? jobOrder.getStatus() : "Unknown");
+    public void bind(JobOrderModel jobOrderModel) {
+        customerName.setText(jobOrderModel.getCustomerName() != null ? jobOrderModel.getCustomerName() : "Unknown");
+        docNo.setText(jobOrderModel.getDocNo() != null ? jobOrderModel.getDocNo() : "N/A");
+        docDate.setText(jobOrderModel.getDocDate() != null ? jobOrderModel.getDocDate() : "N/A");
+        jobOrderStatus.setText(jobOrderModel.getStatus() != null ? jobOrderModel.getStatus() : "Unknown");
 
-        pickupLocation.setText(jobOrder.getPickupLocation() != null ? jobOrder.getPickupLocation() : "Unknown Location");
-        pickupAddress.setText(jobOrder.getPickupAddress() != null ? jobOrder.getPickupAddress() : "Unknown Address");
-        deliveryLocation.setText(jobOrder.getDeliveryLocation() != null ? jobOrder.getDeliveryLocation() : "Unknown Location");
-        deliveryAddress.setText(jobOrder.getDeliveryAddress() != null ? jobOrder.getDeliveryAddress() : "Unknown Address");
+        pickupLocation.setText(jobOrderModel.getPickupLocation() != null ? jobOrderModel.getPickupLocation() : "Unknown Location");
+        pickupAddress.setText(jobOrderModel.getPickupAddress() != null ? jobOrderModel.getPickupAddress() : "Unknown Address");
+        deliveryLocation.setText(jobOrderModel.getDeliveryLocation() != null ? jobOrderModel.getDeliveryLocation() : "Unknown Location");
+        deliveryAddress.setText(jobOrderModel.getDeliveryAddress() != null ? jobOrderModel.getDeliveryAddress() : "Unknown Address");
 
-        startPickupAt.setText(jobOrder.getStartPickupAt() != null ? jobOrder.getStartPickupAt() : "");
-        endPickupAt.setText(jobOrder.getEndPickupAt() != null ? jobOrder.getEndPickupAt() : "");
+        startPickupAt.setText(jobOrderModel.getStartPickupAt() != null ? jobOrderModel.getStartPickupAt() : "");
+        endPickupAt.setText(jobOrderModel.getEndPickupAt() != null ? jobOrderModel.getEndPickupAt() : "");
 
         jobOrderStatus.setBackgroundResource(R.drawable.ui_rounded_32);
 
         int color;
-        if (jobOrder.getStatus() != null) {
-            switch (jobOrder.getStatus()) {
+        if (jobOrderModel.getStatus() != null) {
+            switch (jobOrderModel.getStatus()) {
                 case "Unassigned":
                     color = ContextCompat.getColor(itemView.getContext(), R.color.darkGrey);
                     jobOrderStatus.setTextColor(ContextCompat.getColor(itemView.getContext(), R.color.white));

@@ -21,8 +21,8 @@ import com.example.epod.R;
 import com.example.epod.databinding.JobOrderActivityJobOrderDetailsBinding;
 import com.example.epod.job_management.job_order.data.repository.JobOrderCallback;
 import com.example.epod.job_management.job_order.view.details.adapter.ItemDetailsAdapter;
-import com.example.epod.job_management.job_order.data.model.JobOrder;
-import com.example.epod.job_management.job_order.data.model.JobOrderHasDetails;
+import com.example.epod.job_management.job_order.data.model.JobOrderModel;
+import com.example.epod.job_management.job_order.data.model.JobOrderHasDetailsModel;
 import com.facebook.shimmer.ShimmerFrameLayout;
 
 import java.util.ArrayList;
@@ -90,13 +90,13 @@ public class JobOrderDetailsActivity extends AppCompatActivity implements JobOrd
     }
 
     @Override
-    public void onLoadJobOrder(JobOrder jobOrder) {
+    public void onLoadJobOrder(JobOrderModel jobOrderModel) {
         runOnUiThread(() -> {
-            binding.docNo.setText(jobOrder.getDocNo() != null ? jobOrder.getDocNo() : "");
-            binding.docDate.setText(jobOrder.getDocDate() != null ? jobOrder.getDocDate() : "");
-            binding.deadline.setText(jobOrder.getDeadline() != null ? jobOrder.getDeadline() : "");
-            binding.tripType.setText(jobOrder.getTripType() != null ? jobOrder.getTripType() : "");
-            binding.description.setText(jobOrder.getDescription() != null ? jobOrder.getDescription() : "");
+            binding.docNo.setText(jobOrderModel.getDocNo() != null ? jobOrderModel.getDocNo() : "");
+            binding.docDate.setText(jobOrderModel.getDocDate() != null ? jobOrderModel.getDocDate() : "");
+            binding.deadline.setText(jobOrderModel.getDeadline() != null ? jobOrderModel.getDeadline() : "");
+            binding.tripType.setText(jobOrderModel.getTripType() != null ? jobOrderModel.getTripType() : "");
+            binding.description.setText(jobOrderModel.getDescription() != null ? jobOrderModel.getDescription() : "");
         });
     }
 
@@ -109,8 +109,8 @@ public class JobOrderDetailsActivity extends AppCompatActivity implements JobOrd
     }
 
     @Override
-    public void onLoadJobOrderDetails(List<JobOrderHasDetails> jobOrderHasDetails) {
-        itemDetailsAdapter.setJobOrderHasDetails(jobOrderHasDetails);
+    public void onLoadJobOrderDetails(List<JobOrderHasDetailsModel> jobOrderHasDetailModels) {
+        itemDetailsAdapter.setJobOrderHasDetails(jobOrderHasDetailModels);
     }
 
     @Override
@@ -123,7 +123,7 @@ public class JobOrderDetailsActivity extends AppCompatActivity implements JobOrd
     }
 
     @Override
-    public void onLoadJobOrders(List<JobOrder> jobOrders) {
+    public void onLoadJobOrders(List<JobOrderModel> jobOrderModels) {
 
     }
 }

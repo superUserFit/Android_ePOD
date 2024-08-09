@@ -10,8 +10,8 @@ import androidx.annotation.Nullable;
 
 import com.example.epod.job_management.job_order.data.repository.JobOrderCallback;
 import com.example.epod.job_management.job_order.data.repository.JobOrderRepository;
-import com.example.epod.job_management.job_order.data.model.JobOrder;
-import com.example.epod.job_management.job_order.data.model.JobOrderHasDetails;
+import com.example.epod.job_management.job_order.data.model.JobOrderModel;
+import com.example.epod.job_management.job_order.data.model.JobOrderHasDetailsModel;
 import com.example.epod.utils.helpers.ServiceHelper;
 
 import java.util.List;
@@ -26,17 +26,17 @@ public class JobOrderService extends Service {
 
         jobOrderRepository = new JobOrderRepository(this, new JobOrderCallback() {
             @Override
-            public void onLoadJobOrders(List<JobOrder> jobOrders) {
+            public void onLoadJobOrders(List<JobOrderModel> jobOrderModels) {
 
             }
 
             @Override
-            public void onLoadJobOrder(JobOrder jobOrder) {
+            public void onLoadJobOrder(JobOrderModel jobOrderModel) {
 
             }
 
             @Override
-            public void onLoadJobOrderDetails(List<JobOrderHasDetails> jobOrderHasDetails) {
+            public void onLoadJobOrderDetails(List<JobOrderHasDetailsModel> jobOrderHasDetailModels) {
 
             }
         });
@@ -47,17 +47,17 @@ public class JobOrderService extends Service {
         Log.e("Authorization", authorization);
         jobOrderRepository.getJobOrderByUser("createdAt", sortOrder, authorization, new JobOrderCallback() {
             @Override
-            public void onLoadJobOrders(List<JobOrder> jobOrders) {
-                jobOrderCallback.onLoadJobOrders(jobOrders);
+            public void onLoadJobOrders(List<JobOrderModel> jobOrderModels) {
+                jobOrderCallback.onLoadJobOrders(jobOrderModels);
             }
 
             @Override
-            public void onLoadJobOrder(JobOrder jobOrder) {
+            public void onLoadJobOrder(JobOrderModel jobOrderModel) {
 
             }
 
             @Override
-            public void onLoadJobOrderDetails(List<JobOrderHasDetails> jobOrderHasDetails) {
+            public void onLoadJobOrderDetails(List<JobOrderHasDetailsModel> jobOrderHasDetailModels) {
 
             }
         });
@@ -67,17 +67,17 @@ public class JobOrderService extends Service {
         String authorization = ServiceHelper.getInstance().getAuthorization();
         jobOrderRepository.getUpdateJobOrder(jobOrderId, authorization, new JobOrderCallback() {
             @Override
-            public void onLoadJobOrders(List<JobOrder> jobOrders) {
+            public void onLoadJobOrders(List<JobOrderModel> jobOrderModels) {
 
             }
 
             @Override
-            public void onLoadJobOrder(JobOrder jobOrder) {
-                jobOrderCallback.onLoadJobOrder(jobOrder);
+            public void onLoadJobOrder(JobOrderModel jobOrderModel) {
+                jobOrderCallback.onLoadJobOrder(jobOrderModel);
             }
 
             @Override
-            public void onLoadJobOrderDetails(List<JobOrderHasDetails> jobOrderHasDetails) {
+            public void onLoadJobOrderDetails(List<JobOrderHasDetailsModel> jobOrderHasDetailModels) {
 
             }
         });
@@ -87,18 +87,18 @@ public class JobOrderService extends Service {
         String authorization = ServiceHelper.getInstance().getAuthorization();
         jobOrderRepository.getUpdateJobOrderHasDetails(jobOrderId, authorization, new JobOrderCallback() {
             @Override
-            public void onLoadJobOrders(List<JobOrder> jobOrders) {
+            public void onLoadJobOrders(List<JobOrderModel> jobOrderModels) {
 
             }
 
             @Override
-            public void onLoadJobOrder(JobOrder jobOrder) {
+            public void onLoadJobOrder(JobOrderModel jobOrderModel) {
 
             }
 
             @Override
-            public void onLoadJobOrderDetails(List<JobOrderHasDetails> jobOrderHasDetails) {
-                jobOrderCallback.onLoadJobOrderDetails(jobOrderHasDetails);
+            public void onLoadJobOrderDetails(List<JobOrderHasDetailsModel> jobOrderHasDetailModels) {
+                jobOrderCallback.onLoadJobOrderDetails(jobOrderHasDetailModels);
             }
         });
     }

@@ -1,7 +1,7 @@
 package com.example.epod.job_management.job_order.data.repository;
 
-import com.example.epod.job_management.job_order.data.model.JobOrder;
-import com.example.epod.job_management.job_order.data.model.JobOrderHasDetails;
+import com.example.epod.job_management.job_order.data.model.JobOrderModel;
+import com.example.epod.job_management.job_order.data.model.JobOrderHasDetailsModel;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
@@ -11,21 +11,21 @@ public class JobOrderResponse {
     private int total;
 
     @SerializedName("rows")
-    private List<JobOrder> jobOrders;
-    private List<JobOrderHasDetails> jobOrderHasDetails;
+    private List<JobOrderModel> jobOrderModels;
+    private List<JobOrderHasDetailsModel> jobOrderHasDetailModels;
 
     @SerializedName("data")
-    private JobOrder jobOrder;
+    private JobOrderModel jobOrderModel;
 
     public int getTotal() {
         return total;
     }
 
-    public List<JobOrder> getJobOrders() {
-        return jobOrders;
+    public List<JobOrderModel> getJobOrders() {
+        return jobOrderModels;
     }
 
-    public JobOrder getJobOrder() { return jobOrder; }
+    public JobOrderModel getJobOrder() { return jobOrderModel; }
 
-    public List<JobOrderHasDetails> getJobOrderHasDetails() { return jobOrderHasDetails; }
+    public List<JobOrderHasDetailsModel> getJobOrderHasDetails() { return jobOrderHasDetailModels; }
 }

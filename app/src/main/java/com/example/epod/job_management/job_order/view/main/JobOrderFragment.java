@@ -5,7 +5,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +22,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.epod.job_management.job_order.data.model.JobOrderHasDetails;
+import com.example.epod.job_management.job_order.data.model.JobOrderHasDetailsModel;
 import com.example.epod.job_management.job_order.view.main.model.JobOrderViewModel;
 import com.facebook.shimmer.ShimmerFrameLayout;
 
@@ -31,7 +30,7 @@ import com.example.epod.R;
 import com.example.epod.job_management.job_order.view.main.adapter.JobOrderAdapter;
 import com.example.epod.job_management.job_order.view.main.adapter.TabButtonAdapter;
 import com.example.epod.job_management.job_order.view.main.holder.TabButtonViewHolder;
-import com.example.epod.job_management.job_order.data.model.JobOrder;
+import com.example.epod.job_management.job_order.data.model.JobOrderModel;
 import com.example.epod.job_management.job_order.data.repository.JobOrderCallback;
 
 import java.util.ArrayList;
@@ -45,7 +44,7 @@ public class JobOrderFragment extends Fragment implements JobOrderCallback {
     private ViewSwitcher viewSwitcher;
     private ShimmerFrameLayout loadingLayout;
     private EditText searchTextField;
-    private List<JobOrder> jobOrders = new ArrayList<>();
+    private List<JobOrderModel> jobOrderModels = new ArrayList<>();
     private ImageButton sortJobOrder;
     private static final String[] JOB_ORDER_STATUS = {
             "All",
@@ -122,12 +121,12 @@ public class JobOrderFragment extends Fragment implements JobOrderCallback {
 
         jobOrderViewModel = new ViewModelProvider(this).get(JobOrderViewModel.class);
 
-        jobOrderViewModel.getJobOrders().observe(getViewLifecycleOwner(), new Observer<List<JobOrder>>() {
+        jobOrderViewModel.getJobOrders().observe(getViewLifecycleOwner(), new Observer<List<JobOrderModel>>() {
             @Override
-            public void onChanged(List<JobOrder> jobOrders) {
+            public void onChanged(List<JobOrderModel> jobOrderModels) {
                 loadingLayout.stopShimmer();
                 viewSwitcher.setDisplayedChild(1);
-                jobOrderAdapter.setJobOrders(jobOrders);
+                jobOrderAdapter.setJobOrders(jobOrderModels);
             }
         });
 
@@ -171,30 +170,30 @@ public class JobOrderFragment extends Fragment implements JobOrderCallback {
 
 
     @Override
-    public void onLoadJobOrders(List<JobOrder> jobOrders) {
+    public void onLoadJobOrders(List<JobOrderModel> jobOrderModels) {
         requireActivity().runOnUiThread(() -> {
             loadingLayout.stopShimmer();
             viewSwitcher.setDisplayedChild(1);
-            this.jobOrders = jobOrders;
-            jobOrderAdapter.setJobOrders(this.jobOrders);
+            this.jobOrderModels = jobOrderModels;
+            jobOrderAdapter.setJobOrders(this.jobOrderModels);
         });
     }
 
     private void searchJobOrders(String searchQuery) {
-        List<JobOrder> filteredJobOrders = new ArrayList<>();
-        for (JobOrder jobOrder : jobOrders) {
-            if (jobOrder.getCustomerName() != null) {
-                if (jobOrder.getCustomerName().toLowerCase().contains(searchQuery.toLowerCase())) {
-                    filteredJobOrders.add(jobOrder);
+        List<JobOrderModel> filteredJobOrderModels = new ArrayList<>();
+        for (JobOrderModel jobOrderModel : jobOrderModels) {
+            if (jobOrderModel.getCustomerName() != null) {
+                if (jobOrderModel.getCustomerName().toLowerCase().contains(searchQuery.toLowerCase())) {
+                    filteredJobOrderModels.add(jobOrderModel);
                 }
             }
         }
-        jobOrderAdapter.setJobOrders(filteredJobOrders);
+        jobOrderAdapter.setJobOrders(filteredJobOrderModels);
     }
 
     @Override
-    public void onLoadJobOrder(JobOrder jobOrder) {}
+    public void onLoadJobOrder(JobOrderModel jobOrderModel) {}
 
     @Override
-    public void onLoadJobOrderDetails(List<JobOrderHasDetails> jobOrderHasDetails) {}
+    public void onLoadJobOrderDetails(List<JobOrderHasDetailsModel> jobOrderHasDetailModels) {}
 }

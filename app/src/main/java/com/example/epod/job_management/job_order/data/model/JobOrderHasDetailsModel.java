@@ -1,14 +1,17 @@
 package com.example.epod.job_management.job_order.data.model;
 
-public class JobOrderHasDetails {
-    private String jobOrder, item, itemCode, itemType, itemGroupCode, itemCategoryCode;
+public class JobOrderHasDetailsModel {
+    private String UUID, jobOrder, item, itemCode, itemType, itemGroupCode, itemCategoryCode;
     private String description, quantity, itemUOM;
 
-    public JobOrderHasDetails(
-            String jobOrder, String item, String itemCode, String itemType,
+    public JobOrderHasDetailsModel(
+            String UUID, String jobOrder,
+            String item, String itemCode, String itemType,
             String itemGroupCode, String itemCategoryCode, String description,
-            String quantity, String itemUOM)
+            String quantity, String itemUOM
+    )
     {
+        this.UUID = UUID;
         this.jobOrder = jobOrder;
         this.item = item;
         this.itemCode = itemCode;
@@ -18,6 +21,11 @@ public class JobOrderHasDetails {
         this.description = description;
         this.quantity = quantity;
         this.itemUOM = itemUOM;
+    }
+
+    public String getUUID() { return UUID; }
+    public void setUUID(String UUID) {
+        this.UUID = UUID;
     }
 
     public String getJobOrder() {

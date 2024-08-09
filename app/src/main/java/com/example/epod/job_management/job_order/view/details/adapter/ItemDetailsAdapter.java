@@ -11,23 +11,23 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.epod.R;
 import com.example.epod.job_management.job_order.view.interfaces.JobOrderAdapterInterface;
 import com.example.epod.job_management.job_order.view.details.holder.ItemDetailsViewHolder;
-import com.example.epod.job_management.job_order.data.model.JobOrder;
-import com.example.epod.job_management.job_order.data.model.JobOrderHasDetails;
+import com.example.epod.job_management.job_order.data.model.JobOrderModel;
+import com.example.epod.job_management.job_order.data.model.JobOrderHasDetailsModel;
 
 import java.util.List;
 
 public class ItemDetailsAdapter extends RecyclerView.Adapter<ItemDetailsViewHolder> implements JobOrderAdapterInterface {
-    private List<JobOrderHasDetails> jobOrderHasDetails;
+    private List<JobOrderHasDetailsModel> jobOrderHasDetailModels;
     private Context context;
 
-    public ItemDetailsAdapter(List<JobOrderHasDetails> jobOrderHasDetails, Context context) {
-        this.jobOrderHasDetails = jobOrderHasDetails;
+    public ItemDetailsAdapter(List<JobOrderHasDetailsModel> jobOrderHasDetailModels, Context context) {
+        this.jobOrderHasDetailModels = jobOrderHasDetailModels;
         this.context = context;
     }
 
     @Override
-    public void setJobOrderHasDetails(List<JobOrderHasDetails> jobOrderHasDetails) {
-        this.jobOrderHasDetails = jobOrderHasDetails;
+    public void setJobOrderHasDetails(List<JobOrderHasDetailsModel> jobOrderHasDetailModels) {
+        this.jobOrderHasDetailModels = jobOrderHasDetailModels;
     }
 
     @NonNull
@@ -39,7 +39,7 @@ public class ItemDetailsAdapter extends RecyclerView.Adapter<ItemDetailsViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ItemDetailsViewHolder holder, int position) {
-        JobOrderHasDetails itemDetails = jobOrderHasDetails.get(position);
+        JobOrderHasDetailsModel itemDetails = jobOrderHasDetailModels.get(position);
         holder.bind(itemDetails);
 
         if(itemDetails.getItemType().equals("Stock")) {
@@ -51,11 +51,11 @@ public class ItemDetailsAdapter extends RecyclerView.Adapter<ItemDetailsViewHold
 
     @Override
     public int getItemCount() {
-        return jobOrderHasDetails.size();
+        return jobOrderHasDetailModels.size();
     }
 
     @Override
-    public void setJobOrders(List<JobOrder> jobOrders) {
+    public void setJobOrders(List<JobOrderModel> jobOrderModels) {
         throw new UnsupportedOperationException("Not supported in ItemDetailsAdapter");
     }
 }

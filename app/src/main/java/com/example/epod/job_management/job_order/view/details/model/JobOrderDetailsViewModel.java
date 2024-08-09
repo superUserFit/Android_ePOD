@@ -5,8 +5,8 @@ import android.app.Application;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import com.example.epod.job_management.job_order.data.model.JobOrder;
-import com.example.epod.job_management.job_order.data.model.JobOrderHasDetails;
+import com.example.epod.job_management.job_order.data.model.JobOrderModel;
+import com.example.epod.job_management.job_order.data.model.JobOrderHasDetailsModel;
 import com.example.epod.job_management.job_order.data.repository.JobOrderCallback;
 import com.example.epod.job_management.job_order.service.JobOrderService;
 import org.jetbrains.annotations.NotNull;
@@ -17,7 +17,7 @@ public class JobOrderDetailsViewModel extends AndroidViewModel {
     @SuppressLint("StaticFieldLeak")
     private final JobOrderService jobOrderService;
 
-    private final MutableLiveData<JobOrder> jobOrder;
+    private final MutableLiveData<JobOrderModel> jobOrder;
     private final MutableLiveData<Boolean> isLoading;
     private final MutableLiveData<String> errorMessage;
 
@@ -30,7 +30,7 @@ public class JobOrderDetailsViewModel extends AndroidViewModel {
         jobOrderService = new JobOrderService();
     }
 
-    public LiveData<JobOrder> getJobOrder() {
+    public LiveData<JobOrderModel> getJobOrder() {
         return jobOrder;
     }
 
@@ -46,18 +46,18 @@ public class JobOrderDetailsViewModel extends AndroidViewModel {
         isLoading.setValue(true);
         jobOrderService.getUpdateJobOrder(jobOrderId, new JobOrderCallback() {
             @Override
-            public void onLoadJobOrders(List<JobOrder> jobOrders) {
+            public void onLoadJobOrders(List<JobOrderModel> jobOrderModels) {
 
             }
 
             @Override
-            public void onLoadJobOrder(JobOrder loadedJobOrder) {
-                jobOrder.setValue(loadedJobOrder);
+            public void onLoadJobOrder(JobOrderModel loadedJobOrderModel) {
+                jobOrder.setValue(loadedJobOrderModel);
                 isLoading.setValue(false);
             }
 
             @Override
-            public void onLoadJobOrderDetails(List<JobOrderHasDetails> jobOrderHasDetails) {
+            public void onLoadJobOrderDetails(List<JobOrderHasDetailsModel> jobOrderHasDetailModels) {
 
             }
         });

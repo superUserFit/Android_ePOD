@@ -12,8 +12,8 @@ import android.util.Log;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import com.example.epod.job_management.job_order.data.model.JobOrder;
-import com.example.epod.job_management.job_order.data.model.JobOrderHasDetails;
+import com.example.epod.job_management.job_order.data.model.JobOrderModel;
+import com.example.epod.job_management.job_order.data.model.JobOrderHasDetailsModel;
 import com.example.epod.job_management.job_order.data.repository.JobOrderCallback;
 import com.example.epod.job_management.job_order.service.JobOrderService;
 import org.jetbrains.annotations.NotNull;
@@ -21,7 +21,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 public class JobOrderViewModel extends AndroidViewModel {
-    private final MutableLiveData<List<JobOrder>> jobOrders = new MutableLiveData<>();
+    private final MutableLiveData<List<JobOrderModel>> jobOrders = new MutableLiveData<>();
     private final MutableLiveData<Boolean> isLoading = new MutableLiveData<>();
     private final MutableLiveData<String> errorMessage = new MutableLiveData<>();
     private String sortOrder = "desc";
@@ -61,7 +61,7 @@ public class JobOrderViewModel extends AndroidViewModel {
         }
     };
 
-    public LiveData<List<JobOrder>> getJobOrders() {
+    public LiveData<List<JobOrderModel>> getJobOrders() {
         return jobOrders;
     }
 
@@ -85,18 +85,18 @@ public class JobOrderViewModel extends AndroidViewModel {
             if(isServiceConnected) {
                 jobOrderService.getJobOrderByUser(sortOrder, new JobOrderCallback() {
                     @Override
-                    public void onLoadJobOrders(List<JobOrder> loadedJobOrders) {
-                        jobOrders.setValue(loadedJobOrders);
+                    public void onLoadJobOrders(List<JobOrderModel> loadedJobOrderModels) {
+                        jobOrders.setValue(loadedJobOrderModels);
                         isLoading.setValue(false);
                     }
 
                     @Override
-                    public void onLoadJobOrder(JobOrder jobOrder) {
+                    public void onLoadJobOrder(JobOrderModel jobOrderModel) {
 
                     }
 
                     @Override
-                    public void onLoadJobOrderDetails(List<JobOrderHasDetails> jobOrderHasDetails) {
+                    public void onLoadJobOrderDetails(List<JobOrderHasDetailsModel> jobOrderHasDetailModels) {
 
                     }
                 });
