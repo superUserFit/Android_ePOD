@@ -7,6 +7,7 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "jobOrderHasDetails")
 public class JobOrderHasDetailsEntity {
     @PrimaryKey()
+    @ColumnInfo(name = "UUID")
     private String UUID;
 
     @ColumnInfo(name = "jobOrder")
@@ -20,5 +21,12 @@ public class JobOrderHasDetailsEntity {
 
     @ColumnInfo(name = "itemGroupCode")
     private String itemGroupCode;
-
+    @ColumnInfo(name = "itemCategoryCode")
+    private String itemCategoryCode;
+    @ColumnInfo(name = "itemUOM")
+    private String itemUOM;
+    @ColumnInfo(name = "description")
+    private String description;
+    @ColumnInfo(name = "quantity")
+    private String quantity;
 }

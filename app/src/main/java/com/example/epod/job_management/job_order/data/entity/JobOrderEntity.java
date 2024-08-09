@@ -7,6 +7,7 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "jobOrder")
 public class JobOrderEntity {
     @PrimaryKey()
+    @ColumnInfo(name = "UUID")
     private String UUID;
 
     @ColumnInfo(name = "docNo")
