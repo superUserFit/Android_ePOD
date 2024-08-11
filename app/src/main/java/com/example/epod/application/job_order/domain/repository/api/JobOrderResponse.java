@@ -1,4 +1,4 @@
-package com.example.epod.application.job_order.data.repository;
+package com.example.epod.application.job_order.domain.repository.api;
 
 import com.example.epod.application.job_order.data.model.JobOrderModel;
 import com.example.epod.application.job_order.data.model.JobOrderHasDetailsModel;

@@ -19,7 +19,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.epod.R;
 import com.example.epod.databinding.JobOrderActivityJobOrderDetailsBinding;
-import com.example.epod.application.job_order.data.repository.JobOrderCallback;
 import com.example.epod.screens.job_management.job_order.details.adapter.ItemDetailsAdapter;
 import com.example.epod.application.job_order.data.model.JobOrderModel;
 import com.example.epod.application.job_order.data.model.JobOrderHasDetailsModel;
@@ -28,7 +27,7 @@ import com.facebook.shimmer.ShimmerFrameLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JobOrderDetailsActivity extends AppCompatActivity implements JobOrderCallback {
+public class JobOrderDetailsActivity extends AppCompatActivity {
     private ItemDetailsAdapter itemDetailsAdapter;
     private ViewSwitcher viewSwitcher;
     private ShimmerFrameLayout loadingLayout;
@@ -89,17 +88,6 @@ public class JobOrderDetailsActivity extends AppCompatActivity implements JobOrd
         recyclerView_jobOrderDetails_itemDetails.setLayoutManager(new LinearLayoutManager(this));
     }
 
-    @Override
-    public void onLoadJobOrder(JobOrderModel jobOrderModel) {
-        runOnUiThread(() -> {
-            binding.docNo.setText(jobOrderModel.getDocNo() != null ? jobOrderModel.getDocNo() : "");
-            binding.docDate.setText(jobOrderModel.getDocDate() != null ? jobOrderModel.getDocDate() : "");
-            binding.deadline.setText(jobOrderModel.getDeadline() != null ? jobOrderModel.getDeadline() : "");
-            binding.tripType.setText(jobOrderModel.getTripType() != null ? jobOrderModel.getTripType() : "");
-            binding.description.setText(jobOrderModel.getDescription() != null ? jobOrderModel.getDescription() : "");
-        });
-    }
-
     public void expandItemDetails(View view) {
         if (itemDetailsCard.getVisibility() == View.GONE) {
             itemDetailsCard.setVisibility(View.VISIBLE);
@@ -109,21 +97,11 @@ public class JobOrderDetailsActivity extends AppCompatActivity implements JobOrd
     }
 
     @Override
-    public void onLoadJobOrderDetails(List<JobOrderHasDetailsModel> jobOrderHasDetailModels) {
-        itemDetailsAdapter.setJobOrderHasDetails(jobOrderHasDetailModels);
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             finish();
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onLoadJobOrders(List<JobOrderModel> jobOrderModels) {
-
     }
 }

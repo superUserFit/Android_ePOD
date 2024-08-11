@@ -7,8 +7,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import com.example.epod.application.job_order.data.model.JobOrderModel;
 import com.example.epod.application.job_order.data.model.JobOrderHasDetailsModel;
-import com.example.epod.application.job_order.data.repository.JobOrderCallback;
-import com.example.epod.application.job_order.service.JobOrderService;
+import com.example.epod.application.job_order.domain.service.JobOrderService;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -40,26 +39,5 @@ public class JobOrderDetailsViewModel extends AndroidViewModel {
 
     public LiveData<String> getErrorMessage() {
         return errorMessage;
-    }
-
-    public void loadJobOrder(String jobOrderId) {
-        isLoading.setValue(true);
-        jobOrderService.getUpdateJobOrder(jobOrderId, new JobOrderCallback() {
-            @Override
-            public void onLoadJobOrders(List<JobOrderModel> jobOrderModels) {
-
-            }
-
-            @Override
-            public void onLoadJobOrder(JobOrderModel loadedJobOrderModel) {
-                jobOrder.setValue(loadedJobOrderModel);
-                isLoading.setValue(false);
-            }
-
-            @Override
-            public void onLoadJobOrderDetails(List<JobOrderHasDetailsModel> jobOrderHasDetailModels) {
-
-            }
-        });
     }
 }

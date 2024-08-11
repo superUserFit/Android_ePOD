@@ -22,7 +22,6 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.epod.application.job_order.data.model.JobOrderHasDetailsModel;
 import com.example.epod.screens.job_management.job_order.main.model.JobOrderViewModel;
 import com.facebook.shimmer.ShimmerFrameLayout;
 
@@ -31,12 +30,11 @@ import com.example.epod.screens.job_management.job_order.main.adapter.JobOrderAd
 import com.example.epod.screens.job_management.job_order.main.adapter.TabButtonAdapter;
 import com.example.epod.screens.job_management.job_order.main.holder.TabButtonViewHolder;
 import com.example.epod.application.job_order.data.model.JobOrderModel;
-import com.example.epod.application.job_order.data.repository.JobOrderCallback;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class JobOrderFragment extends Fragment implements JobOrderCallback {
+public class JobOrderFragment extends Fragment {
     private JobOrderAdapter jobOrderAdapter;
     private TabButtonAdapter tabButtonAdapter;
     private JobOrderViewModel jobOrderViewModel;
@@ -130,20 +128,30 @@ public class JobOrderFragment extends Fragment implements JobOrderCallback {
             }
         });
 
-        jobOrderViewModel.getIsLoading().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean isLoading) {
-                if (isLoading) {
+        jobOrderViewModel.getJobOrders().observe(getViewLifecycleOwner(), jobOrderModels -> {
+            jobOrderAdapter.setJobOrders(jobOrderModels);
+        });
+
+        jobOrderViewModel.getLoadingState().observe(getViewLifecycleOwner(), loadingState -> {
+            switch (loadingState.status) {
+                case LOADING:
                     loadingLayout.startShimmer();
                     viewSwitcher.setDisplayedChild(0);
-                } else {
+                    break;
+
+                case SUCCESS:
                     loadingLayout.stopShimmer();
                     viewSwitcher.setDisplayedChild(1);
-                }
+                    break;
+
+                case ERROR:
+                    loadingLayout.stopShimmer();
+                    viewSwitcher.setDisplayedChild(1);
+                    break;
             }
         });
 
-        jobOrderViewModel.loadJobOrders("desc");
+        jobOrderViewModel.loadJobOrders();
 
         // Set up search feature
         searchTextField.addTextChangedListener(new TextWatcher() {
@@ -164,18 +172,8 @@ public class JobOrderFragment extends Fragment implements JobOrderCallback {
             @Override
             public void onClick(View v) {
                 jobOrderViewModel.toggleSortJobOrders();
+                jobOrderViewModel.loadJobOrders();
             }
-        });
-    }
-
-
-    @Override
-    public void onLoadJobOrders(List<JobOrderModel> jobOrderModels) {
-        requireActivity().runOnUiThread(() -> {
-            loadingLayout.stopShimmer();
-            viewSwitcher.setDisplayedChild(1);
-            this.jobOrderModels = jobOrderModels;
-            jobOrderAdapter.setJobOrders(this.jobOrderModels);
         });
     }
 
@@ -190,10 +188,4 @@ public class JobOrderFragment extends Fragment implements JobOrderCallback {
         }
         jobOrderAdapter.setJobOrders(filteredJobOrderModels);
     }
-
-    @Override
-    public void onLoadJobOrder(JobOrderModel jobOrderModel) {}
-
-    @Override
-    public void onLoadJobOrderDetails(List<JobOrderHasDetailsModel> jobOrderHasDetailModels) {}
 }

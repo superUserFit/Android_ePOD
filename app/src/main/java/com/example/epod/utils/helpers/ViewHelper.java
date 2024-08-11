@@ -6,6 +6,7 @@ import android.widget.Toast;
 
 import com.example.epod.MainActivity;
 
+
 public class ViewHelper {
     public static void goBackActivity(Context context) {
         Intent intent = new Intent(context, MainActivity.class);
@@ -27,5 +28,33 @@ public class ViewHelper {
         }
 
         Toast.makeText(context, text, toastDuration).show();
+    }
+
+    public static class LoadingState {
+        public final Status status;
+        public final String message;
+
+        private LoadingState(Status status, String message) {
+            this.status = status;
+            this.message = message;
+        }
+
+        public static LoadingState loading() {
+            return new LoadingState(Status.LOADING, null);
+        }
+
+        public static LoadingState success() {
+            return new LoadingState(Status.SUCCESS, null);
+        }
+
+        public static LoadingState error(String message) {
+            return new LoadingState(Status.ERROR, message);
+        }
+
+        public enum Status {
+            LOADING,
+            SUCCESS,
+            ERROR
+        }
     }
 }

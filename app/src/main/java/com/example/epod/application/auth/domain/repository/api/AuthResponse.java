@@ -1,4 +1,4 @@
-package com.example.epod.application.auth.data.repository;
+package com.example.epod.application.auth.domain.repository.api;
 
 import com.example.epod.application.auth.data.model.Auth;
 import com.google.gson.annotations.SerializedName;

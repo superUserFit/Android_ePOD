@@ -1,13 +1,13 @@
-package com.example.epod.application.job_order.data.repository;
+package com.example.epod.application.job_order.domain.repository;
 
 public interface JobOrderRepositoryInterface {
     /*
         Job Order
     */
     //  GET
-    void getJobOrderByUser(String sort, String order, JobOrderCallback jobOrderCallback);
-    void getUpdateJobOrder(String jobOrderId, JobOrderCallback jobOrderCallback);
-    void getUpdateJobOrderHasDetails(String jobOrderId, JobOrderCallback jobOrderCallback);
+    void getJobOrderByUser(String order);
+    void getUpdateJobOrder(String jobOrderId);
+    void getUpdateJobOrderHasDetails(String jobOrderId);
     void getUpdateJobOrderHasSupervisors();
     void getUpdateJobOrderHasAssignmentData();
 

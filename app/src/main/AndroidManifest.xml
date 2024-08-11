@@ -18,10 +18,10 @@
         tools:targetApi="tiramisu">
 
         <service
-                android:name=".application.auth.service.AuthService"
+                android:name=".application.auth.domain.controller.AuthController"
                 android:exported="false"/>
         <service
-            android:name=".application.job_order.service.JobOrderService"
+            android:name=".application.job_order.domain.service.JobOrderService"
             android:exported="false"/>
 
         <activity

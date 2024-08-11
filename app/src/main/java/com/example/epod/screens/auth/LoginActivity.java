@@ -14,17 +14,15 @@ import android.widget.ProgressBar;
 import com.example.epod.MainActivity;
 import com.example.epod.R;
 import com.example.epod.application.auth.data.model.Auth;
-import com.example.epod.application.auth.data.repository.AuthCallback;
 import com.example.epod.screens.auth.model.AuthViewModel;
 import com.example.epod.utils.helpers.ViewHelper;
 
-import java.util.Objects;
 
-
-public class LoginActivity extends AppCompatActivity implements AuthCallback {
+public class LoginActivity extends AppCompatActivity {
     private AuthViewModel authViewModel;
     private ProgressBar progressBar;
     private Button loginButton;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,13 +42,7 @@ public class LoginActivity extends AppCompatActivity implements AuthCallback {
             }
         });
 
-        authViewModel.getErrorMessage().observe(this, errorMessage -> {
-            if(errorMessage != null) {
-                handleAuthError(errorMessage);
-            }
-        });
-
-        authViewModel.getIsLoading().observe(this, this::updateLoadingState);
+        authViewModel.getLoadingState().observe(this, this::updateLoadingState);
 
         loginButton.setOnClickListener(view -> {
             String username = usernameTextField.getText().toString();
@@ -65,17 +57,6 @@ public class LoginActivity extends AppCompatActivity implements AuthCallback {
         });
     }
 
-    @Override
-    public void onLogin(Auth authenticatedUser) {
-        Log.d("AuthSuccess", "Authenticated successfully.");
-        navigateToMainActivity();
-    }
-
-    @Override
-    public void onError(String errorMessage) {
-        ViewHelper.showToast(LoginActivity.this, errorMessage, "SHORT");
-    }
-
     private void handleAuthSuccess(Auth authenticatedUser) {
         navigateToMainActivity();
     }
@@ -84,17 +65,31 @@ public class LoginActivity extends AppCompatActivity implements AuthCallback {
         ViewHelper.showToast(LoginActivity.this, errorMessage, "SHORT");
     }
 
-    private void updateLoadingState(boolean isLoading) {
-        if(isLoading) {
-            loginButton.setEnabled(false);
-            loginButton.setText("");
-            loginButton.setBackgroundResource(R.drawable.ui_rounded_64_white);
-            progressBar.setVisibility(View.VISIBLE);
-        } else {
-            progressBar.setVisibility(View.GONE);
-            loginButton.setEnabled(true);
-            loginButton.setText("Login");
-            loginButton.setBackgroundResource(R.drawable.ui_rounded_64_gradient_orange);
+    private void updateLoadingState(ViewHelper.LoadingState loadingState) {
+        if (loadingState != null) {
+            switch (loadingState.status) {
+                case LOADING:
+                    loginButton.setEnabled(false);
+                    loginButton.setText("");
+                    loginButton.setBackgroundResource(R.drawable.ui_rounded_64_white);
+                    progressBar.setVisibility(View.VISIBLE);
+                    break;
+
+                case SUCCESS:
+                    progressBar.setVisibility(View.GONE);
+                    loginButton.setEnabled(true);
+                    loginButton.setText("Login");
+                    loginButton.setBackgroundResource(R.drawable.ui_rounded_64_gradient_orange);
+                    break;
+
+                case ERROR:
+                    progressBar.setVisibility(View.GONE);
+                    loginButton.setEnabled(true);
+                    loginButton.setText("Login");
+                    loginButton.setBackgroundResource(R.drawable.ui_rounded_64_gradient_orange);
+                    ViewHelper.showToast(LoginActivity.this, loadingState.message, "SHORT");
+                    break;
+            }
         }
     }
 
