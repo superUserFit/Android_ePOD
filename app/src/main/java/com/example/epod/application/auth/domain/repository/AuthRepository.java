@@ -99,6 +99,7 @@ public class AuthRepository implements AuthRepositoryInterface {
             @Override
             public void onFailure(Call<AuthResponse> call, Throwable throwable) {
                 Log.e("Repo", throwable.getMessage());
+                loadingState.setValue(ViewHelper.LoadingState.error("Request failed"));
             }
         });
     }

@@ -113,13 +113,16 @@ public class JobOrderFragment extends Fragment {
                     int position = recyclerViewTabButton.getChildAdapterPosition(tab);
                     tabButtonAdapter.selectedTabIndex = position;
                     tabButtonAdapter.notifyDataSetChanged();
+
+                    String selectedStatus = JOB_ORDER_STATUS[position];
+                    jobOrderViewModel.filterJobOrders(selectedStatus);
                 }
             });
         }
 
         jobOrderViewModel = new ViewModelProvider(this).get(JobOrderViewModel.class);
 
-        jobOrderViewModel.getJobOrders().observe(getViewLifecycleOwner(), new Observer<List<JobOrderModel>>() {
+        jobOrderViewModel.getFilteredJobOrders().observe(getViewLifecycleOwner(), new Observer<List<JobOrderModel>>() {
             @Override
             public void onChanged(List<JobOrderModel> jobOrderModels) {
                 loadingLayout.stopShimmer();

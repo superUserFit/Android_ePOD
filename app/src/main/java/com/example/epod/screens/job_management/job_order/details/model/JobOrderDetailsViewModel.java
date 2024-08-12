@@ -6,15 +6,12 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import com.example.epod.application.job_order.data.model.JobOrderModel;
-import com.example.epod.application.job_order.data.model.JobOrderHasDetailsModel;
-import com.example.epod.application.job_order.domain.service.JobOrderService;
+import com.example.epod.application.job_order.domain.service.JobOrderBoundService;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.List;
 
 public class JobOrderDetailsViewModel extends AndroidViewModel {
     @SuppressLint("StaticFieldLeak")
-    private final JobOrderService jobOrderService;
+    private final JobOrderBoundService jobOrderBoundService;
 
     private final MutableLiveData<JobOrderModel> jobOrder;
     private final MutableLiveData<Boolean> isLoading;
@@ -26,7 +23,7 @@ public class JobOrderDetailsViewModel extends AndroidViewModel {
         isLoading = new MutableLiveData<>(false);
         errorMessage = new MutableLiveData<>();
 
-        jobOrderService = new JobOrderService();
+        jobOrderBoundService = new JobOrderBoundService();
     }
 
     public LiveData<JobOrderModel> getJobOrder() {
