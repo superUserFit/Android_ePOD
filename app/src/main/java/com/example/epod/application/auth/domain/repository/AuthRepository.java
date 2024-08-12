@@ -10,7 +10,7 @@ import com.example.epod.application.auth.data.model.Auth;
 
 import com.example.epod.application.auth.domain.repository.api.AuthAPI;
 import com.example.epod.application.auth.domain.repository.api.AuthResponse;
-import com.example.epod.utils.Request;
+import com.example.epod.utils.NetworkModule;
 import com.example.epod.utils.helpers.ViewHelper;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -37,7 +37,7 @@ public class AuthRepository implements AuthRepositoryInterface {
 
     public AuthRepository(Context context) {
         this.context = context;
-        this.authAPI = Request.getRetrofitInstance(context).create(AuthAPI.class);
+        this.authAPI = NetworkModule.getRetrofitInstance(context).create(AuthAPI.class);
     }
 
     public LiveData<Auth> getAuthenticatedUser() {

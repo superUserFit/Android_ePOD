@@ -80,4 +80,7 @@ dependencies {
 
     // optional - Paging 3 Integration
     implementation ("androidx.room:room-paging:$room_version")
+
+    implementation ("com.google.dagger:dagger:2.52")
+    annotationProcessor ("com.google.dagger:dagger-compiler:2.52")
 }

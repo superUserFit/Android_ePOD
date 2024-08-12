@@ -9,7 +9,7 @@ import com.example.epod.application.job_order.data.model.JobOrderModel;
 import com.example.epod.application.job_order.data.model.JobOrderHasDetailsModel;
 import com.example.epod.application.job_order.domain.repository.api.JobOrderAPI;
 import com.example.epod.application.job_order.domain.repository.api.JobOrderResponse;
-import com.example.epod.utils.Request;
+import com.example.epod.utils.NetworkModule;
 
 import com.example.epod.utils.helpers.RepositoryHelper;
 import com.example.epod.utils.helpers.ViewHelper;
@@ -32,7 +32,7 @@ public class JobOrderRepository implements JobOrderRepositoryInterface {
 
 
     public JobOrderRepository(Context context) {
-        this.jobOrderApi = Request.getRetrofitInstance(context).create(JobOrderAPI.class);
+        this.jobOrderApi = NetworkModule.getRetrofitInstance(context).create(JobOrderAPI.class);
         this.repositoryHelper = new RepositoryHelper(context);
     }
 
