@@ -27,30 +27,27 @@ import java.security.cert.CertificateFactory;
 
 @Module
 public class NetworkModule {
-    public static Retrofit retrofit;
-    private static final String BASE_URL = "http://192.168.1.101/1ofis/application/backend/";
-//    private static final String BASE_URL = "https://1ofis.infollective.com/application/backend/";
-
     @Provides
     @Singleton
-    public static Retrofit getRetrofitInstance(Context context) {
-        if(retrofit == null) {
-            HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
-            loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+    public Retrofit provideRetrofit(Context context) {
+        final String BASE_URL = "http://192.168.1.101/1ofis/application/backend/";
+//        final String BASE_URL = "https://1ofis.infollective.com/application/backend/";
 
-            OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                    .sslSocketFactory(getSSLSocketFactory(context), getTrustManager(context))
-                    .addInterceptor(loggingInterceptor)
-                    .build();
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
-            retrofit = new Retrofit.Builder()
-                    .baseUrl(BASE_URL)
-                    .client(okHttpClient)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
-        }
-        return retrofit;
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .sslSocketFactory(getSSLSocketFactory(context), getTrustManager(context))
+                .addInterceptor(loggingInterceptor)
+                .build();
+
+        return new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .client(okHttpClient)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
     }
+
 
     private static SSLSocketFactory getSSLSocketFactory(Context context) {
         try {

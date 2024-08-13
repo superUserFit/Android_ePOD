@@ -15,15 +15,20 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import javax.inject.Inject;
+
 
 public class MainActivity extends AppCompatActivity {
-    ActivityMainBinding dataBinding;
+    @Inject
     SharedPreferences sharedPreferences;
+
+    ActivityMainBinding dataBinding;
     boolean isUserAssignee;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        ((MyApplication) getApplication()).getAppComponent().inject(this);
         dataBinding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(dataBinding.getRoot());
 

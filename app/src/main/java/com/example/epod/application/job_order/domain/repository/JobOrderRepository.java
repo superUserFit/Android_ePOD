@@ -20,6 +20,8 @@ import retrofit2.Response;
 import java.util.Collections;
 import java.util.List;
 
+import javax.inject.Inject;
+
 
 public class JobOrderRepository implements JobOrderRepositoryInterface {
     private final JobOrderAPI jobOrderApi;
@@ -31,8 +33,9 @@ public class JobOrderRepository implements JobOrderRepositoryInterface {
     private final MutableLiveData<ViewHelper.LoadingState> loadingState = new MutableLiveData<>();
 
 
-    public JobOrderRepository(Context context) {
-        this.jobOrderApi = NetworkModule.getRetrofitInstance(context).create(JobOrderAPI.class);
+    @Inject
+    public JobOrderRepository(JobOrderAPI jobOrderApi, Context context) {
+        this.jobOrderApi = jobOrderApi;
         this.repositoryHelper = new RepositoryHelper(context);
     }
 
