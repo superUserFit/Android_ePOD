@@ -10,6 +10,7 @@ import com.example.epod.application.auth.data.model.Auth;
 
 import com.example.epod.application.auth.domain.repository.api.AuthAPI;
 import com.example.epod.application.auth.domain.repository.api.AuthResponse;
+import com.example.epod.utils.Request;
 import com.example.epod.utils.helpers.ViewHelper;
 
 import javax.inject.Inject;
@@ -29,8 +30,6 @@ public class AuthRepository implements AuthRepositoryInterface {
     private static final String KEY_LOCATION = "location";
     private static final String KEY_USER_GROUP = "user_group";
     private static final String KEY_USER_ROLE = "user_role";
-
-    private SharedPreferences sharedPreferences;
     private final AuthAPI authAPI;
     private final Context context;
 
@@ -38,9 +37,9 @@ public class AuthRepository implements AuthRepositoryInterface {
     private final MutableLiveData<ViewHelper.LoadingState> loadingState = new MutableLiveData<>();
 
     @Inject
-    public AuthRepository(AuthAPI authAPI, Context context) {
+    public AuthRepository(Context context) {
         this.context = context;
-        this.authAPI = authAPI;
+        this.authAPI = Request.getRetrofit(context).create(AuthAPI.class);
     }
 
     public LiveData<Auth> getAuthenticatedUser() {

@@ -1,4 +1,4 @@
-package com.example.epod.screens.dependency_injection;
+package com.example.epod.screens.job_management.job_order.dependency_injection;
 
 import androidx.lifecycle.ViewModel;
 
@@ -14,6 +14,6 @@ import dagger.MapKey;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 @MapKey
-public @interface ViewModelKey {
+public @interface JobOrderViewModelKey {
     Class<? extends ViewModel> value();
 }

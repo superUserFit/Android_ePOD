@@ -3,7 +3,7 @@ package com.example.epod.application;
 import android.content.Context;
 
 import com.example.epod.application.job_order.domain.repository.api.JobOrderAPI;
-import com.example.epod.screens.dependency_injection.ViewModelModule;
+import com.example.epod.screens.job_management.job_order.dependency_injection.JobOrderViewModelModule;
 import com.example.epod.utils.Request;
 
 import javax.inject.Singleton;
@@ -12,7 +12,7 @@ import dagger.Module;
 import dagger.Provides;
 import retrofit2.Retrofit;
 
-@Module(includes = ViewModelModule.class)
+@Module(includes = JobOrderViewModelModule.class)
 public class NetworkModule {
     @Provides
     @Singleton

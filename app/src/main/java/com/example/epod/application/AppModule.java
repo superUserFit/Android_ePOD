@@ -25,6 +25,12 @@ public class AppModule {
 
     @Provides
     @Singleton
+    public String providePreferenceName() {
+        return "e_pod";
+    }
+
+    @Provides
+    @Singleton
     public SharedPreferences provideSharedPreferences(Context context, String preferenceName) {
         return context.getSharedPreferences(preferenceName, Context.MODE_PRIVATE);
     }
