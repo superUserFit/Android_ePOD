@@ -12,6 +12,7 @@ import com.example.epod.application.job_order.domain.repository.JobOrderReposito
 import com.example.epod.utils.helpers.ViewHelper;
 import org.jetbrains.annotations.NotNull;
 
+import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +28,7 @@ public class JobOrderViewModel extends AndroidViewModel {
     private final JobOrderRepository jobOrderRepository;
 
 
+    @Inject
     public JobOrderViewModel(@NotNull Application application, JobOrderRepository jobOrderRepository) {
         super(application);
         this.jobOrderRepository = jobOrderRepository;

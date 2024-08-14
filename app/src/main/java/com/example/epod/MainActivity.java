@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        ((MyApplication) getApplication()).getAppComponent().inject(this);
+        ((MyApplication) getApplication()).getAppComponent().inject(this);
         dataBinding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(dataBinding.getRoot());
 

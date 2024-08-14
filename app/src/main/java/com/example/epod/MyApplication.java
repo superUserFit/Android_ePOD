@@ -2,8 +2,6 @@ package com.example.epod;
 
 import android.app.Application;
 
-import com.example.epod.application.AppComponent;
-
 public class MyApplication extends Application {
     private AppComponent appComponent;
 
@@ -11,5 +9,12 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
+        appComponent = DaggerAppComponent.builder()
+                .application(this)
+                .build();
+    }
+
+    public AppComponent getAppComponent() {
+        return appComponent;
     }
 }

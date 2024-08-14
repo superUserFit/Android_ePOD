@@ -22,6 +22,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.epod.MyApplication;
 import com.example.epod.screens.job_management.job_order.main.model.JobOrderViewModel;
 import com.facebook.shimmer.ShimmerFrameLayout;
 
@@ -195,5 +196,11 @@ public class JobOrderFragment extends Fragment {
             }
         }
         jobOrderAdapter.setJobOrders(filteredJobOrderModels);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        ((MyApplication) getActivity().getApplication()).getAppComponent().inject(this);
     }
 }
