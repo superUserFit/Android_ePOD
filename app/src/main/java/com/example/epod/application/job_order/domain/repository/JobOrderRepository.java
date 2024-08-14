@@ -9,7 +9,6 @@ import com.example.epod.application.job_order.data.model.JobOrderModel;
 import com.example.epod.application.job_order.data.model.JobOrderHasDetailsModel;
 import com.example.epod.application.job_order.domain.repository.api.JobOrderAPI;
 import com.example.epod.application.job_order.domain.repository.api.JobOrderResponse;
-import com.example.epod.utils.NetworkModule;
 
 import com.example.epod.utils.helpers.RepositoryHelper;
 import com.example.epod.utils.helpers.ViewHelper;

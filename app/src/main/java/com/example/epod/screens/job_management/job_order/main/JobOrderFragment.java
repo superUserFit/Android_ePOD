@@ -34,7 +34,12 @@ import com.example.epod.application.job_order.data.model.JobOrderModel;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 public class JobOrderFragment extends Fragment {
+    @Inject
+    ViewModelProvider.Factory viewModelFactory;
+
     private JobOrderAdapter jobOrderAdapter;
     private TabButtonAdapter tabButtonAdapter;
     private JobOrderViewModel jobOrderViewModel;
@@ -120,7 +125,7 @@ public class JobOrderFragment extends Fragment {
             });
         }
 
-        jobOrderViewModel = new ViewModelProvider(this).get(JobOrderViewModel.class);
+        jobOrderViewModel = new ViewModelProvider(this, viewModelFactory).get(JobOrderViewModel.class);
 
         jobOrderViewModel.getFilteredJobOrders().observe(getViewLifecycleOwner(), new Observer<List<JobOrderModel>>() {
             @Override

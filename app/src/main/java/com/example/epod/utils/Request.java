@@ -3,14 +3,12 @@ package com.example.epod.utils;
 
 import android.content.Context;
 import com.example.epod.R;
-import dagger.Module;
-import dagger.Provides;
+
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 
-import javax.inject.Singleton;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManagerFactory;
 import javax.net.ssl.X509TrustManager;
@@ -25,14 +23,11 @@ import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
 
 
-@Module
-public class NetworkModule {
-    @Provides
-    @Singleton
-    public Retrofit provideRetrofit(Context context) {
-        final String BASE_URL = "http://192.168.1.101/1ofis/application/backend/";
-//        final String BASE_URL = "https://1ofis.infollective.com/application/backend/";
+public class Request {
+    static final String BASE_URL = "http://192.168.1.101/1ofis/application/backend/";
+//    static final String BASE_URL = "https://1ofis.infollective.com/application/backend/";
 
+    public static Retrofit getRetrofit(Context context) {
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 

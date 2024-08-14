@@ -10,8 +10,10 @@ import com.example.epod.application.auth.data.model.Auth;
 
 import com.example.epod.application.auth.domain.repository.api.AuthAPI;
 import com.example.epod.application.auth.domain.repository.api.AuthResponse;
-import com.example.epod.utils.NetworkModule;
 import com.example.epod.utils.helpers.ViewHelper;
+
+import javax.inject.Inject;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -35,9 +37,10 @@ public class AuthRepository implements AuthRepositoryInterface {
     private final MutableLiveData<Auth> authUserLiveData = new MutableLiveData<>();
     private final MutableLiveData<ViewHelper.LoadingState> loadingState = new MutableLiveData<>();
 
-    public AuthRepository(Context context) {
+    @Inject
+    public AuthRepository(AuthAPI authAPI, Context context) {
         this.context = context;
-        this.authAPI = NetworkModule.getRetrofitInstance(context).create(AuthAPI.class);
+        this.authAPI = authAPI;
     }
 
     public LiveData<Auth> getAuthenticatedUser() {

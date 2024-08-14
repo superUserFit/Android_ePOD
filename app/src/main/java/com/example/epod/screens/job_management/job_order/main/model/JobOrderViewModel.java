@@ -19,7 +19,7 @@ import java.util.List;
 public class JobOrderViewModel extends AndroidViewModel {
     private final LiveData<List<JobOrderModel>> jobOrders;
     private final LiveData<ViewHelper.LoadingState> loadingState;
-    private MutableLiveData<List<JobOrderModel>> filteredJobOrders = new MutableLiveData<>();
+    private final MutableLiveData<List<JobOrderModel>> filteredJobOrders = new MutableLiveData<>();
     private final MutableLiveData<String> selectedJobOrderStatus = new MutableLiveData<>();
 
     private String sortOrder = "desc";
@@ -27,9 +27,9 @@ public class JobOrderViewModel extends AndroidViewModel {
     private final JobOrderRepository jobOrderRepository;
 
 
-    public JobOrderViewModel(@NotNull Application application) {
+    public JobOrderViewModel(@NotNull Application application, JobOrderRepository jobOrderRepository) {
         super(application);
-        this.jobOrderRepository = new JobOrderRepository(application.getApplicationContext());
+        this.jobOrderRepository = jobOrderRepository;
         this.jobOrders = jobOrderRepository.getJobOrders();
         this.loadingState = jobOrderRepository.getLoadingState();
         this.selectedJobOrderStatus.setValue("All");
