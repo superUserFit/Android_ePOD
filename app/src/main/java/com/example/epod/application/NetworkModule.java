@@ -3,7 +3,8 @@ package com.example.epod.application;
 import android.content.Context;
 
 import com.example.epod.application.job_order.domain.repository.api.JobOrderAPI;
-import com.example.epod.screens.job_management.job_order.dependency_injection.JobOrderViewModelModule;
+import com.example.epod.dependency_injection.ApplicationContext;
+import com.example.epod.dependency_injection.job_order.presentation.module.JobOrderViewModelModule;
 import com.example.epod.utils.Request;
 
 import javax.inject.Singleton;
@@ -16,13 +17,7 @@ import retrofit2.Retrofit;
 public class NetworkModule {
     @Provides
     @Singleton
-    Retrofit provideRetrofit(Context context) {
+    Retrofit provideRetrofit(@ApplicationContext Context context) {
         return Request.getRetrofit(context);
-    }
-
-    @Provides
-    @Singleton
-    JobOrderAPI provideJobOrderAPI(Retrofit retrofit) {
-        return retrofit.create(JobOrderAPI.class);
     }
 }

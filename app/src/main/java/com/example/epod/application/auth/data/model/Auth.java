@@ -5,6 +5,10 @@ import com.example.epod.application.company.data.model.Company;
 import com.example.epod.application.location.data.model.Location;
 import com.example.epod.application.user_group.model.UserGroup;
 
+import javax.inject.Singleton;
+
+
+@Singleton
 public class Auth {
     private String id, username, access_token, Authorization;
     private Account currentAccount;

@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.example.epod.dependency_injection.ApplicationContext;
+
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -13,12 +15,13 @@ import dagger.Provides;
 public class AppModule {
     private final Context applicationContext;
 
-    public AppModule(Context context) {
+    public AppModule(@ApplicationContext Context context) {
         this.applicationContext = context;
     }
 
     @Provides
     @Singleton
+    @ApplicationContext
     public Context provideContext() {
         return applicationContext;
     }
@@ -31,7 +34,7 @@ public class AppModule {
 
     @Provides
     @Singleton
-    public SharedPreferences provideSharedPreferences(Context context, String preferenceName) {
+    public SharedPreferences provideSharedPreferences(@ApplicationContext Context context, String preferenceName) {
         return context.getSharedPreferences(preferenceName, Context.MODE_PRIVATE);
     }
 }
